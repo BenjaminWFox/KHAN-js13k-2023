@@ -1,15 +1,23 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
-    <title>JS13K Demo</title>
-    <script type="module" src="/src/index.ts"></script>
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <div id="board">
-      <div id="ground"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>JS13K Demo</title>
+  <script type="module" src="/src/index.ts"></script>
+  <link rel="stylesheet" href="/sprites.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/title.css" />
+</head>
+
+<body>
+  <div id="board">
+    <div id="ground"></div>
+    <div id="title">
+      <h1>~~KHAN~~</h1>
+    </div>
+    <div id="">
       <div class="sprite mounted enemy">
         <div class="king sprite enemy"></div>
         <div class="horse sprite double"></div>
@@ -78,5 +86,7 @@
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

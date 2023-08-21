@@ -1,0 +1,49 @@
+.sprite {
+  width: 13px;
+  height: 13px;
+  transform: scale(-8, 8);
+  position: absolute;
+  z-index: 5;
+  top: 37%;
+}
+
+.player {
+  transform: scale(8);
+}
+
+.enemy {
+  left: 35%;
+}
+
+.mounted .sprite {
+  transform: scale(1);
+  left: 7px;
+  top: -6.5px;
+}
+
+.mounted {
+  transform: scale(-8, 8);
+  width: 26px;
+  height: 13px;
+  left: 20%;
+  z-index: 4;
+  background: url('./s.png') -65px 0;
+}
+
+.mounted:not(.enemy) {
+  transform: scale(8, 8);
+  left: 75%;
+}
+
+.khan {
+  background: url('./s.png') -52px 0;
+}
+
+.king {
+  background: url('./s.png') 0 0;
+}
+
+.archer {
+  background: url('./s.png') -13px 0;
+}
+
