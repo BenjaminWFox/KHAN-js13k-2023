@@ -19,18 +19,18 @@
 .sprite {
     width: 13px;
     height: 13px;
-    transform: scale(-10, 10);
+    transform: scale(-8, 8);
     position: absolute;
     z-index: 5;
+    top: 37%;
 }
 
 .player {
-    transform: scale(10);
+    transform: scale(8);
 }
 
 .enemy {
-    left: 30%;
-    top: 47%;
+    left: 35%;
 }
 
 .mounted .sprite {
@@ -40,18 +40,17 @@
 }
 
 .mounted {
-    transform: scale(-10, 10);
+    transform: scale(-8, 8);
     width: 26px;
     height: 13px;
-    left: 30%;
-    top: 47%;
+    left: 20%;
     z-index: 4;
     background: url('./s.png') -65px 0;
 }
 
 .mounted:not(.enemy) {
-    transform: scale(10, 10);
-    left: 70%;
+    transform: scale(8, 8);
+    left: 75%;
 }
 
 .khan {
@@ -60,6 +59,10 @@
 
 .king {
     background: url('./s.png') 0 0;
+}
+
+.archer {
+    background: url('./s.png') -13px 0;
 }
 
 /* Get rid of any margins, set background black, use flexbox to center */
@@ -85,6 +88,15 @@ html, body {
     outline: 0;
     position: relative;
     display: flex;
+}
+
+#ground {
+    background-color: #503e32;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
 }
 
 @media (min-aspect-ratio: 16/9) {
