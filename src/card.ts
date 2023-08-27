@@ -9,14 +9,11 @@ interface CardData {
 let globalId = 0;
 
 export class Card {
-  static id = 0;
-
   name: string;
   data: CardData;
   id: number;
 
   constructor(name: string, data: CardData) {
-
     this.id = globalId++;
     this.name = name;
     this.data = data;

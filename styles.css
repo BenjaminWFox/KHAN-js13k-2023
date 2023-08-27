@@ -16,30 +16,67 @@
 	/* ↑ Pixel size */
 }
 
+* {
+    touch-action: manipulation;
+    user-select: none;
+    touch-action: none;
+}
+
 /* Get rid of any margins, set background black, use flexbox to center */
 html, body {
     margin: 0;
-    background-color: black;
+    background-color: #000;
     color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
+    overflow: visible;
     font-size: 14px;
-    user-select: none;
-    touch-action: none;
-    font-family: monospace;
-    overflow: hidden;
+    font-family: luminari;
     image-rendering: pixelated;
 }
 
+.hide {
+    display: none;
+}
+
+button {
+    font-family: luminari;
+    border: none;
+    background: none;
+    color: #fff;
+    display: inline;
+    font-size: 8rem;
+    align-self: flex-start;
+    margin: 0 auto;
+}
+
+button:hover {
+    text-shadow: 0 0 10px #fff;
+}
+
+button:active {
+    text-shadow: 0 0 10px #999;
+}
+
+#menu {
+    margin-top: 250px;
+}
+
+#title {
+    z-index: 2;
+}
+
 #board {
-    aspect-ratio: 16 / 9;
     background-color: #00a2d1;
-    width: 100vw;
+    width: 1600px;
+    height: 900px;
     outline: 0;
     position: relative;
     display: flex;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 #playing {
@@ -55,12 +92,12 @@ html, body {
     height: 60%;
 }
 
-@media (min-aspect-ratio: 16/9) {
+/* @media (min-aspect-ratio: 16/9) {
     #board {
         height: 100vh;
         width: auto;
     }
-}
+} */
 
 #card-holder {
     position: absolute;
@@ -76,12 +113,13 @@ html, body {
 }
 
 .card {
-    height: 200px;
-    width: 150px;
-    min-width: 150px;
-    max-height: 200px;
-    margin: 0 -25px 0;
+    width: 190px;
+    min-width: 190px;
+    height: 285px;
+    max-height: 285px;
+    margin: 0 -15px 0;
     display: flex;
+    font-family: monospace;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
@@ -89,7 +127,7 @@ html, body {
     color: white;
     background: #000;
     transform: scale(.75);
-    transition: all .25s;
+    transition: bottom .25s;
     z-index: 10;
     position: relative;
     touch-action: none;
@@ -101,6 +139,7 @@ html, body {
 
 .card:hover {
     z-index: 100;
+    bottom: 90px;
     transform: scale(1.5);
 }
 

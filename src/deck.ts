@@ -25,7 +25,7 @@ export class Deck implements IDeck {
       this.drawPile.push({ ...cards[0] });
     });
     this.drawPile = [
-      ...(new Array(4).fill('_')).map((_, i) => {
+      ...(new Array(6).fill('_')).map((_, i) => {
         console.log('running...')
         return cards[i % 2]
       }),
