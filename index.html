@@ -14,7 +14,7 @@
 <body>
   <div id="board">
     <div id="ground"></div>
-    <div id="title">
+    <div id="title" class="hide">
       <h1>KHAN</h1>
       <section id="menu">
         <button id="continue">continue</button>
@@ -22,15 +22,78 @@
         <button id="new">new game</button>
       </section>
     </div>
-    <div id="game" class="hide">
-      <div class="sprite mounted enemy">
-        <div class="king sprite enemy"></div>
-        <div class="horse sprite double"></div>
+    <div id="game">
+      <div class="enemies">
+        <div class="sprite-wrapper enemy mounted">
+          <div class="sprite horse"></div>
+          <div class="sprite person king"></div>
+          <div class="stats hp">
+            <span class="number">100/100</span>
+            <span class="fill"></span>
+          </div>
+          <div class="stats affects">
+            <span class="armor">A:0</span>
+            <span class="enrage">E:0</span>
+            <span class="frail">F:0</span>            
+            <span class="weak">W:0</span>
+          </div>
+        </div>
+        <!-- <div class="sprite-wrapper enemy mounted">
+          <div class="sprite horse"></div>
+          <div class="sprite person dervish"></div>
+          <div class="stats hp">
+            <span class="number">100/100</span>
+            <span class="fill"></span>
+          </div>
+          <div class="stats affects">
+            <span class="armor">A:0</span>
+            <span class="enrage">E:0</span>
+            <span class="frail">F:0</span>            
+            <span class="weak">W:0</span>
+          </div>
+        </div>
+        <div class="sprite-wrapper enemy">
+          <div class="sprite bear1"></div>
+          <div class="stats hp">
+            <span class="number">100/100</span>
+            <span class="fill"></span>
+          </div>
+          <div class="stats affects">
+            <span class="armor">A:0</span>
+            <span class="enrage">E:0</span>
+            <span class="frail">F:0</span>            
+            <span class="weak">W:0</span>
+          </div>
+        </div>
+        <div class="sprite-wrapper enemy">
+          <div class="sprite bear2"></div>
+          <div class="stats hp">
+            <span class="number">100/100</span>
+            <span class="fill"></span>
+          </div>
+          <div class="stats affects">
+            <span class="armor">A:0</span>
+            <span class="enrage">E:0</span>
+            <span class="frail">F:0</span>            
+            <span class="weak">W:0</span>
+          </div>
+        </div> -->
       </div>
-      <div class="archer sprite enemy"></div>
-      <div class="sprite mounted">
-        <div class="khan sprite player"></div>
-        <div class="horse sprite double"></div>
+      <div class="players">
+        <div class="sprite-wrapper mounted">
+          <div class="sprite horse"></div>
+          <div class="sprite person khan player"></div>
+          <div class="stats hp">
+            <span class="number">100/100</span>
+            <span class="fill"></span>
+          </div>
+          <div class="stats affects">
+            <span class="armor">A:0</span>
+            <span class="enrage">E:0</span>
+            <span class="frail">F:0</span>            
+            <span class="weak">W:0</span>
+          </div>
+        </div>
       </div>
       <div id="card-holder">
         <div class="card pixel-border">
