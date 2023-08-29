@@ -22,6 +22,7 @@
   width: 13px;
   height: 13px;
   justify-content: center;
+  position: relative;
 }
 
 .sprite-wrapper.enemy {
@@ -42,10 +43,6 @@
   align-items: flex-end;
 }
 
-.enemy {
-  left: 25%;
-}
-
 .mounted .horse {
   width: 26px;
   height: 13px;
@@ -55,11 +52,6 @@
 .mounted .person {
   top: -7px;
   left: 7px;
-}
-
-
-.mounted:not(.enemy) {
-  left: 75%;
 }
 
 .khan {
@@ -104,6 +96,55 @@
 
 .bear2 {
   background: url('./s.png') -52px -13px;
+}
+
+.intent {
+  width: 8px;
+  height: 13px;
+  transform: scale(-.33, .33);
+  position: relative;
+  top: -10px;
+  left: 1px;
+}
+
+.assault {
+  background: url('./s.png') -65px -13px;
+}
+
+.assault:hover:before, .defend:hover:before, .ability:hover:before {
+
+  font-size: .5rem;
+  position: absolute;
+  display: block;
+  top: -10px;
+  width: 150px;
+}
+
+.assault:hover:before {
+  content: "Planning to attack you!";
+}
+
+.assault-value {
+  display: block;
+  position: relative;
+  left: 8px;
+  top: -3px;
+}
+
+.defend:hover:before {
+  content: "Planning to defend itself!";
+}
+
+.defend {
+  background: url('./s.png') -73px -13px;
+}
+
+.ability:hover:before {
+  content: "Planning something unpleasant!";
+}
+
+.ability {
+  background: url('./s.png') -81px -13px;
 }
 
 .hp, .affects {

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/sprites.css" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/title.css" />
+  <link rel="stylesheet" href="/card.css" />
 </head>
 
 <body>
@@ -25,8 +26,11 @@
     <div id="game">
       <div class="enemies">
         <div class="sprite-wrapper enemy mounted">
+          
           <div class="sprite horse"></div>
-          <div class="sprite person king"></div>
+          <div class="sprite person king">
+            <div class="intent assault"><span class="assault-value">15</span></div>
+          </div>
           <div class="stats hp">
             <span class="number">100/100</span>
             <span class="fill"></span>
@@ -38,9 +42,11 @@
             <span class="weak">W:0</span>
           </div>
         </div>
-        <!-- <div class="sprite-wrapper enemy mounted">
+         <div class="sprite-wrapper enemy mounted">
           <div class="sprite horse"></div>
-          <div class="sprite person dervish"></div>
+          <div class="sprite person dervish">
+            <div class="intent ability"></div>
+          </div>
           <div class="stats hp">
             <span class="number">100/100</span>
             <span class="fill"></span>
@@ -53,7 +59,10 @@
           </div>
         </div>
         <div class="sprite-wrapper enemy">
-          <div class="sprite bear1"></div>
+          
+          <div class="sprite bear1">
+            <div class="intent defend"></div>
+          </div>
           <div class="stats hp">
             <span class="number">100/100</span>
             <span class="fill"></span>
@@ -77,7 +86,7 @@
             <span class="frail">F:0</span>            
             <span class="weak">W:0</span>
           </div>
-        </div> -->
+        </div> 
       </div>
       <div class="players">
         <div class="sprite-wrapper mounted">
@@ -95,63 +104,73 @@
           </div>
         </div>
       </div>
+      <div id="deck-done">
+        <div id="deck">Deck: 0</div>
+        <div id="done">Discard: 0</div>
+      </div>
       <div id="card-holder">
         <div class="card pixel-border">
-          <div class="cost pixel-border">2</div>
+          <div class="cost">2</div>
+          <div class="title">BASIC ATTACK</div>
+          <div class="body">
+            ATTACK: 1
+          </div>
+        </div>
+         <div class="card pixel-border">
+          <div class="cost">2</div>
           <div class="title">BASIC ATTACK</div>
           <div class="body">
             ATTACK: 1
           </div>
         </div>
         <div class="card pixel-border">
-          <div class="cost pixel-border">2</div>
+          <div class="cost">2</div>
           <div class="title">BASIC ATTACK</div>
           <div class="body">
             ATTACK: 1
           </div>
         </div>
         <div class="card pixel-border">
-          <div class="cost pixel-border">2</div>
+          <div class="cost">2</div>
+          <div class="title">BASIC ATTACK</div>
+          <div class="body">
+            ATTACK: 1
+          </div>
+        </div>
+         <div class="card pixel-border">
+          <div class="cost">2</div>
+          <div class="title">BASIC ATTACK</div>
+          <div class="body">
+            <div class="detail">
+            <p>ATTACK: 1</p>
+            <p>DEFEND: 2</p>
+            <p>ENRAGE: 2</p>
+            <p>Lose 2 life.</p>
+          </div>
+            <div class="flavor">The Khan was merciless in pursuit of his enemies.</div>
+          </div>
+        </div> 
+         <div class="card pixel-border">
+          <div class="cost">2</div>
           <div class="title">BASIC ATTACK</div>
           <div class="body">
             ATTACK: 1
           </div>
         </div>
         <div class="card pixel-border">
-          <div class="cost pixel-border">2</div>
+          <div class="cost">2</div>
           <div class="title">BASIC ATTACK</div>
           <div class="body">
             ATTACK: 1
           </div>
         </div>
         <div class="card pixel-border">
-          <div class="cost pixel-border">2</div>
+          <div class="cost">2</div>
           <div class="title">BASIC ATTACK</div>
           <div class="body">
             ATTACK: 1
           </div>
-        </div>
-        <div class="card pixel-border">
-          <div class="cost pixel-border">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
-        <div class="card pixel-border">
-          <div class="cost pixel-border">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
-        <div class="card pixel-border">
-          <div class="cost pixel-border">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
+        </div> 
       </div>
     </div>
   </div>
