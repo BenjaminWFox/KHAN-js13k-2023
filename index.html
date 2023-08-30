@@ -15,7 +15,7 @@
 <body>
   <div id="board">
     <div id="ground"></div>
-    <div id="title" class="hide">
+    <div id="title">
       <h1>KHAN</h1>
       <section id="menu">
         <button id="continue">continue</button>
@@ -23,154 +23,78 @@
         <button id="new">new game</button>
       </section>
     </div>
-    <div id="game">
-      <div class="enemies">
-        <div class="sprite-wrapper enemy mounted">
-          
+    <div id="game" class="hide">
+      <div id="enemies">
+        <!-- <div class="sprite-wrapper enemy mounted">
           <div class="sprite horse"></div>
-          <div class="sprite person king">
-            <div class="intent assault"><span class="assault-value">15</span></div>
+          <div class="sprite king">
+            <div class="intent assault">
+              <div class="assault-value">15</div>
+            </div>
           </div>
           <div class="stats hp">
-            <span class="number">100/100</span>
-            <span class="fill"></span>
+            <div class="number">100/100</div>
+            <div class="fill"></div>
           </div>
           <div class="stats affects">
-            <span class="armor">A:0</span>
-            <span class="enrage">E:0</span>
-            <span class="frail">F:0</span>            
-            <span class="weak">W:0</span>
+            <div class="armor">A:0</div>
+            <div class="enrage">E:0</div>
+            <div class="frail">F:0</div>
+            <div class="weak">W:0</div>
           </div>
         </div>
-         <div class="sprite-wrapper enemy mounted">
-          <div class="sprite horse"></div>
-          <div class="sprite person dervish">
-            <div class="intent ability"></div>
-          </div>
-          <div class="stats hp">
-            <span class="number">100/100</span>
-            <span class="fill"></span>
-          </div>
-          <div class="stats affects">
-            <span class="armor">A:0</span>
-            <span class="enrage">E:0</span>
-            <span class="frail">F:0</span>            
-            <span class="weak">W:0</span>
-          </div>
-        </div>
+
         <div class="sprite-wrapper enemy">
-          
           <div class="sprite bear1">
             <div class="intent defend"></div>
           </div>
           <div class="stats hp">
-            <span class="number">100/100</span>
-            <span class="fill"></span>
+            <div class="number">100/100</div>
+            <div class="fill"></div>
           </div>
           <div class="stats affects">
-            <span class="armor">A:0</span>
-            <span class="enrage">E:0</span>
-            <span class="frail">F:0</span>            
-            <span class="weak">W:0</span>
+            <div class="armor">A:0</div>
+            <div class="enrage">E:0</div>
+            <div class="frail">F:0</div>
+            <div class="weak">W:0</div>
           </div>
-        </div>
-        <div class="sprite-wrapper enemy">
-          <div class="sprite bear2"></div>
-          <div class="stats hp">
-            <span class="number">100/100</span>
-            <span class="fill"></span>
-          </div>
-          <div class="stats affects">
-            <span class="armor">A:0</span>
-            <span class="enrage">E:0</span>
-            <span class="frail">F:0</span>            
-            <span class="weak">W:0</span>
-          </div>
-        </div> 
+        </div> -->
       </div>
-      <div class="players">
-        <div class="sprite-wrapper mounted">
+      <div id="players">
+        <!-- <div class="sprite-wrapper mounted">
           <div class="sprite horse"></div>
-          <div class="sprite person khan player"></div>
+          <div class="sprite khan player"></div>
           <div class="stats hp">
-            <span class="number">100/100</span>
-            <span class="fill"></span>
+            <div class="number">100/100</div>
+            <div class="fill"></div>
           </div>
           <div class="stats affects">
-            <span class="armor">A:0</span>
-            <span class="enrage">E:0</span>
-            <span class="frail">F:0</span>            
-            <span class="weak">W:0</span>
+            <div class="armor">A:0</div>
+            <div class="enrage">E:0</div>
+            <div class="frail">F:0</div>
+            <div class="weak">W:0</div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div id="deck-done">
         <div id="deck">Deck: 0</div>
+        <div id="deck">Energy: 0</div>
         <div id="done">Discard: 0</div>
       </div>
       <div id="card-holder">
-        <div class="card pixel-border">
+        <!-- <div class="card pixel-border">
           <div class="cost">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
-         <div class="card pixel-border">
-          <div class="cost">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
-        <div class="card pixel-border">
-          <div class="cost">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
-        <div class="card pixel-border">
-          <div class="cost">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
-         <div class="card pixel-border">
-          <div class="cost">2</div>
-          <div class="title">BASIC ATTACK</div>
+          <div class="title">WRATH OF KHAN</div>
           <div class="body">
             <div class="detail">
-            <p>ATTACK: 1</p>
-            <p>DEFEND: 2</p>
-            <p>ENRAGE: 2</p>
-            <p>Lose 2 life.</p>
-          </div>
+              <div>ATTACK: 1</div>
+              <div>DEFEND: 2</div>
+              <div>ENRAGE: 2</div>
+              <div>Lose 2 life.</div>
+            </div>
             <div class="flavor">The Khan was merciless in pursuit of his enemies.</div>
           </div>
-        </div> 
-         <div class="card pixel-border">
-          <div class="cost">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
-        <div class="card pixel-border">
-          <div class="cost">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div>
-        <div class="card pixel-border">
-          <div class="cost">2</div>
-          <div class="title">BASIC ATTACK</div>
-          <div class="body">
-            ATTACK: 1
-          </div>
-        </div> 
+        </div> -->
       </div>
     </div>
   </div>

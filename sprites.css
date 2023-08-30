@@ -1,4 +1,4 @@
-.enemies {
+#enemies {
   position: absolute;
   top: 36%;
   left: 0px;
@@ -7,7 +7,7 @@
   justify-content: space-evenly;
 }
 
-.players {
+#players {
   position: absolute;
   top: 36%;
   left: 50%;
@@ -49,7 +49,7 @@
   z-index: 4;
 }
 
-.mounted .person {
+.mounted .sprite:not(.horse) {
   top: -7px;
   left: 7px;
 }
@@ -131,6 +131,10 @@
   top: -3px;
 }
 
+.intent:not(.assault) .assault-value {
+  display: none;
+}
+
 .defend:hover:before {
   content: "Planning to defend itself!";
 }
@@ -171,11 +175,11 @@
   font-size: .75rem;
 }
 
-.affects span {
+.affects div {
   margin-right: 5px;
 }
 
-.affects span:hover:before {
+.affects div:hover:before {
   position: absolute;
   top: 10px;
   width: 150%;
@@ -198,11 +202,11 @@
 }
 
 .armor:hover:before {
-  content: 'Armor: X damage blocked';
+  content: 'Defend: block X attack damage';
 }
 
 .weak:hover:before {
-  content: 'Weak: do 25% less damage for X turns';
+  content: 'Weaken: gain 50% less armor for X turns';
 }
 
 .enrage:hover:before {
@@ -210,7 +214,7 @@
 }
 
 .frail:hover:before {
-  content: 'Frail: gain 50% less armor for X turns';
+  content: 'Falter: do 25% less damage for X turns';
 }
 
 .enemy .stats {

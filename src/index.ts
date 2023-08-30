@@ -1,7 +1,7 @@
 import { Deck } from "./deck";
-
-const ce = (str?: string) => str ? document.createElement(str) : document.createElement('i');
-
+import { cards } from "./card";
+import { ce, gei } from "./utility";
+import { SPRITE_TYPE, spriteElementFactory, cardElementFactory } from "./renderer";
 const BOARD_SCALE = 1;
 
 const e: Record<string, HTMLElement> = {
@@ -11,7 +11,7 @@ const e: Record<string, HTMLElement> = {
   new: ce(),
   continue: ce()
 }
-
+// spriteElementFactory('king', 100, SPRITE_TYPE.enemy, false);
 const deck = new Deck();
 
 console.log('deck', deck);
@@ -54,4 +54,36 @@ window.addEventListener('load', () => {
   console.log('Check 1 2')
 
   resize();
+
+  gei('enemies')?.appendChild(
+    spriteElementFactory('king', 100, SPRITE_TYPE.enemy, true)
+  );
+  gei('enemies')?.appendChild(
+    spriteElementFactory('dervish', 100, SPRITE_TYPE.enemy, true)
+  );
+  gei('enemies')?.appendChild(
+    spriteElementFactory('rok', 100, SPRITE_TYPE.enemy, false)
+  );
+  gei('enemies')?.appendChild(
+    spriteElementFactory('bear2', 100, SPRITE_TYPE.enemy, false)
+  );
+  gei('players')?.appendChild(
+    spriteElementFactory('khan', 100, SPRITE_TYPE.player, true)
+  );
+
+  gei('card-holder')?.appendChild(
+    cardElementFactory(cards[4])
+  )
+  gei('card-holder')?.appendChild(
+    cardElementFactory(cards[3])
+  )
+  gei('card-holder')?.appendChild(
+    cardElementFactory(cards[2])
+  )
+  gei('card-holder')?.appendChild(
+    cardElementFactory(cards[1])
+  )
+  gei('card-holder')?.appendChild(
+    cardElementFactory(cards[0])
+  )
 })

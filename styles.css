@@ -17,7 +17,7 @@ html, body {
     height: 100%;
     overflow: visible;
     font-size: 14px;
-    font-family: luminari;
+    font-family: luminari, Georgia;
     image-rendering: pixelated;
 }
 
@@ -26,7 +26,7 @@ html, body {
 }
 
 button {
-    font-family: luminari;
+    font-family: luminari, Georgia;
     border: none;
     background: none;
     color: #fff;
