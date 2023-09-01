@@ -48,7 +48,7 @@ export const enemies: Record<number, EntityData> = {
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
       new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
-      new EnemyAction(ENEMY_INTENT.ability, { e: 2, f: 2 }),
+      new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
   6: {
@@ -57,7 +57,7 @@ export const enemies: Record<number, EntityData> = {
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
       new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
-      new EnemyAction(ENEMY_INTENT.ability, { e: 2, f: 2 }),
+      new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
   7: {
@@ -66,7 +66,7 @@ export const enemies: Record<number, EntityData> = {
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
       new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
-      new EnemyAction(ENEMY_INTENT.ability, { e: 2, f: 2 }),
+      new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
   8: {
@@ -75,7 +75,7 @@ export const enemies: Record<number, EntityData> = {
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
       new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
-      new EnemyAction(ENEMY_INTENT.ability, { e: 2, f: 2 }),
+      new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
   9: {
@@ -84,7 +84,7 @@ export const enemies: Record<number, EntityData> = {
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
       new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
-      new EnemyAction(ENEMY_INTENT.ability, { e: 2, f: 2 }),
+      new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
 }

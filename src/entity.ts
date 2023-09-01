@@ -1,7 +1,7 @@
-import { ENEMY_INTENT, SPRITE_TYPE } from "./enums";
+import { ENEMY_INTENT } from "./enums";
 import { spriteElementBuilder } from "./renderer";
 import { EntityData, IEnemyAction } from "./types";
-import { ge, gei, getRandomIntInclusive } from "./utility";
+import { gei } from "./utility";
 
 export class Entity {
   sprite: HTMLDivElement;
@@ -9,11 +9,10 @@ export class Entity {
   // nextAction?: IEnemyAction;
 
   constructor(data: EntityData) {
-    const { name, type, hp, d, w, f, e } = data;
+    const { name, type, hp } = data;
 
     this.data = data;
-    this.sprite = spriteElementBuilder(name, hp, type, false);
-    // this.nextAction;
+    this.sprite = spriteElementBuilder(name, hp, type, data.mounted);
   }
 
   render() {

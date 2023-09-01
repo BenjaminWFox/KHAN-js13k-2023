@@ -25,8 +25,10 @@ function spriteElementBuilder(name: string, hp: number, type: SPRITE_TYPE, mount
   e.appendChild(ce('enrage', 'E:0'))
   e.appendChild(ce('falter', 'F:0'))
   e.appendChild(ce('weak', 'W:0'))
-
   wrapper.appendChild(e)
+
+  const f = ce('targeting')
+  wrapper.appendChild(f)
 
   return wrapper;
 }
@@ -52,7 +54,3 @@ function cardElementBuilder(card: Card) {
 }
 
 export { spriteElementBuilder, cardElementBuilder };
-
-// const player = {
-//   khan: '',
-// }

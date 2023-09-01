@@ -1,7 +1,8 @@
 import { Deck } from "./deck"
 import { DeckCollections, SPRITE_TYPE } from "./enums";
 
-export type GameElements = Record<string, HTMLElement>
+export type GameElements = Record<string, HTMLElement>;
+export type Cards = Array<Card>;
 
 interface Affects {
   a?: number // assault value
@@ -28,12 +29,27 @@ export interface ICard {
   attributes: Array<string>;
 }
 
+export interface IGame {
+  e: GameElements
+  level: number;
+  turn: number;
+  deck: IDeck;
+  entities: Array<Entity>;
+  player: Entity;
+  new: () => void;
+  render: () => void;
+  combat: (card: Card, el: HTMLDivElement) => void;
+}
+
 export interface IDeck {
-  drawPile: Array<Card>,
-  handPile: Array<Card>,
-  donePile: Array<Card>,
+  drawPile: Cards,
+  handPile: Cards,
+  donePile: Cards,
+  pendingDraw: number,
+  register: (game: IGame) => void,
   add: (card: Card, collection: DeckCollections) => void,
   shuffle: () => void,
+  shuffleInto: (basePile: Cards, otherPile: Cards) => void,
   draw: (n: number) => void,
 }
 
@@ -54,7 +70,8 @@ export interface EntityData extends Properties {
   name: string,
   type: SPRITE_TYPE,
   mounted: boolean,
-  actions?: EnemyActions
+  actions?: EnemyActions,
+  stamina?: number,
 }
 
 export interface CardData extends Affects {

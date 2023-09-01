@@ -1,10 +1,7 @@
 import { Deck } from "./deck";
-import { cards } from "./card";
-import { ce, gei, resize } from "./utility";
-import { spriteElementBuilder, cardElementBuilder } from "./renderer";
+import { ce, resize } from "./utility";
 import { GameElements } from "./types";
 import { Game } from "./game";
-import { SPRITE_TYPE } from "./enums";
 
 const e: GameElements = {
   board: ce(),
