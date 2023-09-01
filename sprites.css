@@ -1,4 +1,4 @@
-#enemies {
+#enemy {
   position: absolute;
   top: 36%;
   left: 0px;
@@ -7,7 +7,7 @@
   justify-content: space-evenly;
 }
 
-#players {
+#player {
   position: absolute;
   top: 36%;
   left: 50%;
@@ -213,7 +213,7 @@
   content: 'Enrage: do 50% more damage for X turns';
 }
 
-.frail:hover:before {
+.falter:hover:before {
   content: 'Falter: do 25% less damage for X turns';
 }
 

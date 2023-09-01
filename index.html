@@ -18,13 +18,12 @@
     <div id="title">
       <h1>KHAN</h1>
       <section id="menu">
-        <button id="continue">continue</button>
-        <br /><br /><br />
-        <button id="new">new game</button>
+        <button id="continue" class="pixel-border">continue</button>
+        <button id="new" class="pixel-border">new game</button>
       </section>
     </div>
     <div id="game" class="hide">
-      <div id="enemies">
+      <div id="enemy">
         <!-- <div class="sprite-wrapper enemy mounted">
           <div class="sprite horse"></div>
           <div class="sprite king">
@@ -60,7 +59,8 @@
           </div>
         </div> -->
       </div>
-      <div id="players">
+      <div id="player">
+        <button id="endturn" class="pixel-border">End Turn</button>
         <!-- <div class="sprite-wrapper mounted">
           <div class="sprite horse"></div>
           <div class="sprite khan player"></div>
@@ -78,7 +78,7 @@
       </div>
       <div id="deck-done">
         <div id="deck">Deck: 0</div>
-        <div id="deck">Energy: 0</div>
+        <div id="deck">Stamina: 0</div>
         <div id="done">Discard: 0</div>
       </div>
       <div id="card-holder">

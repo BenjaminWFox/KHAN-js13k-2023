@@ -1,13 +1,8 @@
-import { Card, CardData } from "./card";
+import { Card } from "./card";
+import { SPRITE_TYPE } from "./enums";
 import { ce } from "./utility"
 
-export enum SPRITE_TYPE {
-  player = 'player',
-  enemy = 'enemy',
-  mount = 'mount',
-}
-
-function spriteElementFactory(name: string, hp: number, type: SPRITE_TYPE, mounted: boolean): HTMLDivElement {
+function spriteElementBuilder(name: string, hp: number, type: SPRITE_TYPE, mounted: boolean): HTMLDivElement {
   const wrapper = ce(`sprite-wrapper ${type === SPRITE_TYPE.enemy ? 'enemy' : 'x'} ${mounted ? 'mounted' : 'x'}`)
   if (mounted) {
     // mount
@@ -28,7 +23,7 @@ function spriteElementFactory(name: string, hp: number, type: SPRITE_TYPE, mount
   const e = ce('stats affects')
   e.appendChild(ce('armor', 'A:0'))
   e.appendChild(ce('enrage', 'E:0'))
-  e.appendChild(ce('frail', 'F:0'))
+  e.appendChild(ce('falter', 'F:0'))
   e.appendChild(ce('weak', 'W:0'))
 
   wrapper.appendChild(e)
@@ -36,7 +31,7 @@ function spriteElementFactory(name: string, hp: number, type: SPRITE_TYPE, mount
   return wrapper;
 }
 
-export function cardElementFactory(card: Card) {
+function cardElementBuilder(card: Card) {
   const wrapper = ce('card pixel-border');
   const d = ce('detail')
 
@@ -56,15 +51,7 @@ export function cardElementFactory(card: Card) {
   return wrapper;
 }
 
-export { spriteElementFactory };
-
-// class Sprite {
-//   constructor(name: string, type: SPRITE_TYPE, mounted: boolean) {
-
-//   }
-// }
-
-
+export { spriteElementBuilder, cardElementBuilder };
 
 // const player = {
 //   khan: '',

@@ -121,7 +121,7 @@
 }
 
 :root {
-	--pixel-bg: #cccccc;
+	--pixel-bg: #ccc;
 	/* ↑ Inner background color */
 	
 	--pixel-border: black;

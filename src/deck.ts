@@ -1,17 +1,9 @@
 import { Card, cards } from "./card";
+import { DeckCollections } from "./enums";
+import { IDeck } from "./types";
 
 const MAX_IN_HAND = 8;
 const STARTING_CARDS = 6;
-
-export enum DeckCollections {
-  HAND = 'HAND',
-  DRAW = 'DRAW',
-  DONE = 'DONE',
-}
-
-interface IDeck {
-  drawPile: Array<Card>;
-}
 
 export class Deck implements IDeck {
   drawPile: Array<Card>;

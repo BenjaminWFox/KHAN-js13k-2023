@@ -29,11 +29,12 @@ button {
     font-family: luminari, Georgia;
     border: none;
     background: none;
-    color: #fff;
+    color: #000;
     display: inline;
     font-size: 8rem;
     align-self: flex-start;
     margin: 0 auto;
+    padding: 0 50px;
 }
 
 button:hover {
@@ -44,8 +45,22 @@ button:active {
     text-shadow: 0 0 10px #999;
 }
 
+#endturn {
+    position: absolute;
+    font-size: 2rem;
+    right: 25px;
+    top: 60px;
+}
+
 #menu {
-    margin-top: 250px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 #title {

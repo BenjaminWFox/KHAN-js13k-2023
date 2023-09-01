@@ -1,13 +1,4 @@
-export interface CardData {
-  a?: number; // attack
-  c: number; // cost
-  d?: number; // defense
-  w?: number; // weak
-  f?: number; // frail
-  e?: number; // enrage
-  l?: number; // life lostt
-  flavor?: string;
-};
+import { CardData, ICard } from "./types";
 
 export enum CARD_TYPE {
   assault = 'assault',
@@ -17,7 +8,7 @@ export enum CARD_TYPE {
 
 let globalId = 0;
 
-export class Card {
+export class Card implements ICard {
   name: string;
   type: CARD_TYPE;
   data: CardData;
@@ -36,21 +27,15 @@ export class Card {
     if (data.e) this.attributes.push(`ENRAGE: ${data.e}`)
     if (data.w) this.attributes.push(`WEAKEN: ${data.w}`)
     if (data.f) this.attributes.push(`FALTER: ${data.f}`)
-    if (data.l && data.l < 0) this.attributes.push(`Lose ${Math.abs(data.l)} life`)
-    if (data.l && data.l > 0) this.attributes.push(`Gain ${data.l} life`)
+    if (data.hp && data.hp < 0) this.attributes.push(`Lose ${Math.abs(data.hp)} life`)
+    if (data.hp && data.hp > 0) this.attributes.push(`Gain ${data.hp} life`)
   };
 };
-
-Object.defineProperties(Card, {
-  'id': {
-    value: 0
-  }
-});
 
 export const cards = [
   new Card('Basic Attack', CARD_TYPE.assault, { a: 5, c: 1, flavor: 'You spend your life perfecting something, is it really basic?' }),
   new Card('Basic Shield', CARD_TYPE.defense, { d: 5, c: 1, flavor: 'Discretion is the better part of valor, after all.' }),
   new Card('War Cry', CARD_TYPE.ability, { c: 1, w: 2 }),
   new Card('Rally Cry', CARD_TYPE.ability, { c: 1, f: 2 }),
-  new Card('Wrath Of Khan', CARD_TYPE.assault, { c: 1, a: 5, e: 2, l: -2, flavor: 'The Khan was merciless in pursuit of his enemies.' })
+  new Card('Wrath Of Khan', CARD_TYPE.assault, { c: 1, a: 5, e: 2, hp: -2, flavor: 'The Khan was merciless in pursuit of his enemies.' })
 ];
