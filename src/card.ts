@@ -44,7 +44,7 @@ export class Card extends GameElement implements ICard {
       'click',
       (event: MouseEvent) => {
         event.stopPropagation();
-        console.log(this.game)
+
         this.game?.combat(this)
       }
     );

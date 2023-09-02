@@ -1,4 +1,4 @@
-import { IDeck, GameData, GameElements, IGame } from "./types";
+import { IDeck, GameData, GameElements, IGame, ICard } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { enemies } from "./enemies";
@@ -9,9 +9,25 @@ import { SPRITE_TYPE } from "./enums";
 import { Deck } from "./deck";
 import { flashCardCost } from "./dom";
 
-const data = {
-  selectedCard: ce(),
-  targetedEntities: [] as Array<HTMLDivElement>,
+interface Data {
+  selectedCard: Card | undefined,
+  targetedEntities: Array<HTMLDivElement>,
+}
+
+const data: Data = {
+  selectedCard: undefined,
+  targetedEntities: [],
+}
+
+function clearSelectedCard(card?: ICard) {
+  card?.sprite.classList.remove('selected');
+}
+
+function clearTargeted(targets: Array<HTMLDivElement>) {
+  targets.forEach(el => {
+    el.classList.remove('targeted');
+  })
+
 }
 
 function getValidTargets(entities: Array<Entity>, card: Card) {
@@ -69,11 +85,8 @@ export class Game implements IGame {
   }
 
   combat(card: Card) {
-    data.selectedCard.classList.remove('selected');
-
-    data.targetedEntities.forEach(el => {
-      el.classList.remove('targeted');
-    })
+    clearSelectedCard(data.selectedCard);
+    clearTargeted(data.targetedEntities);
 
     data.targetedEntities = [];
 
@@ -85,13 +98,13 @@ export class Game implements IGame {
       return;
     }
 
-    if (data.selectedCard !== card.sprite) {
-      data.selectedCard = card.sprite;
+    if (data.selectedCard?.sprite !== card.sprite) {
+      data.selectedCard = card;
       card.sprite.classList.add('selected');
 
       console.log('Card id', card.id, 'clicked.')
     } else {
-      data.selectedCard = ce()
+      data.selectedCard = undefined
 
       return;
     }
@@ -109,5 +122,12 @@ export class Game implements IGame {
 
   entitySelect(id: string) {
     console.log('Entitiy id', id, 'selected');
+
+    if (data.selectedCard) {
+      const target = getValidTargets(this.entities, data.selectedCard).find(item => item?.id === id)
+
+      target?.applyFromEnemy(data.selectedCard);
+      this.player.applyFromFriendly(data.selectedCard);
+    }
   }
 }

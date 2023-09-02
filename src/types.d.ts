@@ -4,23 +4,6 @@ import { DeckCollections, SPRITE_TYPE } from "./enums";
 export type GameElements = Record<string, HTMLElement>;
 export type Cards = Array<Card>;
 
-interface Affects {
-  a?: number // assault value
-  d?: number // defend change value
-  w?: number // weak change value
-  f?: number // falter change value
-  e?: number // enraged change value
-  hp?: number // hp change value
-}
-
-interface Properties {
-  d: number // defend value
-  w: number // weak value
-  f: number // falter value
-  e: number // enraged value
-  hp: number // hp value
-}
-
 export interface ICard {
   name: string;
   type: CARD_TYPE;
@@ -64,8 +47,25 @@ interface IEnemyAction {
   affects: Affects,
 }
 
+interface Affects {
+  a?: number // assault value
+  d?: number // defend change value
+  w?: number // weak change value
+  f?: number // falter change value
+  e?: number // enraged change value
+  hp?: number // hp change value
+}
+
 interface IEnemyActions {
   actions: Array<EnemyAction>
+}
+
+interface Properties {
+  d: number // defend value
+  w: number // weak value
+  f: number // falter value
+  e: number // enraged value
+  hp: number // hp value
 }
 
 export interface EntityData extends Properties {

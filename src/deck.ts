@@ -93,9 +93,6 @@ export class Deck extends GameElement implements IDeck {
         const c: Card = this.drawPile.pop();
         this.handPile.push(c);
 
-        // c.sprite.addEventListener('click', (event: MouseEvent) => { event.stopPropagation(); this.game?.combat(c, c.sprite) });
-        // c.sprite.id = c.id.toString();
-
         gei('card-holder')?.appendChild(c.sprite)
 
       } else if (this.donePile.length) {

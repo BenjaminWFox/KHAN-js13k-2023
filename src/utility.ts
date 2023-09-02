@@ -3,6 +3,7 @@ import { GameElements } from "./types";
 
 export const ge = (selector: string) => document.querySelector(selector);
 export const gei = (id: string) => document.getElementById(id);
+export const qs = (e: HTMLElement, selector: string): HTMLElement => e.querySelector(selector)!;
 
 export const ce = (c: string = 'x', innerHTML: string = '') => {
   const el = document.createElement('div')
