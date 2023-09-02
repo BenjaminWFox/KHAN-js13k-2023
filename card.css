@@ -1,3 +1,13 @@
+@keyframes flash {
+  0% {background-color: #fff;}
+  50% {background-color: red;}
+  100% {background-color: #fff;}
+}
+
+.flash {
+  animation-name: flash;
+  animation-duration: .25s;
+}
 
 #deck-done {
   position: absolute;

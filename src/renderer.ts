@@ -2,8 +2,9 @@ import { Card } from "./card";
 import { SPRITE_TYPE } from "./enums";
 import { ce } from "./utility"
 
-function spriteElementBuilder(name: string, hp: number, type: SPRITE_TYPE, mounted: boolean): HTMLDivElement {
+function spriteElementBuilder(name: string, hp: number, type: SPRITE_TYPE, mounted: boolean, id: string): HTMLDivElement {
   const wrapper = ce(`sprite-wrapper ${type === SPRITE_TYPE.enemy ? 'enemy' : 'x'} ${mounted ? 'mounted' : 'x'}`)
+  wrapper.id = id;
   if (mounted) {
     // mount
     wrapper.appendChild(ce('sprite horse'))
@@ -35,6 +36,7 @@ function spriteElementBuilder(name: string, hp: number, type: SPRITE_TYPE, mount
 
 function cardElementBuilder(card: Card) {
   const wrapper = ce('card pixel-border');
+  wrapper.id = card.id;
   const d = ce('detail')
 
   card.attributes.forEach(attribute => {

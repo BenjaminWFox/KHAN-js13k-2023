@@ -1,18 +1,27 @@
+import { GameElement } from "./GameElement";
 import { ENEMY_INTENT } from "./enums";
 import { spriteElementBuilder } from "./renderer";
-import { EntityData, IEnemyAction } from "./types";
-import { gei } from "./utility";
+import { EntityData, IEnemyAction, IGame } from "./types";
+import { gei, uuid } from "./utility";
 
-export class Entity {
+export class Entity extends GameElement {
   sprite: HTMLDivElement;
   data: EntityData;
+  id: string;
   // nextAction?: IEnemyAction;
 
-  constructor(data: EntityData) {
+  constructor(data: EntityData, game: IGame) {
+    super(game);
+
     const { name, type, hp } = data;
 
+    this.id = uuid();
     this.data = data;
-    this.sprite = spriteElementBuilder(name, hp, type, data.mounted);
+    this.sprite = spriteElementBuilder(name, hp, type, data.mounted, this.id);
+    this.sprite.addEventListener('click', () => {
+      console.log('CLICKED')
+      game.entitySelect(this.id);
+    });
   }
 
   render() {
@@ -32,8 +41,6 @@ export class Entity {
   pickAction() {
     if (this.data.actions) {
       const action = this.data.actions.get();
-
-      console.log('I am going to', action, this.data.actions)
 
       this.intent(action);
     }

@@ -11,16 +11,14 @@ const e: GameElements = {
   continue: ce(),
   endturn: ce()
 }
-const deck = new Deck();
-const game = new Game(e, {
-  deck,
-})
 
 window.addEventListener('resize', () => {
   resize(e);
 })
 
 window.addEventListener('load', () => {
+  const game = new Game(e)
+
   // Required to prevent awkward zoom-in if double-tapping on mobile
   document.ondblclick = function (e) {
     e.preventDefault();

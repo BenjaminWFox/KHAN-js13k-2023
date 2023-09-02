@@ -1,22 +1,26 @@
 import { Card, cards } from "./card";
 import { DeckCollections } from "./enums";
 import { cardElementBuilder } from "./renderer";
-import { Cards, IDeck } from "./types";
+import { Cards, IDeck, IGame } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
+import { GameElement } from "./GameElement";
 
 const MAX_IN_HAND = 8;
 const STARTING_CARDS = 6;
 
-export class Deck implements IDeck {
+export class Deck extends GameElement implements IDeck {
   drawPile: Cards;
   handPile: Cards;
   donePile: Cards;
   pendingDraw: number;
-  game: any;
+  game: IGame;
 
-  constructor() {
+  constructor(game: IGame) {
+    super(game);
+
+    this.game = game;
     this.drawPile = [
-      ...(new Array(6).fill('_')).map((_, i) => {
+      ...(new Array(STARTING_CARDS).fill('_')).map((_, i) => {
         return new Card(cards[i % 2])
       }),
       new Card(cards[2]),
@@ -26,13 +30,20 @@ export class Deck implements IDeck {
     this.donePile = [];
     this.pendingDraw = 0;
     this.renderScreenData();
+
+    this.register(this.game);
   }
 
-  register(game: any) {
-    this.game = game;
+  register(game: IGame) {
+    console.log('REGISTER');
+    console.log(this.drawPile, this.handPile, this.donePile);
+
+    [this.drawPile, this.handPile, this.donePile].forEach(pile => pile?.forEach(card => card.register(game)));
   }
 
   add(card: Card, collection: DeckCollections) {
+    card.register(this.game);
+
     switch (collection) {
       case DeckCollections.DONE:
         this.donePile.push(card);
@@ -81,12 +92,12 @@ export class Deck implements IDeck {
       if (this.drawPile.length) {
         const c: Card = this.drawPile.pop();
         this.handPile.push(c);
-        console.log('PUSHING', c);
-        const e = cardElementBuilder(c)
-        console.log(e);
-        e.addEventListener('click', (event: MouseEvent) => { event.stopPropagation(); this.game.combat(c, e) });
-        e.id = c.id.toString();
-        gei('card-holder')?.appendChild(e)
+
+        // c.sprite.addEventListener('click', (event: MouseEvent) => { event.stopPropagation(); this.game?.combat(c, c.sprite) });
+        // c.sprite.id = c.id.toString();
+
+        gei('card-holder')?.appendChild(c.sprite)
+
       } else if (this.donePile.length) {
         this.shuffleInto(this.drawPile, this.donePile);
 

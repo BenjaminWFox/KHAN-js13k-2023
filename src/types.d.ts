@@ -25,8 +25,9 @@ export interface ICard {
   name: string;
   type: CARD_TYPE;
   data: CardData;
-  id: number;
+  id: string;
   attributes: Array<string>;
+  sprite: HTMLDivElement;
 }
 
 export interface IGame {
@@ -38,7 +39,8 @@ export interface IGame {
   player: Entity;
   new: () => void;
   render: () => void;
-  combat: (card: Card, el: HTMLDivElement) => void;
+  combat: (card: Card) => void;
+  entitySelect: (id: string) => void;
 }
 
 export interface IDeck {
@@ -71,7 +73,7 @@ export interface EntityData extends Properties {
   type: SPRITE_TYPE,
   mounted: boolean,
   actions?: EnemyActions,
-  stamina?: number,
+  stamina: number,
 }
 
 export interface CardData extends Affects {
