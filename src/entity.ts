@@ -21,6 +21,7 @@ export class Entity extends GameElement {
     this.currentHp = data.hp;
     this.sprite = spriteElementBuilder(name, hp, type, data.mounted, this.id);
     this.sprite.addEventListener('click', () => {
+      console.log('This sprite select', this.id, this.data.name);
       game.entitySelect(this.id);
     });
   }
@@ -33,7 +34,7 @@ export class Entity extends GameElement {
   update() {
     qs(this.sprite, '.hp .fill').style.width = Math.round(this.currentHp / this.data.hp * 100) + '%';
     qs(this.sprite, '.hp .number').innerHTML = `${this.currentHp}/${this.data.hp}`;
-    qs(this.sprite, '.affects .armor').innerHTML = 'A:' + this.data.d;
+    qs(this.sprite, '.affects .armor').innerHTML = 'D:' + this.data.d;
     qs(this.sprite, '.affects .enrage').innerHTML = 'E:' + this.data.e;
     qs(this.sprite, '.affects .falter').innerHTML = 'F:' + this.data.f;
     qs(this.sprite, '.affects .weak').innerHTML = 'W:' + this.data.w;

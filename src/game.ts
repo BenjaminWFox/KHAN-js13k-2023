@@ -126,8 +126,13 @@ export class Game implements IGame {
     if (data.selectedCard) {
       const target = getValidTargets(this.entities, data.selectedCard).find(item => item?.id === id)
 
-      target?.applyFromEnemy(data.selectedCard);
-      this.player.applyFromFriendly(data.selectedCard);
+      if (target) {
+        // target may equal player, but that doesn't matter for this currently
+        // since the enemy/friendly applications are different.
+        target?.applyFromEnemy(data.selectedCard);
+        this.player.applyFromFriendly(data.selectedCard);
+      }
+
     }
   }
 }

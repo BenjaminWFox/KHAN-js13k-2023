@@ -22,7 +22,7 @@ function spriteElementBuilder(name: string, hp: number, type: SPRITE_TYPE, mount
   wrapper.appendChild(d)
 
   const e = ce('stats affects')
-  e.appendChild(ce('armor', 'A:0'))
+  e.appendChild(ce('armor', 'D:0'))
   e.appendChild(ce('enrage', 'E:0'))
   e.appendChild(ce('falter', 'F:0'))
   e.appendChild(ce('weak', 'W:0'))
