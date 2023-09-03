@@ -1,7 +1,6 @@
 import { Card, cards } from "./card";
 import { DeckCollections } from "./enums";
-import { cardElementBuilder } from "./renderer";
-import { Cards, IDeck, IGame } from "./types";
+import { Cards, ICard, IDeck, IGame } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
 import { GameElement } from "./GameElement";
 
@@ -29,7 +28,7 @@ export class Deck extends GameElement implements IDeck {
     this.handPile = [];
     this.donePile = [];
     this.pendingDraw = 0;
-    this.renderScreenData();
+    this.update();
 
     this.register(this.game);
   }
@@ -80,7 +79,7 @@ export class Deck extends GameElement implements IDeck {
     }
   }
 
-  renderScreenData() {
+  update() {
     gei('deck')!.innerHTML = `Deck: ${this.drawPile.length}`;
     gei('done')!.innerHTML = `Discard: ${this.donePile.length}`;
   }
@@ -101,10 +100,19 @@ export class Deck extends GameElement implements IDeck {
         this.draw(n);
       }
 
-      this.renderScreenData();
+      console.log('Drawing', this.handPile);
+
+      this.update();
       setTimeout(() => this.draw(--n), 100)
     }
 
     return this;
   };
+
+  play(card: ICard) {
+    this.donePile.push(card);
+    this.handPile.splice(this.handPile.find((c, i) => c.id === card.id && i), 1)
+
+    this.update();
+  }
 }

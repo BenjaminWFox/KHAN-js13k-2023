@@ -2,8 +2,8 @@ import { IDeck, GameData, GameElements, IGame, ICard } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { enemies } from "./enemies";
-import { player } from "./player";
-import { ce, gei } from "./utility";
+import { playerData } from "./player";
+import { gei } from "./utility";
 import { Card } from "./card";
 import { SPRITE_TYPE } from "./enums";
 import { Deck } from "./deck";
@@ -54,7 +54,7 @@ export class Game implements IGame {
     this.deck = gameData?.deck || new Deck(this);
     if (gameData?.deck) this.deck.register(this);
     this.entities = [];
-    this.player = new Entity(player, this);
+    this.player = new Entity(playerData, this);
   }
 
   new() {
@@ -84,7 +84,14 @@ export class Game implements IGame {
     gei('stamina')!.innerHTML = `Stamina: ${this.player.data.stamina}`;
   }
 
+  update() {
+    gei('stamina')!.innerHTML = `Stamina: ${this.player.data.stamina}`;
+  }
+
   combat(card: Card) {
+    /**
+     * Clear selected & targets every time
+     */
     clearSelectedCard(data.selectedCard);
     clearTargeted(data.targetedEntities);
 
@@ -93,12 +100,17 @@ export class Game implements IGame {
     if (this.player.data.stamina < card.data.c) {
       flashCardCost(card);
 
-      console.error('Player does not have enough stamina');
+      console.error('Not enough stamina!');
 
       return;
     }
 
-    if (data.selectedCard?.sprite !== card.sprite) {
+    /**
+     * Has a different card been selected?
+     * 
+     * If not, deselect current card.
+     */
+    if (data.selectedCard?.id !== card.id) {
       data.selectedCard = card;
       card.sprite.classList.add('selected');
 
@@ -108,6 +120,7 @@ export class Game implements IGame {
 
       return;
     }
+
 
     const targets = getValidTargets(this.entities, card);
 
@@ -120,19 +133,36 @@ export class Game implements IGame {
     })
   }
 
+  /**
+   * Called when an entity is selected during combat.
+   * 
+   * *should not* be called if player stamina is insufficient for played card
+   * 
+   * @param id id of selected entity
+   */
   entitySelect(id: string) {
-    console.log('Entitiy id', id, 'selected');
-
     if (data.selectedCard) {
       const target = getValidTargets(this.entities, data.selectedCard).find(item => item?.id === id)
 
-      if (target) {
-        // target may equal player, but that doesn't matter for this currently
-        // since the enemy/friendly applications are different.
-        target?.applyFromEnemy(data.selectedCard);
-        this.player.applyFromFriendly(data.selectedCard);
+      if (!target || this.player.data.stamina < data.selectedCard?.data.c) {
+        return;
       }
 
+      // target may equal player, but that doesn't matter for this currently
+      // since the enemy/friendly applications are different.
+      target?.applyFromEnemy(data.selectedCard);
+      this.player.applyFromFriendly(data.selectedCard);
+
+      const cardToRemove = data.selectedCard;
+
+      clearSelectedCard(data.selectedCard);
+      clearTargeted(data.targetedEntities);
+
+      this.player.play(cardToRemove);
+      this.deck.play(cardToRemove);
+      this.update();
+
+      cardToRemove.sprite.parentNode?.removeChild(cardToRemove.sprite);
     }
   }
 }

@@ -36,6 +36,7 @@ export interface IDeck {
   shuffle: () => void,
   shuffleInto: (basePile: Cards, otherPile: Cards) => void,
   draw: (n: number) => void,
+  play: (card: Card) => void,
 }
 
 export interface GameData {

@@ -40,6 +40,12 @@ export class Entity extends GameElement {
     qs(this.sprite, '.affects .weak').innerHTML = 'W:' + this.data.w;
   }
 
+  play(card: ICard) {
+    this.data.stamina -= card.data.c;
+
+    this.update()
+  }
+
   intent(action: IEnemyAction) {
     const iEl = this.sprite.querySelector('.intent')!;
     const aEl = iEl.querySelector('.assault-value')!;

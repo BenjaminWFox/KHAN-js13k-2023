@@ -54,7 +54,7 @@ export class Card extends GameElement implements ICard {
 export const cards: Array<ConstructorData> = [
   ['Basic Attack', CARD_TYPE.assault, { a: 5, c: 1, flavor: 'You spend your life perfecting something, is it really basic?' }],
   ['Basic Shield', CARD_TYPE.defense, { d: 5, c: 1, flavor: 'Discretion is the better part of valor, after all.' }],
-  ['War Cry', CARD_TYPE.ability, { c: 5, w: 2, e: 2 }],
-  ['Rally Cry', CARD_TYPE.ability, { c: 5, f: 2, d: 2 }],
+  ['War Cry', CARD_TYPE.ability, { c: 2, w: 2, e: 2 }],
+  ['Rally Cry', CARD_TYPE.ability, { c: 2, f: 2, d: 2 }],
   ['Wrath Of Khan', CARD_TYPE.assault, { c: 1, a: 5, e: 2, hp: -2, flavor: 'The Khan was merciless in pursuit of his enemies.' }]
 ];

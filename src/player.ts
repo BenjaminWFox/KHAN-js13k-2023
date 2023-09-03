@@ -1,7 +1,7 @@
 import { SPRITE_TYPE } from "./enums";
 import { EntityData } from "./types";
 
-export const player: EntityData = {
+export const playerData: EntityData = {
   name: 'khan',
   type: SPRITE_TYPE.player,
   hp: 100,
