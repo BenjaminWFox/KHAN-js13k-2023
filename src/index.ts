@@ -32,5 +32,5 @@ window.addEventListener('load', () => {
   e.continue.addEventListener('click', () => { })
 
   resize(e);
-  game.newGame();
+  // game.newGame();
 })

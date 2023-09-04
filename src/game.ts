@@ -1,10 +1,10 @@
-import { IDeck, GameData, GameElements, IGame, IVisualCard, EntityData } from "./types";
+import { IDeck, GameData, GameElements, IGame, IVisualCard } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { enemies } from "./enemies";
 import { Player, playerData } from "./player";
 import { gei, uuid } from "./utility";
-import { ACTIVATION_TRIGGER, SPRITE_TYPE } from "./enums";
+import { ACTIVATION_TRIGGER, GAME_STATE, SPRITE_TYPE } from "./enums";
 import { Deck } from "./deck";
 import { flashCardCost } from "./dom";
 import { Enemy } from "./enemy";
@@ -52,23 +52,28 @@ function getEnemiesForLevel(c: IGame) {
 }
 
 export class Game implements IGame {
-  e: GameElements
+  e: GameElements;
   level: number;
   turn: number;
   deck: IDeck;
   enemies: Array<Enemy>;
   player: Player;
-  inCombat: boolean;
+  state: GAME_STATE;
 
   constructor(e: GameElements, gameData?: GameData) {
+    this.deck = gameData?.deck || new Deck(this);
+    if (gameData?.deck) this.deck.register(this);
+
     this.e = e;
     this.level = 1;
     this.turn = 0;
-    this.deck = gameData?.deck || new Deck(this);
-    if (gameData?.deck) this.deck.register(this);
     this.enemies = [];
     this.player = new Player(playerData, this);
-    this.inCombat = false;
+    this.state = GAME_STATE.PLAYER_TURN
+  }
+
+  setState(newState: GAME_STATE) {
+    this.state = newState
   }
 
   alert(str: string) {
@@ -88,30 +93,27 @@ export class Game implements IGame {
     this.e.title.classList.add('hide');
     this.e.game.classList.remove('hide');
 
-    this.endRound();
+    getEnemiesForLevel(this);
 
-    // getEnemiesForLevel(this);
-
-    // this.deck.shuffle();
-
-    // this.render();
-    // this.newTurn();
+    this.deck.shuffle();
+    this.render();
+    this.newTurn();
   }
 
   // Waiting on deck.pickNewCards...
   endRound() {
     // Wait for this
-    this.deck.endTurn();
+    this.deck.endRound();
 
     setTimeout(() => {
-      this.inCombat = false; // <-- Sideeffect, cards are not added to discard when false
+      this.setState(GAME_STATE.PICKING_CARD)
       this.deck.pickNewCards();
       gei('stamina')!.innerHTML = "Pick a card to add to your deck OR an innate ability!"
     }, 1000)
   }
 
   newCardPicked() {
-    this.deck.endTurn();
+    this.deck.clearHand();
 
     setTimeout(() => {
       this.newRound();
@@ -121,15 +123,14 @@ export class Game implements IGame {
   newRound() {
     this.level += 1;
     this.turn = 0;
-    this.inCombat = true; // <-- Sideeffect, cards are added to discard when true
+    this.setState(GAME_STATE.PLAYER_TURN);
 
     this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.round);
 
     setTimeout(() => {
       getEnemiesForLevel(this);
       this.player.startRound();
-      // TODO: Enable
-      // this.deck.shuffle();
+      this.deck.shuffle();
       this.render();
       this.newTurn()
     }, 1000)
@@ -138,6 +139,8 @@ export class Game implements IGame {
   newTurn() {
     this.turn += 1;
 
+    this.setState(GAME_STATE.PLAYER_TURN)
+    this.player.startTurn();
     this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.turn);
 
     this.update();
@@ -248,17 +251,20 @@ export class Game implements IGame {
   }
 
   endPlayerTurn() {
-    this.player.endTurn();
-    clearSelectedCard(data.selectedCard);
-    clearTargeted(data.targetedEntities);
+    if (this.state === GAME_STATE.PLAYER_TURN) {
+      this.setState(GAME_STATE.ENEMY_TURN);
+      this.player.endTurn();
+      clearSelectedCard(data.selectedCard);
+      clearTargeted(data.targetedEntities);
 
-    this.enemies.forEach(enemy => {
-      enemy.startTurn();
-    })
+      this.enemies.forEach(enemy => {
+        enemy.startTurn();
+      })
 
-    this.deck.endTurn();
+      this.deck.endTurn();
 
-    setTimeout(() => this.runEnemyTurns(), 1000);
+      setTimeout(() => this.runEnemyTurns(), 1000);
+    }
   }
 
   runEnemyTurns() {
@@ -293,9 +299,8 @@ export class Game implements IGame {
     this.enemies.forEach(enemy => {
       enemy.endTurn();
     })
-    this.turn += 1;
 
-    this.player.startTurn();
+    this.turn += 1;
     this.newTurn();
   }
 

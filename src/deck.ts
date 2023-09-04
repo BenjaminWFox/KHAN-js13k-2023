@@ -40,7 +40,7 @@ export class Deck extends GameElement implements IDeck {
         return new VisualCard(basicCards[i % 2])
       }),
       new VisualCard(basicCards[2]),
-      new VisualCard(cards[3])
+      new VisualCard(basicCards[3])
     ];
     this.handPile = [];
     this.donePile = [];
@@ -135,6 +135,7 @@ export class Deck extends GameElement implements IDeck {
 
   pickNewCards() {
     const cards = getNewCardsToPick();
+
     cards.forEach(card => {
       card.register(this.game);
       this.handPile.push(card);
@@ -148,15 +149,25 @@ export class Deck extends GameElement implements IDeck {
     })
   }
 
-  removeFromHand(card: IVisualCard) {
+  removeFromHand(card: IVisualCard, addToDone = true) {
     card.sprite.parentNode?.removeChild(card.sprite);
 
-    if (this.game.inCombat) {
+    if (addToDone) {
       this.donePile.push(card);
     }
 
     this.handPile.splice(this.handPile.indexOf(card), 1)
     this.update();
+  }
+
+  clearHand() {
+    const card = this.handPile[this.handPile.length - 1];
+
+    if (card) {
+      this.removeFromHand(card, false);
+
+      setTimeout(() => this.clearHand(), 100);
+    }
   }
 
   endTurn() {

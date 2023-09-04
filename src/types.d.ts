@@ -1,7 +1,7 @@
 import { GameElement } from "./GameElement";
 import { Deck } from "./deck"
 import { Entity } from "./entity";
-import { ACTIVATION_TRIGGER, CARD_TYPE, DeckCollections, SPRITE_TYPE } from "./enums";
+import { ACTIVATION_TRIGGER, CARD_TYPE, DeckCollections, GAME_STATE, SPRITE_TYPE } from "./enums";
 
 export type GameElements = Record<string, HTMLElement>;
 export type Cards = Array<IVisualCard>;
@@ -29,7 +29,7 @@ export interface IGame {
   deck: IDeck;
   enemies: Array<Entity>;
   player: Entity;
-  inCombat: boolean;
+  state: GAME_STATE;
   alert: (str: string) => void;
   newGame: () => void;
   newRound: () => void;
@@ -57,6 +57,7 @@ export interface IDeck {
   draw: (n: number) => void,
   removeFromHand: (card: IVisualCard) => void,
   endTurn: () => void,
+  clearHand: () => void,
   endRound: () => void;
   updateVisibleCards: (data: EntityData) => void;
 }

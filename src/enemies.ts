@@ -1,6 +1,5 @@
-import { Card } from "./card";
 import { CARD_TYPE, SPRITE_TYPE } from "./enums";
-import { CardConstructorData, CardData, EntityData, IEnemyActions } from "./types";
+import { CardConstructorData, EntityData, IEnemyActions } from "./types";
 import { getRandomIntInclusive } from "./utility";
 
 
