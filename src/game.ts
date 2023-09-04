@@ -8,6 +8,7 @@ import { ACTIVATION_TRIGGER, GAME_STATE, SPRITE_TYPE } from "./enums";
 import { Deck } from "./deck";
 import { flashCardCost } from "./dom";
 import { Enemy } from "./enemy";
+import { messages, showMessage } from "./messaging";
 
 interface Data {
   selectedCard: IVisualCard | undefined,
@@ -20,6 +21,7 @@ const data: Data = {
 }
 
 function clearSelectedCard(card?: IVisualCard) {
+  data.selectedCard = undefined;
   card?.sprite.classList.remove('selected');
 }
 
@@ -112,6 +114,16 @@ export class Game implements IGame {
     }, 1000)
   }
 
+  endGame() {
+    showMessage(messages.final, () => {
+
+      showMessage(messages.thanks, () => {
+        window.location.assign('/');
+      })
+
+    }, true)
+  }
+
   newCardPicked() {
     this.deck.clearHand();
 
@@ -168,11 +180,17 @@ export class Game implements IGame {
     gei('round')!.innerHTML = `Round ${this.turn}`
   }
 
+  /**
+   * Called when a card is clicked in the hand during players turn. Card may have been
+   * either Selected or De-selected. Targets are selected based on card data.
+   * 
+   * @param card 
+   * @returns 
+   */
   combat(card: IVisualCard) {
     /**
      * Clear selected & targets every time
      */
-    clearSelectedCard(data.selectedCard);
     clearTargeted(data.targetedEntities);
 
     data.targetedEntities = [];
@@ -192,14 +210,16 @@ export class Game implements IGame {
      * If not, deselect current card.
      */
     if (data.selectedCard?.id !== card.id) {
+      clearSelectedCard(data.selectedCard);
       data.selectedCard = card;
       card.sprite.classList.add('selected');
     } else {
-      data.selectedCard = undefined
+      clearSelectedCard(data.selectedCard);
 
       return;
     }
 
+    // Only calculate & apply targets after ensuring it is not a deselection
     const targets = getValidTargets([...this.enemies, this.player], card);
 
     targets.forEach(entity => {
@@ -234,16 +254,16 @@ export class Game implements IGame {
       this.deck.removeFromHand(cardToRemove);
       this.deck.updateVisibleCards(this.player.data);
 
-      this.player.do(data.selectedCard.type);
+      this.player.do(cardToRemove.type);
 
       // target may equal player, but that doesn't matter for this currently
       // since the enemy/friendly applications are different.
       // Main process for PLAYER attacking ENEMY and/or PLAYER buffing SELF:
       target?.applyFromEnemy(
-        data.selectedCard.dData(this.player.data)
+        cardToRemove.dData(this.player.data)
       );
       this.player.applyFromFriendly(
-        data.selectedCard.dData(this.player.data)
+        cardToRemove.dData(this.player.data)
       );
 
       this.update();
@@ -321,8 +341,14 @@ export class Game implements IGame {
     this.enemies.splice(this.enemies.indexOf(entity as Enemy), 1);
 
     if (!this.enemies.length) {
-      console.log('ROUND WON!!');
-      this.endRound();
+      console.log('Wat', this.level, Object.keys(levels).length)
+      if (this.level === Object.keys(levels).length) {
+        console.log('GAME WON!!');
+        this.endGame();
+      } else {
+        console.log('ROUND WON!!');
+        this.endRound();
+      }
     }
   }
 }

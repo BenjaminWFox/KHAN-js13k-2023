@@ -288,15 +288,8 @@
 }
 
 .targeting.targeted {
-  box-shadow: 0px 0px 12px 8px green;
+  box-shadow: 0px 0px 12px 8px #c0ae92;
   width: 0;
   height: 0;
   margin-top: 6px;
 }
-
-/* .targeting.myturn {
-  box-shadow: 0px 0px 12px 8px red;
-  width: 0;
-  height: 0;
-  margin-top: 6px;
-} */

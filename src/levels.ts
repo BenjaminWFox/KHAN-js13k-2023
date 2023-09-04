@@ -25,6 +25,7 @@ export const levels: Record<number, Record<'enemies', () => Array<number>>> = {
     enemies: () => [3, 2, 3]
   },
   8: {
-    enemies: () => [1, getRandomIntInclusive(2, 3), getRandomIntInclusive(2, 3), getRandomIntInclusive(2, 3)]
+    // enemies: () => [1, getRandomIntInclusive(2, 3), getRandomIntInclusive(2, 3), getRandomIntInclusive(2, 3)]
+    enemies: () => [1]
   }
 }

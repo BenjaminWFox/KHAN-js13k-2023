@@ -34,6 +34,7 @@ export interface IGame {
   newGame: () => void;
   newRound: () => void;
   endRound: () => void;
+  endGame: () => void;
   newCardPicked: () => void;
   render: () => void;
   combat: (card: Card) => void;

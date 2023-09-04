@@ -1,6 +1,7 @@
 import { ce, resize } from "./utility";
 import { GameElements } from "./types";
 import { Game } from "./game";
+import { messages, showMessage } from "./messaging";
 
 const e: GameElements = {
   board: ce(),
@@ -27,10 +28,13 @@ window.addEventListener('load', () => {
     e[key] = document.getElementById(key)!;
   })
 
-  e.new.addEventListener('click', () => game.newGame())
+  e.new.addEventListener('click', () => {
+    showMessage(messages.intro, game.newGame.bind(game))
+  })
   e.endturn.addEventListener('click', () => game.endPlayerTurn())
   e.continue.addEventListener('click', () => { })
 
   resize(e);
+
   // game.newGame();
 })

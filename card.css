@@ -92,7 +92,7 @@
   width: calc(100% - 20px);
   padding: 10px;
   border: 1px #000 solid;
-  background-color: #fff;
+  background-color: #d8cab3;
 }
 
 .title {
@@ -134,7 +134,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 25px;
-  background-color: #fff;
+  background-color: #d8cab3;
   /* box-shadow: 0px 0px 0px 1px #000; */
   box-shadow:
     inset 0px 0px 0px 2px #000, 
@@ -143,7 +143,7 @@
 }
 
 :root {
-	--pixel-bg: #ccc;
+	--pixel-bg: #c0ae92;
 	/* ↑ Inner background color */
 	
 	--pixel-border: black;
