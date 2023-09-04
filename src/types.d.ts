@@ -7,7 +7,6 @@ export type GameElements = Record<string, HTMLElement>;
 export type Cards = Array<IVisualCard>;
 export type CardConstructorData = [string, CARD_TYPE, CardData];
 
-
 export interface ICard extends GameElement {
   name: string;
   type: CARD_TYPE;
@@ -28,7 +27,6 @@ export interface IGame {
   level: number;
   turn: number;
   deck: IDeck;
-  entities: Array<Entity>;
   enemies: Array<Entity>;
   player: Entity;
   newGame: () => void;
@@ -46,6 +44,7 @@ export interface IDeck {
   donePile: Cards,
   pendingDraw: number,
   register: (game: IGame) => void,
+  pickNewCards: () => void,
   add: (card: IVisualCard, collection: DeckCollections) => void,
   shuffle: () => void,
   shuffleInto: (basePile: Cards, otherPile: Cards) => void,
@@ -66,6 +65,8 @@ interface Affects {
   f?: number // falter change value
   e?: number // enraged change value
   hp?: number // hp change value
+  s?: number // stamina change value
+  draw?: number // draw cards value
 }
 
 interface IEnemyActions {

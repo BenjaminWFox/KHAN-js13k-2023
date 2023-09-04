@@ -37,22 +37,34 @@ function getValidTargets(entities: Array<Entity>, card: IVisualCard) {
   return [entities.find(entity => entity.data.type === SPRITE_TYPE.player)];
 }
 
+/**
+ * Grabs `enemies` arry from passed instance to add enemies for level and
+ * register IGame instance with enemy instance.
+ * 
+ * @param c 
+ * @param level 
+ */
+function getEnemiesForLevel(c: IGame) {
+  levels[c.level].enemies().forEach((enemy => {
+    const e = new Enemy(enemies[enemy], c)
+    c.enemies.push(e);
+  }))
+}
+
 export class Game implements IGame {
   e: GameElements
   level: number;
   turn: number;
   deck: IDeck;
-  entities: Array<Entity>;
   enemies: Array<Enemy>;
   player: Player;
 
   constructor(e: GameElements, gameData?: GameData) {
     this.e = e;
     this.level = 1;
-    this.turn = 1;
+    this.turn = 0;
     this.deck = gameData?.deck || new Deck(this);
     if (gameData?.deck) this.deck.register(this);
-    this.entities = [];
     this.enemies = [];
     this.player = new Player(playerData, this);
   }
@@ -61,21 +73,36 @@ export class Game implements IGame {
     this.e.title.classList.add('hide');
     this.e.game.classList.remove('hide');
 
-    levels[this.level].enemies().forEach((enemy => {
-      const e = new Enemy(enemies[enemy], this)
-      this.enemies.push(e);
-    }))
 
-    this.entities = [...this.enemies, this.player];
+    this.deck.pickNewCards();
+    gei('stamina')!.innerHTML = "Pick a card to add to your deck OR an innate ability!"
 
-    this.deck.shuffle();
+    // getEnemiesForLevel(this);
 
-    this.render();
-    this.newTurn();
+    // this.deck.shuffle();
+
+    // this.render();
+    // this.newTurn();
+  }
+
+  newRound() {
+    this.deck.endTurn();
+    this.level += 1;
+    this.turn = 0;
+    getEnemiesForLevel(this);
+
+    setTimeout(() => {
+      this.player.startRound();
+      this.render();
+      this.newTurn()
+    }, 1000)
   }
 
   newTurn() {
+    this.turn += 1;
+
     this.update();
+
     this.enemies.forEach(enemy => {
       enemy.pickAction();
     })
@@ -84,15 +111,19 @@ export class Game implements IGame {
   }
 
   render() {
-    this.entities.forEach(entity => {
+    this.enemies.forEach(entity => {
       entity.render();
     })
+    this.player.render();
 
     gei('stamina')!.innerHTML = `Stamina: ${this.player.currentStamina}`;
+    gei('stage')!.innerHTML = `Stage ${this.level} / ${Object.keys(levels).length}`
+    gei('round')!.innerHTML = `Round ${this.turn}`
   }
 
   update() {
     gei('stamina')!.innerHTML = `Stamina: ${this.player.currentStamina}`;
+    gei('round')!.innerHTML = `Round ${this.turn}`
   }
 
   combat(card: IVisualCard) {
@@ -126,8 +157,7 @@ export class Game implements IGame {
       return;
     }
 
-
-    const targets = getValidTargets(this.entities, card);
+    const targets = getValidTargets([...this.enemies, this.player], card);
 
     targets.forEach(entity => {
       const el = entity!.sprite.querySelector('.targeting')! as HTMLDivElement;
@@ -147,7 +177,7 @@ export class Game implements IGame {
    */
   entitySelect(id: string) {
     if (data.selectedCard) {
-      const target = getValidTargets(this.entities, data.selectedCard).find(item => item?.id === id)
+      const target = getValidTargets([...this.enemies, this.player], data.selectedCard).find(item => item?.id === id)
 
       if (!target || this.player.currentStamina < data.selectedCard?.data?.c!) {
         return;
@@ -178,7 +208,10 @@ export class Game implements IGame {
   }
 
   endPlayerTurn() {
-    this.player.endTurn()
+    this.player.endTurn();
+    clearSelectedCard(data.selectedCard);
+    clearTargeted(data.targetedEntities);
+
     this.enemies.forEach(enemy => {
       enemy.startTurn();
     })
@@ -189,7 +222,6 @@ export class Game implements IGame {
   }
 
   runEnemyTurns() {
-    console.log('--- Start runEnemyTurns')
     const enemiesToGo = [...this.enemies]
 
     const enemyTurn = () => {
@@ -197,15 +229,12 @@ export class Game implements IGame {
 
 
       if (enemy) {
-        console.log(enemy.id, 'Start run turn');
-
         // Main process for ENEMY attacking PLAYER and/or ENEMY buffing SELF:'
         const dd = enemy.nextAction.dData(enemy.data)
 
         this.player.applyFromEnemy(dd)
 
         const dd2 = enemy.nextAction.dData(enemy.data)
-        console.log(enemy.id, 'ddata', dd2.d, dd2.e);
 
         enemy.applyFromFriendly(dd2)
 
@@ -213,7 +242,6 @@ export class Game implements IGame {
 
         setTimeout(() => enemyTurn(), 1000)
       } else {
-        console.log('--- Stop runEnemyTurns')
         this.startNextTurn()
       }
     }
@@ -245,12 +273,11 @@ export class Game implements IGame {
       return;
     }
 
-    this.entities.splice(this.entities.indexOf(entity), 1);
     this.enemies.splice(this.enemies.indexOf(entity as Enemy), 1);
 
     if (!this.enemies.length) {
-      // round won
       console.log('ROUND WON!!');
+      this.newRound();
     }
   }
 }

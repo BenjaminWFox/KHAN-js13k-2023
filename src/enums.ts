@@ -14,6 +14,7 @@ export enum CARD_TYPE {
   assault = 'assault',
   ability = 'ability',
   defense = 'defense',
+  innate = 'innate',
 }
 
 

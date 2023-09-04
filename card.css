@@ -57,6 +57,10 @@
   bottom: 0px;
 }
 
+.card.innate {
+  margin-left: 190px;
+}
+
 .card:hover {
   z-index: 100;
   bottom: 60px;

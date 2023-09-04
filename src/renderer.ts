@@ -1,5 +1,5 @@
 import { Card } from "./card";
-import { SPRITE_TYPE } from "./enums";
+import { CARD_TYPE, SPRITE_TYPE } from "./enums";
 import { ce } from "./utility"
 
 function spriteElementBuilder(name: string, hp: number, type: SPRITE_TYPE, mounted: boolean, id: string): HTMLDivElement {
@@ -48,7 +48,12 @@ function cardElementBuilder(card: Card) {
 
   if (card.data.flavor) b.appendChild(ce('flavor', card.data.flavor))
 
-  wrapper.appendChild(ce('cost', card.data.c!.toString()))
+  if (card.type !== CARD_TYPE.innate) {
+    wrapper.appendChild(ce('cost', card.data.c!.toString()))
+  } else {
+    wrapper.classList.add('innate');
+  }
+
   wrapper.appendChild(ce('title', card.name))
   wrapper.appendChild(b);
 

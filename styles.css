@@ -77,6 +77,26 @@ button:active {
     touch-action: manipulation;
     user-select: none;
 }
+#game {
+    position: relative;
+    width: 100%;
+}
+#game h2 {
+    width: 100%;
+    text-align: center;
+}
+
+#game h2 div {
+    /* display: inline; */
+}
+
+#stage {
+    font-size: 2.5rem;
+}
+
+#round {
+    font-size: 1.5rem;
+}
 
 #playing {
     display: none;

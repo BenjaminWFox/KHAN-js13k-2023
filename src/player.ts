@@ -5,7 +5,7 @@ import { ICard, IGame, PlayerData } from "./types";
 export const playerData: PlayerData = {
   name: 'khan',
   type: SPRITE_TYPE.player,
-  hp: 100,
+  hp: 10,
   d: 0,
   w: 0,
   f: 0,
@@ -21,14 +21,31 @@ export class Player extends Entity {
   constructor(data: PlayerData, game: IGame) {
     super(data, game);
 
-    this.data = data;
+    this.data = { ...data };
     this.currentStamina = data.stamina;
+  }
+
+  resetStamina() {
+    this.currentStamina = this.data.stamina;
+  }
+
+  resetProperties() {
+    this.data.d = 0;
+    this.data.w = 0;
+    this.data.f = 0;
+    this.data.e = 0;
+  }
+
+  startRound() {
+    this.resetProperties();
+
+    this.resetStamina();
   }
 
   startTurn() {
     super.startTurn();
 
-    this.currentStamina = this.data.stamina;
+    this.resetStamina();
 
     this.update()
   }

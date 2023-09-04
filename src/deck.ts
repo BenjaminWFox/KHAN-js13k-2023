@@ -1,4 +1,4 @@
-import { VisualCard, cards } from "./card";
+import { VisualCard, basicCards, cards, innateCards } from "./card";
 import { DeckCollections } from "./enums";
 import { Cards, EntityData, IDeck, IGame, IVisualCard } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
@@ -6,6 +6,22 @@ import { GameElement } from "./GameElement";
 
 const MAX_IN_HAND = 8;
 const STARTING_CARDS = 6;
+
+function getNewCardsToPick() {
+  const c1 = getRandomIntInclusive(0, cards.length - 1);
+  let c2 = c1
+  let c3 = c1
+  while (c2 === c1 || c2 === c3) {
+    c2 = getRandomIntInclusive(0, cards.length - 1);
+  }
+  while (c3 === c1 || c3 === c2) {
+    c3 = getRandomIntInclusive(0, cards.length - 1);
+  }
+
+  const ci = getRandomIntInclusive(0, innateCards.length - 1);
+
+  return [new VisualCard(cards[c1]), new VisualCard(cards[c2]), new VisualCard(cards[c3]), new VisualCard(innateCards[ci])];
+}
 
 export class Deck extends GameElement implements IDeck {
   drawPile: Cards;
@@ -20,9 +36,9 @@ export class Deck extends GameElement implements IDeck {
     this.game = game;
     this.drawPile = [
       ...(new Array(STARTING_CARDS).fill('_')).map((_, i) => {
-        return new VisualCard(cards[i % 2])
+        return new VisualCard(basicCards[i % 2])
       }),
-      new VisualCard(cards[2]),
+      new VisualCard(basicCards[2]),
       new VisualCard(cards[3])
     ];
     this.handPile = [];
@@ -105,6 +121,13 @@ export class Deck extends GameElement implements IDeck {
 
     return this;
   };
+
+  pickNewCards() {
+    const cards = getNewCardsToPick();
+    cards.forEach(card => {
+      gei('card-holder')?.appendChild(card.sprite)
+    })
+  }
 
   updateVisibleCards(modData: EntityData) {
     this.handPile.forEach(card => {
