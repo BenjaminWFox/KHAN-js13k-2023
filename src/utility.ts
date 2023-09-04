@@ -1,9 +1,10 @@
 import { BOARD_SCALE } from "./constants";
-import { GameElements } from "./types";
+import { CardData, EntityData, GameElements } from "./types";
 
 export const ge = (selector: string) => document.querySelector(selector);
 export const gei = (id: string) => document.getElementById(id);
 export const qs = (e: HTMLElement, selector: string): HTMLElement => e.querySelector(selector)!;
+export const qsa = (e: HTMLElement, selector: string): NodeListOf<Element> => e.querySelectorAll(selector)!;
 
 export const ce = (c: string = 'x', innerHTML: string = '') => {
   const el = document.createElement('div')
@@ -39,4 +40,16 @@ export function uuid(): string {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
+}
+
+export function getAttackForData(modData: EntityData | undefined, attack: number) {
+  if (!modData) return attack;
+
+  return Math.ceil(attack * (modData.e ? 1.5 : 1) * (modData.f ? .75 : 1));
+}
+
+export function getDefenceForData(modData: EntityData | undefined, defence: number) {
+  if (!modData) return defence;
+
+  return Math.ceil(defence * (!!modData.w ? .5 : 1));
 }

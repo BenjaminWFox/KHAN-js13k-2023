@@ -10,12 +10,6 @@ export enum SPRITE_TYPE {
   mount = 'mount',
 }
 
-export enum ENEMY_INTENT {
-  assault = 'assault',
-  defense = 'defense',
-  ability = 'ability',
-}
-
 export enum CARD_TYPE {
   assault = 'assault',
   ability = 'ability',

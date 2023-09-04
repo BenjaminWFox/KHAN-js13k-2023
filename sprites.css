@@ -257,7 +257,7 @@
 }
 
 .weak:hover:before {
-  content: 'Weaken: gain 50% less armor for X turns';
+  content: 'Weaken: gain 50% less defence for X turns';
 }
 
 .enrage:hover:before {

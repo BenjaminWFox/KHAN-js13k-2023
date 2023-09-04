@@ -48,7 +48,7 @@ function cardElementBuilder(card: Card) {
 
   if (card.data.flavor) b.appendChild(ce('flavor', card.data.flavor))
 
-  wrapper.appendChild(ce('cost', card.data.c.toString()))
+  wrapper.appendChild(ce('cost', card.data.c!.toString()))
   wrapper.appendChild(ce('title', card.name))
   wrapper.appendChild(b);
 

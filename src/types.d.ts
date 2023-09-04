@@ -1,5 +1,6 @@
 import { Deck } from "./deck"
-import { DeckCollections, SPRITE_TYPE } from "./enums";
+import { Entity } from "./entity";
+import { CARD_TYPE, DeckCollections, SPRITE_TYPE } from "./enums";
 
 export type GameElements = Record<string, HTMLElement>;
 export type Cards = Array<Card>;
@@ -41,15 +42,11 @@ export interface IDeck {
   draw: (n: number) => void,
   removeFromHand: (card: Card) => void,
   endTurn: () => void,
+  updateVisibleCards: (data: EntityData) => void;
 }
 
 export interface GameData {
   deck: Deck
-}
-
-interface IEnemyAction {
-  type: ENEMY_INTENT,
-  affects: Affects,
 }
 
 interface Affects {
@@ -62,7 +59,7 @@ interface Affects {
 }
 
 interface IEnemyActions {
-  actions: Array<EnemyAction>
+  actions: Array<Card>
 }
 
 interface Properties {
@@ -82,6 +79,6 @@ export interface EntityData extends Properties {
 }
 
 export interface CardData extends Affects {
-  c: number; // cost
+  c?: number; // cost
   flavor?: string;
 };

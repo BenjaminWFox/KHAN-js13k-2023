@@ -1,7 +1,7 @@
 import { GameElement } from "./GameElement";
-import { CARD_TYPE, ENEMY_INTENT, SPRITE_TYPE } from "./enums";
+import { CARD_TYPE, SPRITE_TYPE } from "./enums";
 import { spriteElementBuilder } from "./renderer";
-import { Affects, CardData, EntityData, ICard, IEnemyAction, IGame } from "./types";
+import { Affects, CardData, EntityData, ICard, IGame } from "./types";
 import { gei, qs, uuid } from "./utility";
 
 export class Entity extends GameElement {
@@ -9,7 +9,8 @@ export class Entity extends GameElement {
   data: EntityData;
   id: string;
   currentHp: number;
-  nextAction?: IEnemyAction;
+  currentStamina: number;
+  nextAction?: ICard;
   isPlayer: boolean;
 
   constructor(data: EntityData, game: IGame) {
@@ -20,6 +21,7 @@ export class Entity extends GameElement {
     this.id = uuid();
     this.data = data;
     this.currentHp = data.hp;
+    this.currentStamina = data.stamina;
     this.sprite = spriteElementBuilder(name, hp, type, data.mounted, this.id);
     this.sprite.addEventListener('click', () => {
       game.entitySelect(this.id);
@@ -42,18 +44,18 @@ export class Entity extends GameElement {
   }
 
   play(card: ICard) {
-    this.data.stamina -= card.data.c;
+    this.currentStamina -= card.data.c || 0;
 
     this.update()
   }
 
-  intent(action: IEnemyAction) {
+  intent(action: ICard) {
     const iEl = this.sprite.querySelector('.intent')!;
     const aEl = iEl.querySelector('.assault-value')!;
     iEl.classList.add(action.type)
 
-    if (action.type === ENEMY_INTENT.assault) {
-      aEl.innerHTML = action.affects.a!.toString();
+    if (action.type === CARD_TYPE.assault) {
+      aEl.innerHTML = action.data.a!.toString();
     }
   }
 
@@ -88,11 +90,13 @@ export class Entity extends GameElement {
   startTurn() {
     this.data.d = 0;
     this.data.e = Math.max(0, this.data.e - 1);
+    this.currentStamina = this.data.stamina;
     this.update()
   }
 
   endTurn() {
-    this.data.f = Math.max(0, this.data.w - 1);
+    console.log('ENDING TURN', this.id)
+    this.data.f = Math.max(0, this.data.f - 1);
     this.data.w = Math.max(0, this.data.w - 1);
     this.update()
   }
@@ -119,7 +123,9 @@ export class Entity extends GameElement {
     // qs(this.sprite, '.targeting').classList.add('myturn')
     this.sprite.style.animationName = animationName;
     setTimeout(() => {
-      qs(this.sprite, '.intent').className = 'intent';
+      const e = qs(this.sprite, '.intent');
+      e.className = 'intent';
+      qs(e, ('.assault-value')).innerHTML = ''
     }, 500);
     setTimeout(() => {
       this.sprite.style.animation = '';

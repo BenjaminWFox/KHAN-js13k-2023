@@ -1,6 +1,6 @@
 import { Card, cards } from "./card";
 import { DeckCollections } from "./enums";
-import { Cards, ICard, IDeck, IGame } from "./types";
+import { CardData, Cards, EntityData, ICard, IDeck, IGame } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
 import { GameElement } from "./GameElement";
 
@@ -87,6 +87,9 @@ export class Deck extends GameElement implements IDeck {
     if (n > 0 && this.handPile.length < MAX_IN_HAND) {
       if (this.drawPile.length) {
         const c: Card = this.drawPile.pop();
+
+        c.update(this.game.player.data);
+
         this.handPile.push(c);
 
         gei('card-holder')?.appendChild(c.sprite)
@@ -102,6 +105,12 @@ export class Deck extends GameElement implements IDeck {
 
     return this;
   };
+
+  updateVisibleCards(modData: EntityData) {
+    this.handPile.forEach(card => {
+      (card as Card).update(modData);
+    })
+  }
 
   removeFromHand(card: ICard) {
     card.sprite.parentNode?.removeChild(card.sprite);

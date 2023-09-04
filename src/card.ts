@@ -1,8 +1,8 @@
 import { GameElement } from "./GameElement";
 import { CARD_TYPE } from "./enums";
 import { cardElementBuilder } from "./renderer";
-import { CardData, ICard } from "./types";
-import { uuid } from "./utility";
+import { CardData, EntityData, ICard } from "./types";
+import { ce, getAttackForData, getDefenceForData, qs, qsa, uuid } from "./utility";
 
 type ConstructorData = [string, CARD_TYPE, CardData];
 
@@ -24,24 +24,46 @@ export class Card extends GameElement implements ICard {
     this.type = type;
     this.data = data;
     this.attributes = []
-    if (data.a) this.attributes.push(`ATTACK ENEMY: ${data.a}`)
-    if (data.d) this.attributes.push(`DEFEND SELF: ${data.d}`)
+
+    if (this.name) {
+      this.buildAttributes(this.data);
+
+      this.sprite = cardElementBuilder(this);
+
+      this.sprite.addEventListener(
+        'click',
+        (event: MouseEvent) => {
+          event.stopPropagation();
+
+          this.game?.combat(this)
+        }
+      );
+    } else {
+      this.sprite = ce();
+    }
+  };
+
+  buildAttributes(data: CardData, modData?: EntityData) {
+    this.attributes = [];
+    if (data.a) this.attributes.push(`ATTACK ENEMY: ${getAttackForData(modData, data.a)}`)
+    if (data.d) this.attributes.push(`DEFEND SELF: ${getDefenceForData(modData, data.d)}`)
     if (data.e) this.attributes.push(`ENRAGE SELF: ${data.e}`)
     if (data.w) this.attributes.push(`WEAKEN ENEMY: ${data.w}`)
     if (data.f) this.attributes.push(`FALTER ENEMY: ${data.f}`)
     if (data.hp && data.hp < 0) this.attributes.push(`Lose ${Math.abs(data.hp)} life`)
     if (data.hp && data.hp > 0) this.attributes.push(`Gain ${data.hp} life`)
+  }
 
-    this.sprite = cardElementBuilder(this);
-    this.sprite.addEventListener(
-      'click',
-      (event: MouseEvent) => {
-        event.stopPropagation();
+  update(modData: EntityData) {
+    this.buildAttributes(this.data, modData);
 
-        this.game?.combat(this)
-      }
-    );
-  };
+    const newSprite = cardElementBuilder(this);
+
+    console.log('Old/NewSprite', this.sprite, newSprite, qsa(newSprite, '*'))
+
+    // @ts-ignore
+    this.sprite.replaceChildren(...newSprite.childNodes);
+  }
 };
 
 export const cards: Array<ConstructorData> = [

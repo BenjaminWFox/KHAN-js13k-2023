@@ -75,6 +75,7 @@ export class Game implements IGame {
   }
 
   newTurn() {
+    this.update();
     this.enemies.forEach(enemy => {
       enemy.pickAction();
     })
@@ -87,11 +88,11 @@ export class Game implements IGame {
       entity.render();
     })
 
-    gei('stamina')!.innerHTML = `Stamina: ${this.player.data.stamina}`;
+    gei('stamina')!.innerHTML = `Stamina: ${this.player.currentStamina}`;
   }
 
   update() {
-    gei('stamina')!.innerHTML = `Stamina: ${this.player.data.stamina}`;
+    gei('stamina')!.innerHTML = `Stamina: ${this.player.currentStamina}`;
   }
 
   combat(card: Card) {
@@ -103,7 +104,7 @@ export class Game implements IGame {
 
     data.targetedEntities = [];
 
-    if (this.player.data.stamina < card.data.c) {
+    if (this.player.currentStamina < card.data.c!) {
       flashCardCost(card);
 
       console.error('Not enough stamina!');
@@ -148,7 +149,7 @@ export class Game implements IGame {
     if (data.selectedCard) {
       const target = getValidTargets(this.entities, data.selectedCard).find(item => item?.id === id)
 
-      if (!target || this.player.data.stamina < data.selectedCard?.data.c) {
+      if (!target || this.player.currentStamina < data.selectedCard?.data?.c!) {
         return;
       }
 
@@ -165,11 +166,13 @@ export class Game implements IGame {
 
       this.player.play(cardToRemove);
       this.deck.removeFromHand(cardToRemove);
+      this.deck.updateVisibleCards(this.player.data);
       this.update();
     }
   }
 
   endPlayerTurn() {
+    this.player.endTurn()
     this.enemies.forEach(enemy => {
       enemy.startTurn();
     })
@@ -186,13 +189,13 @@ export class Game implements IGame {
       const enemy = enemiesToGo.pop();
 
       if (enemy) {
-        this.player.applyFromEnemy(enemy.nextAction?.affects!)
-        enemy.applyFromFriendly(enemy.nextAction?.affects!)
-        enemy.do(enemy.nextAction?.type);
+        this.player.applyFromEnemy(enemy.nextAction?.data!)
+        enemy.applyFromFriendly(enemy.nextAction?.data!)
+        enemy.do(enemy.nextAction!.type);
 
         setTimeout(enemyTurn, 1000)
       } else {
-        this.newTurn();
+        this.startNextTurn()
       }
     }
 
@@ -200,6 +203,12 @@ export class Game implements IGame {
   }
 
   startNextTurn() {
+    this.enemies.forEach(enemy => {
+      enemy.endTurn();
+    })
     this.turn += 1;
+
+    this.player.startTurn();
+    this.newTurn();
   }
 }
