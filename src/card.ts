@@ -1,5 +1,5 @@
 import { GameElement } from "./GameElement";
-import { CARD_TYPE } from "./enums";
+import { ACTIVATION_TRIGGER, CARD_TYPE, DeckCollections } from "./enums";
 import { cardElementBuilder } from "./renderer";
 import { CardConstructorData, CardData, EntityData, ICard, IVisualCard } from "./types";
 import { getAttackForData, getDefenceForData, uuid } from "./utility";
@@ -34,23 +34,49 @@ export class Card extends GameElement implements ICard {
 
 export class VisualCard extends Card implements IVisualCard {
   sprite: HTMLDivElement;
+  listener: (e: MouseEvent) => void;
 
-  constructor(constructorData: CardConstructorData) {
+  constructor(constructorData: CardConstructorData, isCardAdd = false) {
     super(constructorData);
 
     this.buildVisualAttributes(this.data);
 
     this.sprite = cardElementBuilder(this);
 
-    this.sprite.addEventListener(
-      'click',
-      (event: MouseEvent) => {
-        event.stopPropagation();
+    this.listener = isCardAdd ? this.deckAddSelect.bind(this) : this.combatSelect.bind(this)
 
-        this.game?.combat(this)
-      }
-    );
+    if (isCardAdd) {
+      this.sprite.addEventListener(
+        'click',
+        this.listener
+      );
+    } else {
+      this.sprite.addEventListener(
+        'click',
+        this.listener
+      );
+    }
   };
+
+  deckAddSelect(event: MouseEvent) {
+    event.stopPropagation();
+
+    this.sprite.removeEventListener('click', this.listener)
+    this.listener = this.combatSelect.bind(this)
+    this.sprite.addEventListener('click', this.listener)
+
+    console.log('Adding...')
+
+    this.type === CARD_TYPE.innate ?
+      this.game?.deck.add(this, DeckCollections.INNATE)
+      : this.game?.deck.add(this);
+  }
+
+  combatSelect(event: MouseEvent) {
+    event.stopPropagation();
+
+    this.game?.combat(this)
+  }
 
   buildVisualAttributes(data: CardData, modData?: EntityData) {
     this.attributes = [];
@@ -105,7 +131,7 @@ export const cards: Array<CardConstructorData> = [
 ];
 
 export const innateCards: Array<CardConstructorData> = [
-  ['Strategic Planning', CARD_TYPE.innate, { c: 0, draw: 1, flavor: 'Water shapes its course according to the nature of the ground over which it flows; the soldier works out his victory in relation to the foe whom he is facing.' }],
-  ['Calisthenics', CARD_TYPE.innate, { c: 0, s: 1, flavor: 'To not prepare is the greatest of crimes; to be prepared beforehand for any contingency is the greatest of virtues.' }],
-  ['Shamanism', CARD_TYPE.innate, { c: 0, hp: 10, flavor: '' }],
+  ['Strategic Planning', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, draw: 1, flavor: 'Water shapes its course according to the nature of the ground over which it flows; the soldier works out his victory in relation to the foe whom he is facing.' }],
+  ['Calisthenics', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, s: 1, flavor: 'To not prepare is the greatest of crimes; to be prepared beforehand for any contingency is the greatest of virtues.' }],
+  ['Shamanism', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, hp: 10, flavor: '' }],
 ]

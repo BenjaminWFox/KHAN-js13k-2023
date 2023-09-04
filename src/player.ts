@@ -1,11 +1,11 @@
 import { Entity } from "./entity";
-import { SPRITE_TYPE } from "./enums";
-import { ICard, IGame, PlayerData } from "./types";
+import { ACTIVATION_TRIGGER, SPRITE_TYPE } from "./enums";
+import { CardData, ICard, IGame, IVisualCard, PlayerData } from "./types";
 
 export const playerData: PlayerData = {
   name: 'khan',
   type: SPRITE_TYPE.player,
-  hp: 10,
+  hp: 100,
   d: 0,
   w: 0,
   f: 0,
@@ -48,6 +48,43 @@ export class Player extends Entity {
     this.resetStamina();
 
     this.update()
+  }
+
+  applyFromFriendly(cardData: CardData): void {
+    super.applyFromFriendly(cardData)
+
+    const { s = 0, draw = 0 } = cardData;
+
+    this.currentStamina += s;
+
+    console.log('Apply')
+    if (draw > 0) {
+      console.log("draw")
+      this.game?.deck.draw(draw);
+    }
+
+    this.update();
+  }
+
+  applyInnate(cards: Array<IVisualCard>, type: ACTIVATION_TRIGGER) {
+    console.log('Apply innate', cards)
+    let applyCards: Array<IVisualCard> = []
+
+    switch (type) {
+      case ACTIVATION_TRIGGER.round:
+        applyCards = cards.filter(card => card.data.on === ACTIVATION_TRIGGER.round);
+        break;
+      case ACTIVATION_TRIGGER.turn:
+        applyCards = cards.filter(card => card.data.on === ACTIVATION_TRIGGER.turn);
+        break;
+    }
+
+    console.log('Found innate', applyCards)
+
+    applyCards.forEach(card => {
+      this.applyFromFriendly(card.data);
+    })
+
   }
 
   play(card: ICard) {

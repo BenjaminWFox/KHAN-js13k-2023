@@ -69,7 +69,7 @@ export class Entity extends GameElement {
   }
 
   applyFromFriendly(cardData: CardData) {
-    const { d = 0, e = 0, hp = 0, } = cardData
+    const { d = 0, e = 0, hp = 0, s = 0, draw = 0 } = cardData
 
     this.currentHp = Math.min(this.data.hp, Math.max(0, this.currentHp + hp));
     this.data.d += d;

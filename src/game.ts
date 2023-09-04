@@ -3,8 +3,8 @@ import { levels } from "./levels";
 import { Entity } from "./entity";
 import { enemies } from "./enemies";
 import { Player, playerData } from "./player";
-import { gei } from "./utility";
-import { SPRITE_TYPE } from "./enums";
+import { gei, uuid } from "./utility";
+import { ACTIVATION_TRIGGER, SPRITE_TYPE } from "./enums";
 import { Deck } from "./deck";
 import { flashCardCost } from "./dom";
 import { Enemy } from "./enemy";
@@ -58,6 +58,7 @@ export class Game implements IGame {
   deck: IDeck;
   enemies: Array<Enemy>;
   player: Player;
+  inCombat: boolean;
 
   constructor(e: GameElements, gameData?: GameData) {
     this.e = e;
@@ -67,15 +68,27 @@ export class Game implements IGame {
     if (gameData?.deck) this.deck.register(this);
     this.enemies = [];
     this.player = new Player(playerData, this);
+    this.inCombat = false;
+  }
+
+  alert(str: string) {
+    const id = uuid();
+    const el = gei('alert')!
+    el.setAttribute('data-id', id)
+    el.innerHTML = str;
+
+    setTimeout(() => {
+      if (gei('alert')!.getAttribute('data-id') === id) {
+        gei('alert')!.innerHTML = ''
+      }
+    }, 4000);
   }
 
   newGame() {
     this.e.title.classList.add('hide');
     this.e.game.classList.remove('hide');
 
-
-    this.deck.pickNewCards();
-    gei('stamina')!.innerHTML = "Pick a card to add to your deck OR an innate ability!"
+    this.endRound();
 
     // getEnemiesForLevel(this);
 
@@ -85,14 +98,38 @@ export class Game implements IGame {
     // this.newTurn();
   }
 
-  newRound() {
+  // Waiting on deck.pickNewCards...
+  endRound() {
+    // Wait for this
     this.deck.endTurn();
-    this.level += 1;
-    this.turn = 0;
-    getEnemiesForLevel(this);
 
     setTimeout(() => {
+      this.inCombat = false; // <-- Sideeffect, cards are not added to discard when false
+      this.deck.pickNewCards();
+      gei('stamina')!.innerHTML = "Pick a card to add to your deck OR an innate ability!"
+    }, 1000)
+  }
+
+  newCardPicked() {
+    this.deck.endTurn();
+
+    setTimeout(() => {
+      this.newRound();
+    }, 500)
+  }
+
+  newRound() {
+    this.level += 1;
+    this.turn = 0;
+    this.inCombat = true; // <-- Sideeffect, cards are added to discard when true
+
+    this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.round);
+
+    setTimeout(() => {
+      getEnemiesForLevel(this);
       this.player.startRound();
+      // TODO: Enable
+      // this.deck.shuffle();
       this.render();
       this.newTurn()
     }, 1000)
@@ -101,13 +138,15 @@ export class Game implements IGame {
   newTurn() {
     this.turn += 1;
 
+    this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.turn);
+
     this.update();
 
     this.enemies.forEach(enemy => {
       enemy.pickAction();
     })
 
-    this.deck.draw(8);
+    this.deck.draw(4);
   }
 
   render() {
@@ -139,6 +178,7 @@ export class Game implements IGame {
       flashCardCost(card);
 
       console.error('Not enough stamina!');
+      this.alert('Not enough stamina!')
 
       return;
     }
@@ -182,6 +222,16 @@ export class Game implements IGame {
       if (!target || this.player.currentStamina < data.selectedCard?.data?.c!) {
         return;
       }
+      const cardToRemove = data.selectedCard;
+
+      clearSelectedCard(data.selectedCard);
+      clearTargeted(data.targetedEntities);
+
+      this.player.play(cardToRemove);
+      this.deck.removeFromHand(cardToRemove);
+      this.deck.updateVisibleCards(this.player.data);
+
+      this.player.do(data.selectedCard.type);
 
       // target may equal player, but that doesn't matter for this currently
       // since the enemy/friendly applications are different.
@@ -193,16 +243,6 @@ export class Game implements IGame {
         data.selectedCard.dData(this.player.data)
       );
 
-      this.player.do(data.selectedCard.type);
-
-      const cardToRemove = data.selectedCard;
-
-      clearSelectedCard(data.selectedCard);
-      clearTargeted(data.targetedEntities);
-
-      this.player.play(cardToRemove);
-      this.deck.removeFromHand(cardToRemove);
-      this.deck.updateVisibleCards(this.player.data);
       this.update();
     }
   }
@@ -277,7 +317,7 @@ export class Game implements IGame {
 
     if (!this.enemies.length) {
       console.log('ROUND WON!!');
-      this.newRound();
+      this.endRound();
     }
   }
 }

@@ -20,13 +20,14 @@ function getNewCardsToPick() {
 
   const ci = getRandomIntInclusive(0, innateCards.length - 1);
 
-  return [new VisualCard(cards[c1]), new VisualCard(cards[c2]), new VisualCard(cards[c3]), new VisualCard(innateCards[ci])];
+  return [new VisualCard(cards[c1], true), new VisualCard(cards[c2], true), new VisualCard(cards[c3], true), new VisualCard(innateCards[ci], true)];
 }
 
 export class Deck extends GameElement implements IDeck {
   drawPile: Cards;
   handPile: Cards;
   donePile: Cards;
+  innatePile: Cards;
   pendingDraw: number;
   game: IGame;
 
@@ -43,6 +44,7 @@ export class Deck extends GameElement implements IDeck {
     ];
     this.handPile = [];
     this.donePile = [];
+    this.innatePile = [];
     this.pendingDraw = 0;
     this.update();
 
@@ -53,21 +55,26 @@ export class Deck extends GameElement implements IDeck {
     [this.drawPile, this.handPile, this.donePile].forEach(pile => pile?.forEach(card => card.register(game)));
   }
 
-  add(card: IVisualCard, collection: DeckCollections) {
-    card.register(this.game);
-
+  add(card: IVisualCard, collection?: DeckCollections) {
     switch (collection) {
       case DeckCollections.DONE:
         this.donePile.push(card);
         break;
-      case DeckCollections.DRAW:
-        this.drawPile.push(card);
-        break;
-      default:
       case DeckCollections.HAND:
         this.handPile.push(card);
         break;
+      case DeckCollections.INNATE:
+        this.innatePile.push(card);
+        break;
+      default:
+      case DeckCollections.DRAW:
+        this.drawPile.push(card);
+        break;
     };
+
+    this.update();
+
+    this.game.newCardPicked()
 
     return this;
   }
@@ -98,6 +105,8 @@ export class Deck extends GameElement implements IDeck {
   }
 
   draw(n: number) {
+    console.log('Begin draw')
+
     this.pendingDraw = n;
 
     if (n > 0 && this.handPile.length < MAX_IN_HAND) {
@@ -117,6 +126,8 @@ export class Deck extends GameElement implements IDeck {
 
         this.draw(n);
       }
+    } else if (this.pendingDraw > 0) {
+      this.game.alert('Your hand is full!')
     }
 
     return this;
@@ -125,6 +136,8 @@ export class Deck extends GameElement implements IDeck {
   pickNewCards() {
     const cards = getNewCardsToPick();
     cards.forEach(card => {
+      card.register(this.game);
+      this.handPile.push(card);
       gei('card-holder')?.appendChild(card.sprite)
     })
   }
@@ -138,7 +151,10 @@ export class Deck extends GameElement implements IDeck {
   removeFromHand(card: IVisualCard) {
     card.sprite.parentNode?.removeChild(card.sprite);
 
-    this.donePile.push(card);
+    if (this.game.inCombat) {
+      this.donePile.push(card);
+    }
+
     this.handPile.splice(this.handPile.indexOf(card), 1)
     this.update();
   }
