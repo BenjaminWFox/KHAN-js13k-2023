@@ -78,7 +78,6 @@ button:active {
 }
 
 #board {
-    background-color: #00a2d1;
     width: 1600px;
     height: 900px;
     outline: 0;
@@ -86,6 +85,9 @@ button:active {
     display: flex;
     touch-action: manipulation;
     user-select: none;
+    background: url('./b.png');
+    background-repeat: repeat;
+    background-size: 66%;
 }
 #game {
     position: relative;
@@ -94,10 +96,6 @@ button:active {
 #game h2 {
     width: 100%;
     text-align: center;
-}
-
-#game h2 div {
-    /* display: inline; */
 }
 
 #stage {
@@ -127,8 +125,10 @@ button:active {
     left: 0;
     right: 0;
     height: 60%;
+    background: url('./g.png');
+    background-repeat: repeat;
+    background-size: 50%;
 }
-
 /* @media (min-aspect-ratio: 16/9) {
     #board {
         height: 100vh;

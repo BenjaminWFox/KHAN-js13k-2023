@@ -1,4 +1,4 @@
-import { ce, gei } from "./utility";
+import { gei } from "./utility";
 
 export const messages = {
   intro: `Oh Great Khan! The Gods have decreed the world shall know and fear the name, Ghengis Khan.
