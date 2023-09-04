@@ -57,6 +57,7 @@ export interface IDeck {
   draw: (n: number) => void,
   removeFromHand: (card: IVisualCard) => void,
   endTurn: () => void,
+  endRound: () => void;
   updateVisibleCards: (data: EntityData) => void;
 }
 

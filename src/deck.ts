@@ -168,4 +168,12 @@ export class Deck extends GameElement implements IDeck {
       setTimeout(() => this.endTurn(), 100);
     }
   }
+
+  endRound() {
+    this.endTurn();
+
+    setTimeout(() => {
+      this.shuffleInto(this.drawPile, this.donePile);
+    }, 900)
+  }
 }
