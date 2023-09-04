@@ -42,8 +42,22 @@ export class Entity extends GameElement {
 
   applyFromEnemy(cardData: CardData) {
     const { a = 0, w = 0, f = 0, } = cardData
+    let d = this.data.d;
 
-    this.currentHp = Math.max(0, this.currentHp - a);
+    if (this.data.d > 0) {
+      d = d - a;
+
+      if (d < 0) {
+        this.currentHp = Math.max(0, this.currentHp - (a - this.data.d));
+
+        this.data.d = 0;
+      } else {
+        this.data.d = d;
+      }
+    } else {
+      this.currentHp = Math.max(0, this.currentHp - a);
+    }
+
     this.data.w += w;
     this.data.f += f;
 
