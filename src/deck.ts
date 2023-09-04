@@ -1,6 +1,6 @@
-import { Card, cards } from "./card";
+import { VisualCard, cards } from "./card";
 import { DeckCollections } from "./enums";
-import { CardData, Cards, EntityData, ICard, IDeck, IGame } from "./types";
+import { Cards, EntityData, IDeck, IGame, IVisualCard } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
 import { GameElement } from "./GameElement";
 
@@ -20,10 +20,10 @@ export class Deck extends GameElement implements IDeck {
     this.game = game;
     this.drawPile = [
       ...(new Array(STARTING_CARDS).fill('_')).map((_, i) => {
-        return new Card(cards[i % 2])
+        return new VisualCard(cards[i % 2])
       }),
-      new Card(cards[2]),
-      new Card(cards[3])
+      new VisualCard(cards[2]),
+      new VisualCard(cards[3])
     ];
     this.handPile = [];
     this.donePile = [];
@@ -37,7 +37,7 @@ export class Deck extends GameElement implements IDeck {
     [this.drawPile, this.handPile, this.donePile].forEach(pile => pile?.forEach(card => card.register(game)));
   }
 
-  add(card: Card, collection: DeckCollections) {
+  add(card: IVisualCard, collection: DeckCollections) {
     card.register(this.game);
 
     switch (collection) {
@@ -57,7 +57,7 @@ export class Deck extends GameElement implements IDeck {
   }
 
   shuffle() {
-    const t: Array<Card> = [];
+    const t: Array<IVisualCard> = [];
 
     while (this.drawPile.length) {
       t.push(this.drawPile.splice(Math.floor(Math.random() * this.drawPile.length), 1)[0])
@@ -68,7 +68,7 @@ export class Deck extends GameElement implements IDeck {
     return this;
   };
 
-  shuffleInto(basePile: Array<Card>, otherPile: Array<Card>) {
+  shuffleInto(basePile: Array<IVisualCard>, otherPile: Array<IVisualCard>) {
     while (otherPile.length) {
       const c = otherPile.splice(Math.floor(Math.random() * otherPile.length), 1)[0];
       const i = getRandomIntInclusive(0, basePile.length);
@@ -86,7 +86,7 @@ export class Deck extends GameElement implements IDeck {
 
     if (n > 0 && this.handPile.length < MAX_IN_HAND) {
       if (this.drawPile.length) {
-        const c: Card = this.drawPile.pop();
+        const c = this.drawPile.pop()!;
 
         c.update(this.game.player.data);
 
@@ -108,11 +108,11 @@ export class Deck extends GameElement implements IDeck {
 
   updateVisibleCards(modData: EntityData) {
     this.handPile.forEach(card => {
-      (card as Card).update(modData);
+      card.update(modData);
     })
   }
 
-  removeFromHand(card: ICard) {
+  removeFromHand(card: IVisualCard) {
     card.sprite.parentNode?.removeChild(card.sprite);
 
     this.donePile.push(card);
@@ -122,7 +122,6 @@ export class Deck extends GameElement implements IDeck {
 
   endTurn() {
     const card = this.handPile[this.handPile.length - 1];
-    console.log('endTurn', card, this.handPile);
 
     if (card) {
       this.removeFromHand(card);

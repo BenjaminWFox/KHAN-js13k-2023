@@ -1,17 +1,24 @@
+import { GameElement } from "./GameElement";
 import { Deck } from "./deck"
 import { Entity } from "./entity";
 import { CARD_TYPE, DeckCollections, SPRITE_TYPE } from "./enums";
 
 export type GameElements = Record<string, HTMLElement>;
-export type Cards = Array<Card>;
+export type Cards = Array<IVisualCard>;
 
-export interface ICard {
+export interface ICard extends GameElement {
   name: string;
   type: CARD_TYPE;
-  data: CardData;
   id: string;
   attributes: Array<string>;
+  data: CardData;
+  dData: (modData?: EntityData | CardData) => CardData;
+}
+
+export interface IVisualCard extends ICard {
   sprite: HTMLDivElement;
+  update: (modData: EntityData) => void;
+  buildVisualAttributes: (data: CardData, modData?: EntityData) => void;
 }
 
 export interface IGame {
@@ -36,11 +43,11 @@ export interface IDeck {
   donePile: Cards,
   pendingDraw: number,
   register: (game: IGame) => void,
-  add: (card: Card, collection: DeckCollections) => void,
+  add: (card: IVisualCard, collection: DeckCollections) => void,
   shuffle: () => void,
   shuffleInto: (basePile: Cards, otherPile: Cards) => void,
   draw: (n: number) => void,
-  removeFromHand: (card: Card) => void,
+  removeFromHand: (card: IVisualCard) => void,
   endTurn: () => void,
   updateVisibleCards: (data: EntityData) => void;
 }
@@ -75,6 +82,9 @@ export interface EntityData extends Properties {
   type: SPRITE_TYPE,
   mounted: boolean,
   actions?: EnemyActions,
+}
+
+export interface PlayerData extends EntityData {
   stamina: number,
 }
 

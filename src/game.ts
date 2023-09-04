@@ -1,16 +1,16 @@
-import { IDeck, GameData, GameElements, IGame, ICard } from "./types";
+import { IDeck, GameData, GameElements, IGame, IVisualCard } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { enemies } from "./enemies";
-import { playerData } from "./player";
+import { Player, playerData } from "./player";
 import { gei } from "./utility";
-import { Card } from "./card";
 import { SPRITE_TYPE } from "./enums";
 import { Deck } from "./deck";
 import { flashCardCost } from "./dom";
+import { Enemy } from "./enemy";
 
 interface Data {
-  selectedCard: Card | undefined,
+  selectedCard: IVisualCard | undefined,
   targetedEntities: Array<HTMLDivElement>,
 }
 
@@ -19,7 +19,7 @@ const data: Data = {
   targetedEntities: [],
 }
 
-function clearSelectedCard(card?: ICard) {
+function clearSelectedCard(card?: IVisualCard) {
   card?.sprite.classList.remove('selected');
 }
 
@@ -29,7 +29,7 @@ function clearTargeted(targets: Array<HTMLDivElement>) {
   })
 }
 
-function getValidTargets(entities: Array<Entity>, card: Card) {
+function getValidTargets(entities: Array<Entity>, card: IVisualCard) {
   if (card.data.a || card.data.f || card.data.w) {
     return entities.filter(entity => entity.data.type === SPRITE_TYPE.enemy)
   }
@@ -43,8 +43,8 @@ export class Game implements IGame {
   turn: number;
   deck: IDeck;
   entities: Array<Entity>;
-  enemies: Array<Entity>;
-  player: Entity;
+  enemies: Array<Enemy>;
+  player: Player;
 
   constructor(e: GameElements, gameData?: GameData) {
     this.e = e;
@@ -54,7 +54,7 @@ export class Game implements IGame {
     if (gameData?.deck) this.deck.register(this);
     this.entities = [];
     this.enemies = [];
-    this.player = new Entity(playerData, this);
+    this.player = new Player(playerData, this);
   }
 
   newGame() {
@@ -62,7 +62,7 @@ export class Game implements IGame {
     this.e.game.classList.remove('hide');
 
     levels[this.level].enemies().forEach((enemy => {
-      const e = new Entity(enemies[enemy], this)
+      const e = new Enemy(enemies[enemy], this)
       this.enemies.push(e);
     }))
 
@@ -80,7 +80,7 @@ export class Game implements IGame {
       enemy.pickAction();
     })
 
-    this.deck.draw(4);
+    this.deck.draw(8);
   }
 
   render() {
@@ -95,7 +95,7 @@ export class Game implements IGame {
     gei('stamina')!.innerHTML = `Stamina: ${this.player.currentStamina}`;
   }
 
-  combat(card: Card) {
+  combat(card: IVisualCard) {
     /**
      * Clear selected & targets every time
      */
@@ -155,8 +155,14 @@ export class Game implements IGame {
 
       // target may equal player, but that doesn't matter for this currently
       // since the enemy/friendly applications are different.
-      target?.applyFromEnemy(data.selectedCard.data);
-      this.player.applyFromFriendly(data.selectedCard.data);
+      // Main process for PLAYER attacking ENEMY and/or PLAYER buffing SELF:
+      target?.applyFromEnemy(
+        data.selectedCard.dData(this.player.data)
+      );
+      this.player.applyFromFriendly(
+        data.selectedCard.dData(this.player.data)
+      );
+
       this.player.do(data.selectedCard.type);
 
       const cardToRemove = data.selectedCard;
@@ -189,8 +195,9 @@ export class Game implements IGame {
       const enemy = enemiesToGo.pop();
 
       if (enemy) {
-        this.player.applyFromEnemy(enemy.nextAction?.data!)
-        enemy.applyFromFriendly(enemy.nextAction?.data!)
+        // Main process for ENEMY attacking PLAYER and/or ENEMY buffing SELF:
+        this.player.applyFromEnemy(enemy.nextAction.dData(enemy.data))
+        enemy.applyFromFriendly(enemy.nextAction.dData(enemy.data))
         enemy.do(enemy.nextAction!.type);
 
         setTimeout(enemyTurn, 1000)

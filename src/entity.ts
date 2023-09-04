@@ -1,7 +1,7 @@
 import { GameElement } from "./GameElement";
 import { CARD_TYPE, SPRITE_TYPE } from "./enums";
 import { spriteElementBuilder } from "./renderer";
-import { Affects, CardData, EntityData, ICard, IGame } from "./types";
+import { CardData, EntityData, IGame } from "./types";
 import { gei, qs, uuid } from "./utility";
 
 export class Entity extends GameElement {
@@ -9,8 +9,6 @@ export class Entity extends GameElement {
   data: EntityData;
   id: string;
   currentHp: number;
-  currentStamina: number;
-  nextAction?: ICard;
   isPlayer: boolean;
 
   constructor(data: EntityData, game: IGame) {
@@ -21,7 +19,6 @@ export class Entity extends GameElement {
     this.id = uuid();
     this.data = data;
     this.currentHp = data.hp;
-    this.currentStamina = data.stamina;
     this.sprite = spriteElementBuilder(name, hp, type, data.mounted, this.id);
     this.sprite.addEventListener('click', () => {
       game.entitySelect(this.id);
@@ -43,31 +40,7 @@ export class Entity extends GameElement {
     qs(this.sprite, '.affects .weak').innerHTML = 'W:' + this.data.w;
   }
 
-  play(card: ICard) {
-    this.currentStamina -= card.data.c || 0;
-
-    this.update()
-  }
-
-  intent(action: ICard) {
-    const iEl = this.sprite.querySelector('.intent')!;
-    const aEl = iEl.querySelector('.assault-value')!;
-    iEl.classList.add(action.type)
-
-    if (action.type === CARD_TYPE.assault) {
-      aEl.innerHTML = action.data.a!.toString();
-    }
-  }
-
-  pickAction() {
-    if (this.data.actions) {
-      this.nextAction = this.data.actions.get();
-
-      this.intent(this.nextAction!);
-    }
-  }
-
-  applyFromEnemy(cardData: CardData | Affects) {
+  applyFromEnemy(cardData: CardData) {
     const { a = 0, w = 0, f = 0, } = cardData
 
     this.currentHp = Math.max(0, this.currentHp - a);
@@ -77,8 +50,10 @@ export class Entity extends GameElement {
     this.update();
   }
 
-  applyFromFriendly(cardData: CardData | Affects) {
+  applyFromFriendly(cardData: CardData) {
     const { d = 0, e = 0, hp = 0, } = cardData
+
+    console.log('friendly applied', cardData);
 
     this.currentHp = Math.max(0, this.currentHp + hp);
     this.data.d += d;
@@ -89,13 +64,13 @@ export class Entity extends GameElement {
 
   startTurn() {
     this.data.d = 0;
-    this.data.e = Math.max(0, this.data.e - 1);
-    this.currentStamina = this.data.stamina;
+
     this.update()
   }
 
   endTurn() {
     console.log('ENDING TURN', this.id)
+    this.data.e = Math.max(0, this.data.e - 1);
     this.data.f = Math.max(0, this.data.f - 1);
     this.data.w = Math.max(0, this.data.w - 1);
     this.update()
@@ -103,8 +78,6 @@ export class Entity extends GameElement {
 
   do(type: CARD_TYPE) {
     let animationName = '';
-
-    console.log('Do!');
 
     switch (type) {
       case CARD_TYPE.ability:
@@ -117,8 +90,6 @@ export class Entity extends GameElement {
         animationName = this.isPlayer ? 'bumpRight' : 'bumpLeft';
         break;
     }
-
-    console.log('Do!', animationName);
 
     // qs(this.sprite, '.targeting').classList.add('myturn')
     this.sprite.style.animationName = animationName;
