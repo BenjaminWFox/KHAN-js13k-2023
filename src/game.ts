@@ -1,4 +1,4 @@
-import { IDeck, GameData, GameElements, IGame, IVisualCard } from "./types";
+import { IDeck, GameData, GameElements, IGame, IVisualCard, EntityData } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { enemies } from "./enemies";
@@ -189,19 +189,31 @@ export class Game implements IGame {
   }
 
   runEnemyTurns() {
+    console.log('--- Start runEnemyTurns')
     const enemiesToGo = [...this.enemies]
 
     const enemyTurn = () => {
       const enemy = enemiesToGo.pop();
 
+
       if (enemy) {
-        // Main process for ENEMY attacking PLAYER and/or ENEMY buffing SELF:
-        this.player.applyFromEnemy(enemy.nextAction.dData(enemy.data))
-        enemy.applyFromFriendly(enemy.nextAction.dData(enemy.data))
+        console.log(enemy.id, 'Start run turn');
+
+        // Main process for ENEMY attacking PLAYER and/or ENEMY buffing SELF:'
+        const dd = enemy.nextAction.dData(enemy.data)
+
+        this.player.applyFromEnemy(dd)
+
+        const dd2 = enemy.nextAction.dData(enemy.data)
+        console.log(enemy.id, 'ddata', dd2.d, dd2.e);
+
+        enemy.applyFromFriendly(dd2)
+
         enemy.do(enemy.nextAction!.type);
 
-        setTimeout(enemyTurn, 1000)
+        setTimeout(() => enemyTurn(), 1000)
       } else {
+        console.log('--- Stop runEnemyTurns')
         this.startNextTurn()
       }
     }
@@ -217,5 +229,28 @@ export class Game implements IGame {
 
     this.player.startTurn();
     this.newTurn();
+  }
+
+  onDeath(entity: Entity) {
+    entity.sprite.style.animationName = 'dead'
+
+    setTimeout(() => {
+      entity.sprite.parentNode?.removeChild(entity.sprite);
+    }, 750);
+
+    if (entity.isPlayer) {
+      // game over
+      console.log('GAME OVER :( :(');
+
+      return;
+    }
+
+    this.entities.splice(this.entities.indexOf(entity), 1);
+    this.enemies.splice(this.enemies.indexOf(entity as Enemy), 1);
+
+    if (!this.enemies.length) {
+      // round won
+      console.log('ROUND WON!!');
+    }
   }
 }

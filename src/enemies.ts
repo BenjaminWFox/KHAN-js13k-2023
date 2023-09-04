@@ -1,14 +1,14 @@
 import { Card } from "./card";
 import { CARD_TYPE, SPRITE_TYPE } from "./enums";
-import { EntityData, IEnemyActions } from "./types";
+import { CardConstructorData, CardData, EntityData, IEnemyActions } from "./types";
 import { getRandomIntInclusive } from "./utility";
 
 
 class EnemyActions implements IEnemyActions {
-  actions: Array<Card>
+  actions: Array<CardConstructorData>
 
-  constructor(actions: Array<Card>) {
-    this.actions = actions
+  constructor(actions: Array<CardConstructorData>) {
+    this.actions = [...actions]
   }
 
   get() {
@@ -36,46 +36,46 @@ export const enemies: Record<number, EntityData> = {
   5: {
     name: 'snake', type: SPRITE_TYPE.enemy, hp: 50, d: 0, w: 0, f: 0, e: 0, mounted: false,
     actions: new EnemyActions([
-      new Card(['', CARD_TYPE.assault, { a: 15 }]),
-      new Card(['', CARD_TYPE.assault, { a: 8, e: 2 }]),
-      new Card(['', CARD_TYPE.defense, { d: 5 }]),
-      new Card(['', CARD_TYPE.ability, { e: 4, f: 2 }]),
+      ['', CARD_TYPE.assault, { a: 15 }],
+      ['', CARD_TYPE.assault, { a: 8, e: 2 }],
+      ['', CARD_TYPE.defense, { d: 5 }],
+      ['', CARD_TYPE.ability, { e: 4, f: 2 }],
     ])
   },
   6: {
     name: 'rok', type: SPRITE_TYPE.enemy, hp: 50, d: 0, w: 0, f: 0, e: 0, mounted: false,
     actions: new EnemyActions([
-      new Card(['', CARD_TYPE.assault, { a: 15 }]),
-      new Card(['', CARD_TYPE.assault, { a: 8, e: 2 }]),
-      new Card(['', CARD_TYPE.defense, { d: 5 }]),
-      new Card(['', CARD_TYPE.ability, { e: 4, f: 2, w: 2 }]),
+      ['', CARD_TYPE.assault, { a: 15 }],
+      ['', CARD_TYPE.assault, { a: 8, e: 2 }],
+      ['', CARD_TYPE.defense, { d: 5 }],
+      ['', CARD_TYPE.ability, { e: 4, f: 2, w: 2 }],
     ])
   },
   7: {
     name: 'wolf', type: SPRITE_TYPE.enemy, hp: 50, d: 0, w: 0, f: 0, e: 3, mounted: false,
     actions: new EnemyActions([
-      new Card(['', CARD_TYPE.assault, { a: 15 }]),
-      new Card(['', CARD_TYPE.assault, { a: 8, e: 2 }]),
-      new Card(['', CARD_TYPE.defense, { d: 5 }]),
-      new Card(['', CARD_TYPE.ability, { e: 4, w: 2 }]),
+      ['', CARD_TYPE.assault, { a: 15 }],
+      ['', CARD_TYPE.assault, { a: 8, e: 2 }],
+      ['', CARD_TYPE.defense, { d: 5 }],
+      ['', CARD_TYPE.ability, { e: 4, w: 2 }],
     ])
   },
   8: {
-    name: 'bear1', type: SPRITE_TYPE.enemy, hp: 50, d: 0, w: 0, f: 0, e: 2, mounted: false,
+    name: 'bear1', type: SPRITE_TYPE.enemy, hp: 10, d: 0, w: 0, f: 0, e: 2, mounted: false,
     actions: new EnemyActions([
-      new Card(['', CARD_TYPE.assault, { a: 15 }]),
-      new Card(['', CARD_TYPE.assault, { a: 8, e: 2 }]),
-      new Card(['', CARD_TYPE.defense, { d: 5 }]),
-      new Card(['', CARD_TYPE.ability, { e: 4, f: 2 }]),
+      // ['', CARD_TYPE.assault, { a: 15 }],
+      // ['', CARD_TYPE.assault, { a: 8, e: 2 }],
+      ['', CARD_TYPE.defense, { d: 5 }],
+      ['', CARD_TYPE.ability, { e: 4, f: 2 }],
     ])
   },
   9: {
     name: 'bear2', type: SPRITE_TYPE.enemy, hp: 50, d: 0, w: 0, f: 0, e: 1, mounted: false,
     actions: new EnemyActions([
-      new Card(['', CARD_TYPE.assault, { a: 15 }]),
-      new Card(['', CARD_TYPE.assault, { a: 8, e: 2 }]),
-      new Card(['', CARD_TYPE.defense, { d: 5 }]),
-      new Card(['', CARD_TYPE.ability, { e: 4, f: 2, w: 2 }]),
+      // ['', CARD_TYPE.assault, { a: 15 }],
+      // ['', CARD_TYPE.assault, { a: 8, e: 2 }],
+      // ['', CARD_TYPE.defense, { d: 5 }],
+      ['', CARD_TYPE.ability, { e: 4, f: 2, w: 2 }],
     ])
   },
 }

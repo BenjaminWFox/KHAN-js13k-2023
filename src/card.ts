@@ -1,10 +1,8 @@
 import { GameElement } from "./GameElement";
 import { CARD_TYPE } from "./enums";
 import { cardElementBuilder } from "./renderer";
-import { CardData, EntityData, ICard, IVisualCard } from "./types";
+import { CardConstructorData, CardData, EntityData, ICard, IVisualCard } from "./types";
 import { getAttackForData, getDefenceForData, uuid } from "./utility";
-
-type ConstructorData = [string, CARD_TYPE, CardData];
 
 export class Card extends GameElement implements ICard {
   name: string;
@@ -13,7 +11,7 @@ export class Card extends GameElement implements ICard {
   id: string;
   attributes: Array<string>;
 
-  constructor(constructorData: ConstructorData) {
+  constructor(constructorData: CardConstructorData) {
     super();
 
     const [name, type, data] = constructorData;
@@ -21,7 +19,7 @@ export class Card extends GameElement implements ICard {
     this.id = uuid();
     this.name = name;
     this.type = type;
-    this.data = data;
+    this.data = { ...data };
     this.attributes = []
   };
 
@@ -37,7 +35,7 @@ export class Card extends GameElement implements ICard {
 export class VisualCard extends Card implements IVisualCard {
   sprite: HTMLDivElement;
 
-  constructor(constructorData: ConstructorData) {
+  constructor(constructorData: CardConstructorData) {
     super(constructorData);
 
     this.buildVisualAttributes(this.data);
@@ -75,7 +73,7 @@ export class VisualCard extends Card implements IVisualCard {
   }
 }
 
-export const cards: Array<ConstructorData> = [
+export const cards: Array<CardConstructorData> = [
   ['Basic Attack', CARD_TYPE.assault, { a: 5, c: 1, flavor: 'You spend your life perfecting something, is it really basic?' }],
   ['Basic Shield', CARD_TYPE.defense, { d: 5, c: 1, flavor: 'Discretion is the better part of valor, after all.' }],
   ['War Cry', CARD_TYPE.ability, { c: 2, w: 2, e: 2 }],

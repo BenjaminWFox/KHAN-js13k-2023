@@ -44,6 +44,20 @@
   }
 }
 
+@keyframes dead {
+  0% {
+    opacity: 100%;
+  }
+  50% {
+    opacity: 0%;
+    width: 13px;
+  }
+  100% {
+    width: 0px;
+    opacity: 0%;
+  }
+}
+
 #enemy {
   position: absolute;
   top: 36%;
@@ -71,6 +85,7 @@
   position: relative;
   animation-duration: 1s;
   animation-iteration-count: 1;
+  transition: all .5s;
 }
 
 .sprite-wrapper.enemy {

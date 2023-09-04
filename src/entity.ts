@@ -17,7 +17,8 @@ export class Entity extends GameElement {
     const { name, type, hp } = data;
 
     this.id = uuid();
-    this.data = data;
+    console.log(this.id, name);
+    this.data = { ...data };
     this.currentHp = data.hp;
     this.sprite = spriteElementBuilder(name, hp, type, data.mounted, this.id);
     this.sprite.addEventListener('click', () => {
@@ -32,6 +33,8 @@ export class Entity extends GameElement {
   }
 
   update() {
+    console.log(this.id, 'update', this.data.d, this.data.e);
+
     qs(this.sprite, '.hp .fill').style.width = Math.round(this.currentHp / this.data.hp * 100) + '%';
     qs(this.sprite, '.hp .number').innerHTML = `${this.currentHp}/${this.data.hp}`;
     qs(this.sprite, '.affects .armor').innerHTML = 'D:' + this.data.d;
@@ -62,12 +65,16 @@ export class Entity extends GameElement {
     this.data.f += f;
 
     this.update();
+
+    if (this.currentHp <= 0) {
+      this.game?.onDeath(this);
+    }
   }
 
   applyFromFriendly(cardData: CardData) {
     const { d = 0, e = 0, hp = 0, } = cardData
 
-    console.log('friendly applied', cardData);
+    console.log(this.id, 'apply friendly', cardData.d, cardData.e, '//', this.data.d, this.data.e);
 
     this.currentHp = Math.max(0, this.currentHp + hp);
     this.data.d += d;
@@ -87,6 +94,7 @@ export class Entity extends GameElement {
     this.data.e = Math.max(0, this.data.e - 1);
     this.data.f = Math.max(0, this.data.f - 1);
     this.data.w = Math.max(0, this.data.w - 1);
+
     this.update()
   }
 

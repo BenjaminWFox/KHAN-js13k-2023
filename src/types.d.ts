@@ -5,6 +5,8 @@ import { CARD_TYPE, DeckCollections, SPRITE_TYPE } from "./enums";
 
 export type GameElements = Record<string, HTMLElement>;
 export type Cards = Array<IVisualCard>;
+export type CardConstructorData = [string, CARD_TYPE, CardData];
+
 
 export interface ICard extends GameElement {
   name: string;
@@ -35,6 +37,7 @@ export interface IGame {
   entitySelect: (id: string) => void;
   endPlayerTurn: () => void;
   startNextTurn: () => void;
+  onDeath: (entity: Entity) => void;
 }
 
 export interface IDeck {

@@ -1,3 +1,4 @@
+import { Card } from "./card";
 import { Entity } from "./entity";
 import { CARD_TYPE } from "./enums";
 import { CardData, EntityData, ICard, IGame } from "./types";
@@ -16,16 +17,12 @@ export class Enemy extends Entity {
     iEl.classList.add(action.type)
 
     if (action.type === CARD_TYPE.assault) {
-      console.log('Assigning attack value', getAttackForData(action.data.a!, this.data).toString(), this.data);
-
       aEl.innerHTML = getAttackForData(action.data.a!, this.data).toString();
     }
   }
 
   pickAction() {
-    this.nextAction = this.data.actions.get();
-
-    console.log('Picking next action', this.nextAction);
+    this.nextAction = new Card(this.data.actions.get());
 
     this.intent(this.nextAction);
   }
