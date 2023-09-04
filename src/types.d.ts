@@ -19,11 +19,14 @@ export interface IGame {
   turn: number;
   deck: IDeck;
   entities: Array<Entity>;
+  enemies: Array<Entity>;
   player: Entity;
-  new: () => void;
+  newGame: () => void;
   render: () => void;
   combat: (card: Card) => void;
   entitySelect: (id: string) => void;
+  endPlayerTurn: () => void;
+  startNextTurn: () => void;
 }
 
 export interface IDeck {
@@ -36,7 +39,8 @@ export interface IDeck {
   shuffle: () => void,
   shuffleInto: (basePile: Cards, otherPile: Cards) => void,
   draw: (n: number) => void,
-  play: (card: Card) => void,
+  removeFromHand: (card: Card) => void,
+  endTurn: () => void,
 }
 
 export interface GameData {

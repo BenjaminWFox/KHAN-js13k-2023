@@ -27,11 +27,9 @@ function clearTargeted(targets: Array<HTMLDivElement>) {
   targets.forEach(el => {
     el.classList.remove('targeted');
   })
-
 }
 
 function getValidTargets(entities: Array<Entity>, card: Card) {
-  console.log(card)
   if (card.data.a || card.data.f || card.data.w) {
     return entities.filter(entity => entity.data.type === SPRITE_TYPE.enemy)
   }
@@ -45,6 +43,7 @@ export class Game implements IGame {
   turn: number;
   deck: IDeck;
   entities: Array<Entity>;
+  enemies: Array<Entity>;
   player: Entity;
 
   constructor(e: GameElements, gameData?: GameData) {
@@ -54,23 +53,31 @@ export class Game implements IGame {
     this.deck = gameData?.deck || new Deck(this);
     if (gameData?.deck) this.deck.register(this);
     this.entities = [];
+    this.enemies = [];
     this.player = new Entity(playerData, this);
   }
 
-  new() {
+  newGame() {
     this.e.title.classList.add('hide');
     this.e.game.classList.remove('hide');
 
     levels[this.level].enemies().forEach((enemy => {
       const e = new Entity(enemies[enemy], this)
-      this.entities.push(e);
+      this.enemies.push(e);
     }))
 
-    this.entities.push(this.player);
+    this.entities = [...this.enemies, this.player];
 
     this.deck.shuffle();
 
-    console.log('Game has deck', this.deck);
+    this.render();
+    this.newTurn();
+  }
+
+  newTurn() {
+    this.enemies.forEach(enemy => {
+      enemy.pickAction();
+    })
 
     this.deck.draw(4);
   }
@@ -78,7 +85,6 @@ export class Game implements IGame {
   render() {
     this.entities.forEach(entity => {
       entity.render();
-      entity.pickAction();
     })
 
     gei('stamina')!.innerHTML = `Stamina: ${this.player.data.stamina}`;
@@ -113,8 +119,6 @@ export class Game implements IGame {
     if (data.selectedCard?.id !== card.id) {
       data.selectedCard = card;
       card.sprite.classList.add('selected');
-
-      console.log('Card id', card.id, 'clicked.')
     } else {
       data.selectedCard = undefined
 
@@ -150,8 +154,9 @@ export class Game implements IGame {
 
       // target may equal player, but that doesn't matter for this currently
       // since the enemy/friendly applications are different.
-      target?.applyFromEnemy(data.selectedCard);
-      this.player.applyFromFriendly(data.selectedCard);
+      target?.applyFromEnemy(data.selectedCard.data);
+      this.player.applyFromFriendly(data.selectedCard.data);
+      this.player.do(data.selectedCard.type);
 
       const cardToRemove = data.selectedCard;
 
@@ -159,10 +164,42 @@ export class Game implements IGame {
       clearTargeted(data.targetedEntities);
 
       this.player.play(cardToRemove);
-      this.deck.play(cardToRemove);
+      this.deck.removeFromHand(cardToRemove);
       this.update();
-
-      cardToRemove.sprite.parentNode?.removeChild(cardToRemove.sprite);
     }
+  }
+
+  endPlayerTurn() {
+    this.enemies.forEach(enemy => {
+      enemy.startTurn();
+    })
+
+    this.deck.endTurn();
+
+    setTimeout(() => this.runEnemyTurns(), 1000);
+  }
+
+  runEnemyTurns() {
+    const enemiesToGo = [...this.enemies]
+
+    const enemyTurn = () => {
+      const enemy = enemiesToGo.pop();
+
+      if (enemy) {
+        this.player.applyFromEnemy(enemy.nextAction?.affects!)
+        enemy.applyFromFriendly(enemy.nextAction?.affects!)
+        enemy.do(enemy.nextAction?.type);
+
+        setTimeout(enemyTurn, 1000)
+      } else {
+        this.newTurn();
+      }
+    }
+
+    enemyTurn();
+  }
+
+  startNextTurn() {
+    this.turn += 1;
   }
 }

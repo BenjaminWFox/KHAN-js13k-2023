@@ -1,4 +1,3 @@
-import { Deck } from "./deck";
 import { ce, resize } from "./utility";
 import { GameElements } from "./types";
 import { Game } from "./game";
@@ -28,20 +27,10 @@ window.addEventListener('load', () => {
     e[key] = document.getElementById(key)!;
   })
 
-  e.new.addEventListener('click', game.new)
+  e.new.addEventListener('click', () => game.newGame())
+  e.endturn.addEventListener('click', () => game.endPlayerTurn())
   e.continue.addEventListener('click', () => { })
 
   resize(e);
-  game.new();
-  game.render();
-
-  // gei('enemies')?.appendChild(
-  //   spriteElementFactory('king', 100, SPRITE_TYPE.enemy, true)
-  // );
-  // gei('players')?.appendChild(
-  //   spriteElementFactory('khan', 100, SPRITE_TYPE.player, true)
-  // );
-  // gei('card-holder')?.appendChild(
-  //   cardElementFactory(cards[0])
-  // )
+  game.newGame();
 })

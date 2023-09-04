@@ -47,7 +47,7 @@ export const enemies: Record<number, EntityData> = {
     actions: new EnemyActions([
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
-      new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
+      new EnemyAction(ENEMY_INTENT.defense, { d: 5 }),
       new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
@@ -56,7 +56,7 @@ export const enemies: Record<number, EntityData> = {
     actions: new EnemyActions([
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
-      new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
+      new EnemyAction(ENEMY_INTENT.defense, { d: 5 }),
       new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
@@ -65,7 +65,7 @@ export const enemies: Record<number, EntityData> = {
     actions: new EnemyActions([
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
-      new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
+      new EnemyAction(ENEMY_INTENT.defense, { d: 5 }),
       new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
@@ -74,7 +74,7 @@ export const enemies: Record<number, EntityData> = {
     actions: new EnemyActions([
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
-      new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
+      new EnemyAction(ENEMY_INTENT.defense, { d: 5 }),
       new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },
@@ -83,7 +83,7 @@ export const enemies: Record<number, EntityData> = {
     actions: new EnemyActions([
       new EnemyAction(ENEMY_INTENT.assault, { a: 15 }),
       new EnemyAction(ENEMY_INTENT.assault, { a: 8, e: 2 }),
-      new EnemyAction(ENEMY_INTENT.defence, { d: 5 }),
+      new EnemyAction(ENEMY_INTENT.defense, { d: 5 }),
       new EnemyAction(ENEMY_INTENT.ability, { e: 4, f: 2 }),
     ])
   },

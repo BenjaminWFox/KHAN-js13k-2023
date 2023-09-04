@@ -34,9 +34,6 @@ export class Deck extends GameElement implements IDeck {
   }
 
   register(game: IGame) {
-    console.log('REGISTER');
-    console.log(this.drawPile, this.handPile, this.donePile);
-
     [this.drawPile, this.handPile, this.donePile].forEach(pile => pile?.forEach(card => card.register(game)));
   }
 
@@ -94,25 +91,34 @@ export class Deck extends GameElement implements IDeck {
 
         gei('card-holder')?.appendChild(c.sprite)
 
+        this.update();
+        setTimeout(() => this.draw(--n), 100)
       } else if (this.donePile.length) {
         this.shuffleInto(this.drawPile, this.donePile);
 
         this.draw(n);
       }
-
-      console.log('Drawing', this.handPile);
-
-      this.update();
-      setTimeout(() => this.draw(--n), 100)
     }
 
     return this;
   };
 
-  play(card: ICard) {
-    this.donePile.push(card);
-    this.handPile.splice(this.handPile.find((c, i) => c.id === card.id && i), 1)
+  removeFromHand(card: ICard) {
+    card.sprite.parentNode?.removeChild(card.sprite);
 
+    this.donePile.push(card);
+    this.handPile.splice(this.handPile.indexOf(card), 1)
     this.update();
+  }
+
+  endTurn() {
+    const card = this.handPile[this.handPile.length - 1];
+    console.log('endTurn', card, this.handPile);
+
+    if (card) {
+      this.removeFromHand(card);
+
+      setTimeout(() => this.endTurn(), 100);
+    }
   }
 }

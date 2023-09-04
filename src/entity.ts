@@ -1,7 +1,7 @@
 import { GameElement } from "./GameElement";
-import { ENEMY_INTENT } from "./enums";
+import { CARD_TYPE, ENEMY_INTENT, SPRITE_TYPE } from "./enums";
 import { spriteElementBuilder } from "./renderer";
-import { EntityData, ICard, IEnemyAction, IGame } from "./types";
+import { Affects, CardData, EntityData, ICard, IEnemyAction, IGame } from "./types";
 import { gei, qs, uuid } from "./utility";
 
 export class Entity extends GameElement {
@@ -9,7 +9,8 @@ export class Entity extends GameElement {
   data: EntityData;
   id: string;
   currentHp: number;
-  // nextAction?: IEnemyAction;
+  nextAction?: IEnemyAction;
+  isPlayer: boolean;
 
   constructor(data: EntityData, game: IGame) {
     super(game);
@@ -21,9 +22,9 @@ export class Entity extends GameElement {
     this.currentHp = data.hp;
     this.sprite = spriteElementBuilder(name, hp, type, data.mounted, this.id);
     this.sprite.addEventListener('click', () => {
-      console.log('This sprite select', this.id, this.data.name);
       game.entitySelect(this.id);
     });
+    this.isPlayer = this.data.type === SPRITE_TYPE.player;
   }
 
   render() {
@@ -58,14 +59,14 @@ export class Entity extends GameElement {
 
   pickAction() {
     if (this.data.actions) {
-      const action = this.data.actions.get();
+      this.nextAction = this.data.actions.get();
 
-      this.intent(action);
+      this.intent(this.nextAction!);
     }
   }
 
-  applyFromEnemy(card: ICard) {
-    const { a = 0, w = 0, f = 0, } = card.data
+  applyFromEnemy(cardData: CardData | Affects) {
+    const { a = 0, w = 0, f = 0, } = cardData
 
     this.currentHp = Math.max(0, this.currentHp - a);
     this.data.w += w;
@@ -74,13 +75,55 @@ export class Entity extends GameElement {
     this.update();
   }
 
-  applyFromFriendly(card: ICard) {
-    const { d = 0, e = 0, hp = 0, } = card.data
+  applyFromFriendly(cardData: CardData | Affects) {
+    const { d = 0, e = 0, hp = 0, } = cardData
 
     this.currentHp = Math.max(0, this.currentHp + hp);
     this.data.d += d;
     this.data.e += e;
 
     this.update();
+  }
+
+  startTurn() {
+    this.data.d = 0;
+    this.data.e = Math.max(0, this.data.e - 1);
+    this.update()
+  }
+
+  endTurn() {
+    this.data.f = Math.max(0, this.data.w - 1);
+    this.data.w = Math.max(0, this.data.w - 1);
+    this.update()
+  }
+
+  do(type: CARD_TYPE) {
+    let animationName = '';
+
+    console.log('Do!');
+
+    switch (type) {
+      case CARD_TYPE.ability:
+        animationName = 'bumpUp';
+        break;
+      case CARD_TYPE.assault:
+        animationName = this.isPlayer ? 'bumpLeft' : 'bumpRight';
+        break;
+      case CARD_TYPE.defense:
+        animationName = this.isPlayer ? 'bumpRight' : 'bumpLeft';
+        break;
+    }
+
+    console.log('Do!', animationName);
+
+    // qs(this.sprite, '.targeting').classList.add('myturn')
+    this.sprite.style.animationName = animationName;
+    setTimeout(() => {
+      qs(this.sprite, '.intent').className = 'intent';
+    }, 500);
+    setTimeout(() => {
+      this.sprite.style.animation = '';
+      // qs(this.sprite, '.targeting').classList.remove('myturn')
+    }, 1000);
   }
 }

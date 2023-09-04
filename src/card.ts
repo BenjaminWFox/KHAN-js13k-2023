@@ -1,13 +1,8 @@
 import { GameElement } from "./GameElement";
+import { CARD_TYPE } from "./enums";
 import { cardElementBuilder } from "./renderer";
 import { CardData, ICard } from "./types";
 import { uuid } from "./utility";
-
-export enum CARD_TYPE {
-  assault = 'assault',
-  ability = 'ability',
-  defense = 'defense',
-}
 
 type ConstructorData = [string, CARD_TYPE, CardData];
 
@@ -23,8 +18,6 @@ export class Card extends GameElement implements ICard {
     super();
 
     const [name, type, data] = constructorData;
-
-    console.log({ name, type, data })
 
     this.id = uuid();
     this.name = name;
