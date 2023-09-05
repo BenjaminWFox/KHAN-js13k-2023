@@ -242,13 +242,21 @@
 }
 
 .affects div {
-  margin-right: 5px;
+  margin: 0 5px;
 }
 
 .affects div:hover:before {
   position: absolute;
   top: 10px;
   width: 150%;
+  text-align: left;
+}
+
+.affects div.armor:hover:before {
+  position: absolute;
+  top: 0px;
+  left: -40px;
+  width: 250%;
 }
 
 .stats .number {
@@ -267,8 +275,16 @@
   transition: width .5s;
 }
 
+.armor {
+  position: absolute;
+  left: -15px;
+  top: -25px;
+}
+
 .armor:hover:before {
   content: 'Defend: block X attack damage';
+  top: 20px;
+  width: 200%;
 }
 
 .weak:hover:before {

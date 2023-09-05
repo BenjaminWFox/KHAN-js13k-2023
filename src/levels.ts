@@ -2,15 +2,13 @@ import { getRandomIntInclusive } from "./utility"
 
 export const levels: Record<number, Record<'enemies', () => Array<number>>> = {
   1: {
-    enemies: () => [getRandomIntInclusive(8, 8)]
-    // enemies: () => [getRandomIntInclusive(5, 9), getRandomIntInclusive(5, 9), getRandomIntInclusive(5, 9)]
-    // enemies: () => [getRandomIntInclusive(8, 8), getRandomIntInclusive(8, 8)]
+    enemies: () => [getRandomIntInclusive(9, 9)]
   },
   2: {
-    enemies: () => [getRandomIntInclusive(5, 9), getRandomIntInclusive(5, 9)]
+    enemies: () => [getRandomIntInclusive(8, 9), getRandomIntInclusive(8, 9)]
   },
   3: {
-    enemies: () => [4, getRandomIntInclusive(5, 9)]
+    enemies: () => [getRandomIntInclusive(7, 9), getRandomIntInclusive(5, 7), getRandomIntInclusive(5, 7)]
   },
   4: {
     enemies: () => [4, getRandomIntInclusive(5, 9), getRandomIntInclusive(5, 9)]

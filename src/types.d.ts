@@ -106,3 +106,5 @@ export interface CardData extends Affects {
   on?: ACTIVATION_TRIGGER;
   flavor?: string;
 };
+
+export type EnemyData = Record<number, EntityData>

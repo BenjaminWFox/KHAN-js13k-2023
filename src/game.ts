@@ -1,27 +1,27 @@
 import { IDeck, GameData, GameElements, IGame, IVisualCard } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
-import { enemies } from "./enemies";
-import { Player, playerData } from "./player";
+import { Player } from "./player";
 import { gei, uuid } from "./utility";
 import { ACTIVATION_TRIGGER, GAME_STATE, SPRITE_TYPE } from "./enums";
 import { Deck } from "./deck";
 import { flashCardCost } from "./dom";
 import { Enemy } from "./enemy";
 import { messages, showMessage } from "./messaging";
+import data from "./data";
 
 interface Data {
   selectedCard: IVisualCard | undefined,
   targetedEntities: Array<HTMLDivElement>,
 }
 
-const data: Data = {
+const globalGameData: Data = {
   selectedCard: undefined,
   targetedEntities: [],
 }
 
 function clearSelectedCard(card?: IVisualCard) {
-  data.selectedCard = undefined;
+  globalGameData.selectedCard = undefined;
   card?.sprite.classList.remove('selected');
 }
 
@@ -48,7 +48,7 @@ function getValidTargets(entities: Array<Entity>, card: IVisualCard) {
  */
 function getEnemiesForLevel(c: IGame) {
   levels[c.level].enemies().forEach((enemy => {
-    const e = new Enemy(enemies[enemy], c)
+    const e = new Enemy(data.enemyData[enemy], c)
     c.enemies.push(e);
   }))
 }
@@ -67,10 +67,10 @@ export class Game implements IGame {
     if (gameData?.deck) this.deck.register(this);
 
     this.e = e;
-    this.level = 8;
-    this.turn = 0;
+    this.level = data.startLevel;
+    this.turn = data.startTurn;
     this.enemies = [];
-    this.player = new Player(playerData, this);
+    this.player = new Player(data.playerData, this);
     this.state = GAME_STATE.PLAYER_TURN
   }
 
@@ -193,9 +193,9 @@ export class Game implements IGame {
     /**
      * Clear selected & targets every time
      */
-    clearTargeted(data.targetedEntities);
+    clearTargeted(globalGameData.targetedEntities);
 
-    data.targetedEntities = [];
+    globalGameData.targetedEntities = [];
 
     if (this.player.currentStamina < card.data.c!) {
       flashCardCost(card);
@@ -211,12 +211,12 @@ export class Game implements IGame {
      * 
      * If not, deselect current card.
      */
-    if (data.selectedCard?.id !== card.id) {
-      clearSelectedCard(data.selectedCard);
-      data.selectedCard = card;
+    if (globalGameData.selectedCard?.id !== card.id) {
+      clearSelectedCard(globalGameData.selectedCard);
+      globalGameData.selectedCard = card;
       card.sprite.classList.add('selected');
     } else {
-      clearSelectedCard(data.selectedCard);
+      clearSelectedCard(globalGameData.selectedCard);
 
       return;
     }
@@ -227,7 +227,7 @@ export class Game implements IGame {
     targets.forEach(entity => {
       const el = entity!.sprite.querySelector('.targeting')! as HTMLDivElement;
 
-      data.targetedEntities.push(el)
+      globalGameData.targetedEntities.push(el)
 
       el.classList.add('targeted');
     })
@@ -241,16 +241,16 @@ export class Game implements IGame {
    * @param id id of selected entity
    */
   entitySelect(id: string) {
-    if (data.selectedCard) {
-      const target = getValidTargets([...this.enemies, this.player], data.selectedCard).find(item => item?.id === id)
+    if (globalGameData.selectedCard) {
+      const target = getValidTargets([...this.enemies, this.player], globalGameData.selectedCard).find(item => item?.id === id)
 
-      if (!target || this.player.currentStamina < data.selectedCard?.data?.c!) {
+      if (!target || this.player.currentStamina < globalGameData.selectedCard?.data?.c!) {
         return;
       }
-      const cardToRemove = data.selectedCard;
+      const cardToRemove = globalGameData.selectedCard;
 
-      clearSelectedCard(data.selectedCard);
-      clearTargeted(data.targetedEntities);
+      clearSelectedCard(globalGameData.selectedCard);
+      clearTargeted(globalGameData.targetedEntities);
 
       this.player.play(cardToRemove);
       this.deck.removeFromHand(cardToRemove);
@@ -276,8 +276,8 @@ export class Game implements IGame {
     if (this.state === GAME_STATE.PLAYER_TURN) {
       this.setState(GAME_STATE.ENEMY_TURN);
       this.player.endTurn();
-      clearSelectedCard(data.selectedCard);
-      clearTargeted(data.targetedEntities);
+      clearSelectedCard(globalGameData.selectedCard);
+      clearTargeted(globalGameData.targetedEntities);
 
       this.enemies.forEach(enemy => {
         enemy.startTurn();

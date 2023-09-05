@@ -1,18 +1,6 @@
 import { Entity } from "./entity";
-import { ACTIVATION_TRIGGER, SPRITE_TYPE } from "./enums";
+import { ACTIVATION_TRIGGER } from "./enums";
 import { CardData, ICard, IGame, IVisualCard, PlayerData } from "./types";
-
-export const playerData: PlayerData = {
-  name: 'khan',
-  type: SPRITE_TYPE.player,
-  hp: 1,
-  d: 0,
-  w: 0,
-  f: 0,
-  e: 0,
-  mounted: true,
-  stamina: 4
-}
 
 export class Player extends Entity {
   data: PlayerData;
