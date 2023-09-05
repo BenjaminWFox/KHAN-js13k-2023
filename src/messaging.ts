@@ -7,7 +7,10 @@ export const messages = {
   Should you prepare wisely, even the Great King of the West will be no match for your might! Go forth and conquer!`,
   final: `Oh Great Khan! You've done it! The King of the West has fallen and all lands are yours, from sea to sea on all sides! Go 
   forth now and prosper and multiply so that these lands will know the lineage and rule of Khan until the end of time!`,
-  thanks: `Thank you for playing, hope you enjoyed this tiny game!`
+  thanks: `Thank you for playing, hope you enjoyed this tiny game!`,
+  fail: `Oh Great Khan, the people mourn you! The Gods must have been mistaken, for it was not your destiny to conquer these lands,
+  but rather it must have been one of your many offspring who is to wear this mantle. We shall wait still for those days of
+  glory to come.`
 }
 
 export function showMessage(message: string, callback: () => void, multiMessage = false) {

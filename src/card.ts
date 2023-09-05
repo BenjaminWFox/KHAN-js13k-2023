@@ -127,11 +127,14 @@ export const cards: Array<CardConstructorData> = [
   ['Healing Ritual', CARD_TYPE.assault, { c: 2, hp: 15, flavor: 'He will win who knows when to fight and when not to fight.' }],
   ['Wrath Of Khan', CARD_TYPE.assault, { c: 1, a: 5, e: 2, hp: -2, flavor: 'The Khan was merciless in pursuit of his enemies.' }],
   ['Reeckless Assault', CARD_TYPE.assault, { c: 2, a: 20, hp: -10, flavor: 'Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.' }],
-  ['Fearsome Reputation', CARD_TYPE.ability, { c: 2, w: 3, f: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }]
+  ['Shock and Awe', CARD_TYPE.ability, { c: 2, w: 3, f: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
+  ['Combat Medics', CARD_TYPE.ability, { c: 0, flavor: '??' }],
+  ['Field Hospital', CARD_TYPE.ability, { c: 0, flavor: '??' }],
 ];
 
 export const innateCards: Array<CardConstructorData> = [
   ['Strategic Planning', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, draw: 1, flavor: 'Water shapes its course according to the nature of the ground over which it flows; the soldier works out his victory in relation to the foe whom he is facing.' }],
   ['Calisthenics', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, s: 1, flavor: 'To not prepare is the greatest of crimes; to be prepared beforehand for any contingency is the greatest of virtues.' }],
   ['Shamanism', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, hp: 10, flavor: '' }],
+  ['Fearsome Reputation', CARD_TYPE.ability, { c: 0, w: 1, f: 1, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }]
 ]

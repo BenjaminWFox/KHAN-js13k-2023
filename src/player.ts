@@ -5,7 +5,7 @@ import { CardData, ICard, IGame, IVisualCard, PlayerData } from "./types";
 export const playerData: PlayerData = {
   name: 'khan',
   type: SPRITE_TYPE.player,
-  hp: 100,
+  hp: 1,
   d: 0,
   w: 0,
   f: 0,

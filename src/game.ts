@@ -67,7 +67,7 @@ export class Game implements IGame {
     if (gameData?.deck) this.deck.register(this);
 
     this.e = e;
-    this.level = 1;
+    this.level = 8;
     this.turn = 0;
     this.enemies = [];
     this.player = new Player(playerData, this);
@@ -114,14 +114,16 @@ export class Game implements IGame {
     }, 1000)
   }
 
-  endGame() {
-    showMessage(messages.final, () => {
+  endGame(isWin = true) {
+    setTimeout(() => {
+      showMessage(isWin ? messages.final : messages.fail, () => {
 
-      showMessage(messages.thanks, () => {
-        window.location.assign('/');
-      })
+        showMessage(messages.thanks, () => {
+          window.location.reload();
+        })
 
-    }, true)
+      }, true)
+    }, 1000)
   }
 
   newCardPicked() {
@@ -316,12 +318,14 @@ export class Game implements IGame {
   }
 
   startNextTurn() {
-    this.enemies.forEach(enemy => {
-      enemy.endTurn();
-    })
+    if (this.state !== GAME_STATE.GAME_OVER) {
+      this.enemies.forEach(enemy => {
+        enemy.endTurn();
+      })
 
-    this.turn += 1;
-    this.newTurn();
+      this.turn += 1;
+      this.newTurn();
+    }
   }
 
   onDeath(entity: Entity) {
@@ -334,6 +338,8 @@ export class Game implements IGame {
     if (entity.isPlayer) {
       // game over
       console.log('GAME OVER :( :(');
+      this.setState(GAME_STATE.GAME_OVER)
+      this.endGame(false);
 
       return;
     }
@@ -343,6 +349,7 @@ export class Game implements IGame {
     if (!this.enemies.length) {
       console.log('Wat', this.level, Object.keys(levels).length)
       if (this.level === Object.keys(levels).length) {
+        this.setState(GAME_STATE.GAME_OVER)
         console.log('GAME WON!!');
         this.endGame();
       } else {
