@@ -16,7 +16,7 @@ class EnemyActions implements IEnemyActions {
 
 export default {
   boardScale: 1,
-  startLevel: 3,
+  startLevel: 1,
   startTurn: 0,
   playerData: {
     name: 'khan',
@@ -27,7 +27,7 @@ export default {
     f: 0,
     e: 0,
     mounted: true,
-    stamina: 40
+    stamina: 4
   } as PlayerData,
   enemyData: {
     1: {

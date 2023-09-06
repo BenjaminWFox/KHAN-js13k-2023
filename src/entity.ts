@@ -113,6 +113,10 @@ export class Entity extends GameElement {
     if (e > 0) changed.e = e;
 
     this.update(changed);
+
+    if (this.currentHp <= 0) {
+      this.game?.onDeath(this);
+    }
   }
 
   startTurn() {

@@ -39,8 +39,8 @@ export class Deck extends GameElement implements IDeck {
       ...(new Array(STARTING_CARDS).fill('_')).map((_, i) => {
         return new VisualCard(basicCards[i % 2])
       }),
-      new VisualCard(cards[3]),
-      new VisualCard(cards[3])
+      new VisualCard(basicCards[2]),
+      new VisualCard(basicCards[3])
     ];
     this.handPile = [];
     this.donePile = [];
@@ -105,8 +105,6 @@ export class Deck extends GameElement implements IDeck {
   }
 
   draw(n: number) {
-    console.log('Begin draw')
-
     this.pendingDraw = n;
 
     if (n > 0 && this.handPile.length < MAX_IN_HAND) {
@@ -157,7 +155,19 @@ export class Deck extends GameElement implements IDeck {
     }
 
     this.handPile.splice(this.handPile.indexOf(card), 1)
+
     this.update();
+  }
+
+  removeInnateBuffs(cards: Cards) {
+    for (let i = 0; i < this.innatePile.length; i++) {
+      const c = this.innatePile[i]
+
+      if (cards.indexOf(c) !== -1) {
+        this.innatePile.splice(i, 1);
+        i--;
+      }
+    }
   }
 
   clearHand() {
@@ -185,6 +195,6 @@ export class Deck extends GameElement implements IDeck {
 
     setTimeout(() => {
       this.shuffleInto(this.drawPile, this.donePile);
-    }, 900)
+    }, 1000)
   }
 }

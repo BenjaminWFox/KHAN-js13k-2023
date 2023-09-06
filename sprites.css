@@ -271,7 +271,7 @@
 
 .affects div.changed {
   animation-name: changed;
-  animation-duration: 1.5s;
+  animation-duration: 1s;
 }
 
 .affects div {

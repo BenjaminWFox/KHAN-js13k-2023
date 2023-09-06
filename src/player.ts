@@ -41,9 +41,12 @@ export class Player extends Entity {
   applyFromFriendly(cardData: CardData): void {
     super.applyFromFriendly(cardData)
 
-    const { s = 0, draw = 0 } = cardData;
+    const { s = 0, draw = 0, mhp = 0 } = cardData;
 
     this.currentStamina += s;
+
+    this.currentHp += mhp;
+    this.data.hp += mhp;
 
     console.log('Apply')
     if (draw > 0) {
@@ -52,6 +55,10 @@ export class Player extends Entity {
     }
 
     this.update();
+
+    if (this.currentHp <= 0) {
+      this.game?.onDeath(this);
+    }
   }
 
   applyInnate(cards: Array<IVisualCard>, type: ACTIVATION_TRIGGER) {
@@ -59,6 +66,10 @@ export class Player extends Entity {
     let applyCards: Array<IVisualCard> = []
 
     switch (type) {
+      case ACTIVATION_TRIGGER.buff:
+        applyCards = cards.filter(card => card.data.on === ACTIVATION_TRIGGER.buff);
+        this.game?.onPlayerBuffsApplied(applyCards);
+        break;
       case ACTIVATION_TRIGGER.round:
         applyCards = cards.filter(card => card.data.on === ACTIVATION_TRIGGER.round);
         break;

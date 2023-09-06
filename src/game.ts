@@ -1,4 +1,4 @@
-import { IDeck, GameData, GameElements, IGame, IVisualCard, ICard, CardData } from "./types";
+import { IDeck, GameData, GameElements, IGame, IVisualCard, CardData, Cards } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { Player } from "./player";
@@ -128,6 +128,7 @@ export class Game implements IGame {
 
   newCardPicked() {
     this.deck.clearHand();
+    this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.buff);
 
     setTimeout(() => {
       this.newRound();
@@ -180,6 +181,10 @@ export class Game implements IGame {
     gei('round')!.innerHTML = `Round ${this.turn}`
   }
 
+  onPlayerBuffsApplied(cards: Cards) {
+    this.deck.removeInnateBuffs(cards);
+  }
+
   /**
    * Called when a card is clicked in the hand during players turn. Card may have been
    * either Selected or De-selected. Targets are selected based on card data.
@@ -198,7 +203,6 @@ export class Game implements IGame {
     if (this.player.currentStamina < card.data.c!) {
       flashCardCost(card);
 
-      console.error('Not enough stamina!');
       this.alert('Not enough stamina!')
 
       return;
@@ -263,17 +267,26 @@ export class Game implements IGame {
         cardToRemove.dData(this.player.data)
       );
 
+      this.deck.updateVisibleCards(this.player.data);
+      this.update();
+
       // Remove this after playing, or just-played cards may be reshuffled into the draw pile
       this.deck.removeFromHand(cardToRemove);
 
-      this.deck.updateVisibleCards(this.player.data);
-      this.update();
+      if (!this.enemies.length) {
+        if (this.level === Object.keys(levels).length) {
+          this.setState(GAME_STATE.GAME_OVER)
+          console.log('GAME WON!!');
+          this.endGame();
+        } else {
+          console.log('ROUND WON!!');
+          this.endRound();
+        }
+      }
     }
   }
 
   applyToAllEnemies(cardData: CardData) {
-    console.log('Applying to ALL enemies', this.enemies);
-
     /**
      * Must make copy of array, otherwise if an enemy dies other enemies will be skipped
      */
@@ -284,7 +297,9 @@ export class Game implements IGame {
 
   endPlayerTurn() {
     if (this.state === GAME_STATE.PLAYER_TURN) {
+
       this.setState(GAME_STATE.ENEMY_TURN);
+
       this.player.endTurn();
       clearSelectedCard(globalGameData.selectedCard);
       clearTargeted(globalGameData.targetedEntities);
@@ -339,8 +354,6 @@ export class Game implements IGame {
   }
 
   onDeath(entity: Entity) {
-    console.log('On death!', [...this.enemies], this.enemies.length);
-
     entity.sprite.style.animationName = 'dead'
 
     setTimeout(() => {
@@ -358,16 +371,5 @@ export class Game implements IGame {
 
     this.enemies.splice(this.enemies.indexOf(entity as Enemy), 1);
 
-    if (!this.enemies.length) {
-      console.log('Wat', this.level, Object.keys(levels).length)
-      if (this.level === Object.keys(levels).length) {
-        this.setState(GAME_STATE.GAME_OVER)
-        console.log('GAME WON!!');
-        this.endGame();
-      } else {
-        console.log('ROUND WON!!');
-        this.endRound();
-      }
-    }
   }
 }

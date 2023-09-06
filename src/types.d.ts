@@ -37,6 +37,7 @@ export interface IGame {
   endGame: () => void;
   newCardPicked: () => void;
   render: () => void;
+  onPlayerBuffsApplied: (cards: Cards) => void;
   onPlayerSelectCard: (card: Card) => void;
   entitySelect: (id: string) => void;
   endPlayerTurn: () => void;
@@ -58,6 +59,7 @@ export interface IDeck {
   shuffleInto: (basePile: Cards, otherPile: Cards) => void,
   draw: (n: number) => void,
   removeFromHand: (card: IVisualCard) => void,
+  removeInnateBuffs: (cards: Cards) => void,
   endTurn: () => void,
   clearHand: () => void,
   endRound: () => void;
