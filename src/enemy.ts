@@ -30,6 +30,8 @@ export class Enemy extends Entity {
   applyFromEnemy(cardData: CardData) {
     super.applyFromEnemy(cardData);
 
-    this.intent(this.nextAction);
+    if (this.nextAction) {
+      this.intent(this.nextAction);
+    }
   }
 }

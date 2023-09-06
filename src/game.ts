@@ -1,4 +1,4 @@
-import { IDeck, GameData, GameElements, IGame, IVisualCard } from "./types";
+import { IDeck, GameData, GameElements, IGame, IVisualCard, ICard } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { Player } from "./player";
@@ -139,10 +139,10 @@ export class Game implements IGame {
     this.turn = 0;
     this.setState(GAME_STATE.PLAYER_TURN);
 
+    getEnemiesForLevel(this);
     this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.round);
 
     setTimeout(() => {
-      getEnemiesForLevel(this);
       this.player.startRound();
       this.deck.shuffle();
       this.render();
@@ -189,7 +189,7 @@ export class Game implements IGame {
    * @param card 
    * @returns 
    */
-  combat(card: IVisualCard) {
+  onPlayerSelectCard(card: IVisualCard) {
     /**
      * Clear selected & targets every time
      */
@@ -254,7 +254,6 @@ export class Game implements IGame {
 
       this.player.play(cardToRemove);
       this.deck.removeFromHand(cardToRemove);
-      this.deck.updateVisibleCards(this.player.data);
 
       this.player.do(cardToRemove.type);
 
@@ -268,8 +267,16 @@ export class Game implements IGame {
         cardToRemove.dData(this.player.data)
       );
 
+
+      this.deck.updateVisibleCards(this.player.data);
       this.update();
     }
+  }
+
+  applyToAllEnemies(card: ICard) {
+    this.enemies.forEach(enemy => {
+      enemy.applyFromEnemy(card.data);
+    })
   }
 
   endPlayerTurn() {

@@ -71,8 +71,11 @@ export class Player extends Entity {
 
     applyCards.forEach(card => {
       this.applyFromFriendly(card.data);
-    })
 
+      if (card.data.w || card.data.f) {
+        this.game?.applyToAllEnemies(card);
+      }
+    })
   }
 
   play(card: ICard) {

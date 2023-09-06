@@ -85,7 +85,6 @@
   position: relative;
   animation-duration: 1s;
   animation-iteration-count: 1;
-  transition: all .5s;
 }
 
 .sprite-wrapper.enemy {
@@ -230,8 +229,7 @@
   bottom: -6px;
   transform: scale(.25, .25);
   z-index: 2;
-  text-shadow: 0px 0px 2px #000;
-  /* background: linear-gradient(to right, red 50%, #ffffff00 50%); */
+  text-shadow: 0px 0px 5px #000;
   transition: all .25s;
 }
 
@@ -275,10 +273,14 @@
   transition: width .5s;
 }
 
+.stats .fill.armored {
+  background: lightskyblue;
+}
+
 .armor {
   position: absolute;
   left: -15px;
-  top: -25px;
+  top: -35px;
 }
 
 .armor:hover:before {

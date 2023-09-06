@@ -32,7 +32,9 @@ export class Entity extends GameElement {
   }
 
   update() {
-    qs(this.sprite, '.hp .fill').style.width = Math.round(this.currentHp / this.data.hp * 100) + '%';
+    const fillEl = qs(this.sprite, `.hp .fill`)
+    fillEl.style.width = Math.round(this.currentHp / this.data.hp * 100) + '%';
+    this.data.d > 0 ? fillEl.classList.add('armored') : fillEl.classList.remove('armored');
     qs(this.sprite, '.hp .number').innerHTML = `${this.currentHp}/${this.data.hp}`;
     qs(this.sprite, '.affects .armor').innerHTML = 'D:' + this.data.d;
     qs(this.sprite, '.affects .enrage').innerHTML = 'E:' + this.data.e;

@@ -97,7 +97,7 @@ export default {
     5: {
       name: 'bear2',
       type: SPRITE_TYPE.enemy,
-      hp: 30,
+      hp: 5,
       d: 0,
       w: 0,
       f: 0,
@@ -113,7 +113,7 @@ export default {
     6: {
       name: 'bear1',
       type: SPRITE_TYPE.enemy,
-      hp: 30,
+      hp: 5,
       d: 0,
       w: 0,
       f: 0,
@@ -129,7 +129,7 @@ export default {
     7: {
       name: 'rok',
       type: SPRITE_TYPE.enemy,
-      hp: 25,
+      hp: 5,
       d: 0,
       w: 0,
       f: 0,
@@ -145,7 +145,7 @@ export default {
     8: {
       name: 'wolf',
       type: SPRITE_TYPE.enemy,
-      hp: 20,
+      hp: 5,
       d: 0,
       w: 0,
       f: 0,
@@ -161,17 +161,17 @@ export default {
     9: {
       name: 'snake',
       type: SPRITE_TYPE.enemy,
-      hp: 20,
+      hp: 5,
       d: 0,
       w: 0,
       f: 0,
       e: 0,
       mounted: false,
       actions: new EnemyActions([
-        ['', CARD_TYPE.assault, { a: 15 }],
+        // ['', CARD_TYPE.assault, { a: 15 }],
         ['', CARD_TYPE.assault, { a: 8, e: 2 }],
-        ['', CARD_TYPE.defense, { d: 5 }],
-        ['', CARD_TYPE.ability, { e: 4, f: 2 }],
+        // ['', CARD_TYPE.defense, { d: 5 }],
+        // ['', CARD_TYPE.ability, { e: 4, f: 2 }],
       ])
     },
   } as EnemyData

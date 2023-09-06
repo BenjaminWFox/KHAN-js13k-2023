@@ -37,11 +37,12 @@ export interface IGame {
   endGame: () => void;
   newCardPicked: () => void;
   render: () => void;
-  combat: (card: Card) => void;
+  onPlayerSelectCard: (card: Card) => void;
   entitySelect: (id: string) => void;
   endPlayerTurn: () => void;
   startNextTurn: () => void;
   onDeath: (entity: Entity) => void;
+  applyToAllEnemies: (card: ICard) => void;
 }
 
 export interface IDeck {
