@@ -32,5 +32,5 @@ window.addEventListener('load', () => {
 
   resize(e);
 
-  // game.newGame();
+  game.newGame();
 })

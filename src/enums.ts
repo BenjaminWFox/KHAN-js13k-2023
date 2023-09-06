@@ -20,7 +20,8 @@ export enum CARD_TYPE {
 
 export enum ACTIVATION_TRIGGER {
   round = 'round',
-  turn = 'turn'
+  turn = 'turn',
+  buff = 'buff',
 }
 
 export enum GAME_STATE {

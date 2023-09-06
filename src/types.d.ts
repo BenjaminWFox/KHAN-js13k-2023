@@ -42,7 +42,7 @@ export interface IGame {
   endPlayerTurn: () => void;
   startNextTurn: () => void;
   onDeath: (entity: Entity) => void;
-  applyToAllEnemies: (card: ICard) => void;
+  applyToAllEnemies: (cardData: CardData) => void;
 }
 
 export interface IDeck {
@@ -70,11 +70,13 @@ export interface GameData {
 
 interface Affects {
   a?: number // assault value
+  aa?: number // assult all value
   d?: number // defend change value
   w?: number // weak change value
   f?: number // falter change value
   e?: number // enraged change value
   hp?: number // hp change value
+  mhp?: number // max hp change value
   s?: number // stamina change value
   draw?: number // draw cards value
 }

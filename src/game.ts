@@ -1,4 +1,4 @@
-import { IDeck, GameData, GameElements, IGame, IVisualCard, ICard } from "./types";
+import { IDeck, GameData, GameElements, IGame, IVisualCard, ICard, CardData } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { Player } from "./player";
@@ -32,7 +32,7 @@ function clearTargeted(targets: Array<HTMLDivElement>) {
 }
 
 function getValidTargets(entities: Array<Entity>, card: IVisualCard) {
-  if (card.data.a || card.data.f || card.data.w) {
+  if (card.data.a || card.data.aa || card.data.f || card.data.w) {
     return entities.filter(entity => entity.data.type === SPRITE_TYPE.enemy)
   }
 
@@ -137,8 +137,6 @@ export class Game implements IGame {
   newRound() {
     this.level += 1;
     this.turn = 0;
-    this.setState(GAME_STATE.PLAYER_TURN);
-
     getEnemiesForLevel(this);
     this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.round);
 
@@ -147,7 +145,7 @@ export class Game implements IGame {
       this.deck.shuffle();
       this.render();
       this.newTurn()
-    }, 1000)
+    }, 500)
   }
 
   newTurn() {
@@ -273,9 +271,14 @@ export class Game implements IGame {
     }
   }
 
-  applyToAllEnemies(card: ICard) {
-    this.enemies.forEach(enemy => {
-      enemy.applyFromEnemy(card.data);
+  applyToAllEnemies(cardData: CardData) {
+    console.log('Applying to ALL enemies', this.enemies);
+
+    /**
+     * Must make copy of array, otherwise if an enemy dies other enemies will be skipped
+     */
+    [...this.enemies].forEach(enemy => {
+      enemy.applyFromEnemy(cardData);
     })
   }
 
@@ -336,6 +339,8 @@ export class Game implements IGame {
   }
 
   onDeath(entity: Entity) {
+    console.log('On death!', [...this.enemies], this.enemies.length);
+
     entity.sprite.style.animationName = 'dead'
 
     setTimeout(() => {

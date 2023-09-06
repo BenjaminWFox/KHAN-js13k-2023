@@ -81,6 +81,7 @@ export class VisualCard extends Card implements IVisualCard {
   buildVisualAttributes(data: CardData, modData?: EntityData) {
     this.attributes = [];
     if (data.a) this.attributes.push(`ATTACK ENEMY: ${getAttackForData(data.a, modData)}`)
+    if (data.aa) this.attributes.push(`ATTACK ALL: ${getAttackForData(data.aa, modData)}`)
     if (data.d) this.attributes.push(`DEFEND SELF: ${getDefenceForData(data.d, modData)}`)
     if (data.e) this.attributes.push(`ENRAGE SELF: ${data.e}`)
     if (data.w)
@@ -122,24 +123,30 @@ export class VisualCard extends Card implements IVisualCard {
 export const basicCards: Array<CardConstructorData> = [
   ['Basic Attack', CARD_TYPE.assault, { a: 5, c: 1, flavor: 'You spend your life perfecting something, is it really basic?' }],
   ['Basic Shield', CARD_TYPE.defense, { d: 5, c: 1, flavor: 'Discretion is the better part of valor, after all.' }],
-  ['War Cry', CARD_TYPE.ability, { c: 2, w: 3, e: 2, flavor: 'Enemies could scarcely move to defend themselves on hearing the screams of the Khan\'s riders.' }],
-  ['Rally Cry', CARD_TYPE.ability, { c: 2, f: 3, d: 5, flavor: 'Such were the regrouping tactics that enemies could find nowhere to strike.' }],
+  ['War Cry', CARD_TYPE.ability, { c: 2, w: 2, e: 2, flavor: 'Enemies could scarcely move to defend themselves on hearing the screams of the Khan\'s riders.' }],
+  ['Rally Cry', CARD_TYPE.ability, { c: 2, f: 2, d: 8, flavor: 'Such were the regrouping tactics that enemies could find nowhere to strike.' }],
 ];
 
 export const cards: Array<CardConstructorData> = [
-  ['Recharge', CARD_TYPE.assault, { c: 0, s: 2, flavor: '??' }],
-  ['Push Through', CARD_TYPE.assault, { c: 1, draw: 2, flavor: '??' }],
-  ['Clairvoyance', CARD_TYPE.assault, { c: 0, draw: 1, flavor: '??' }],
-  ['Wrath Of Khan', CARD_TYPE.assault, { c: 1, a: 5, e: 2, hp: -2, flavor: 'The Khan was merciless in pursuit of his enemies.' }],
+  ['Recharge', CARD_TYPE.assault, { c: 0, s: 2, flavor: 'The Khan\'s army could rest on the move, allowing them to be where noone thought they could be.' }],
+
+  ['Push Through', CARD_TYPE.assault, { c: 1, draw: 2, flavor: 'Any obstacle may be overcome with enough force.' }],
+  ['Clairvoyance', CARD_TYPE.assault, { c: 0, draw: 1, flavor: 'The Khan had a preternatural ability to know what to do next.' }],
+
+  ['Wrath Of Khan', CARD_TYPE.assault, { c: 3, aa: 12, e: 2, hp: -2, flavor: 'The Khan was merciless in pursuit of his enemies.' }],
   ['Reeckless Assault', CARD_TYPE.assault, { c: 2, a: 20, hp: -10, flavor: 'Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.' }],
+
   ['Shock and Awe', CARD_TYPE.ability, { c: 2, w: 3, f: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
+
   ['Combat Medics', CARD_TYPE.ability, { c: 1, d: 5, hp: 5, flavor: '??' }],
   ['Field Hospital', CARD_TYPE.ability, { c: 2, hp: 15, flavor: 'He will win who knows when to fight and when not to fight.' }],
 ];
 
 export const innateCards: Array<CardConstructorData> = [
-  // ['Strategic Planning', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, draw: 1, flavor: 'Water shapes its course according to the ground as the soldier works out victory in relation to his foe.' }],
-  // ['Calisthenics', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, s: 1, flavor: 'To not prepare is the greatest of crimes; to be prepared beforehand for any contingency is the greatest of virtues.' }],
-  // ['Shamanism', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, hp: 10, flavor: '??' }],
-  ['Fearsome Reputation', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, w: 2, f: 2, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }]
+  ['Strategic Planning', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, draw: 1, flavor: 'Water shapes its course according to the ground as the soldier works out victory in relation to his foe.' }],
+  ['Calisthenics', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, s: 1, flavor: 'To not prepare is the greatest of crimes; to be prepared beforehand for any contingency is the greatest of virtues.' }],
+  ['Tenger Spirit', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, hp: 10, flavor: 'The Khan was considered the embodiment of this highest deity.' }],
+  ['Fearsome Reputation', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, w: 2, f: 2, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
+  ['Scientific Advancement', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.buff, c: 0, mhp: 5, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
+  ['Defensive Perimeter', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, d: 5, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
 ]
