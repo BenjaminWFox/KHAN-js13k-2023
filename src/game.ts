@@ -251,8 +251,6 @@ export class Game implements IGame {
       clearTargeted(globalGameData.targetedEntities);
 
       this.player.play(cardToRemove);
-      this.deck.removeFromHand(cardToRemove);
-
       this.player.do(cardToRemove.type);
 
       // target may equal player, but that doesn't matter for this currently
@@ -265,6 +263,8 @@ export class Game implements IGame {
         cardToRemove.dData(this.player.data)
       );
 
+      // Remove this after playing, or just-played cards may be reshuffled into the draw pile
+      this.deck.removeFromHand(cardToRemove);
 
       this.deck.updateVisibleCards(this.player.data);
       this.update();

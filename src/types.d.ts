@@ -74,6 +74,7 @@ interface Affects {
   d?: number // defend change value
   w?: number // weak change value
   f?: number // falter change value
+  fa?: number // falter all change value
   e?: number // enraged change value
   hp?: number // hp change value
   mhp?: number // max hp change value

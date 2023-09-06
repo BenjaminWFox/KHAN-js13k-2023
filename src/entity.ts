@@ -61,7 +61,7 @@ export class Entity extends GameElement {
     console.log(this.id, 'entity applying cardData', cardData);
 
     let changed: Partial<CardData> = {}
-    const { a = 0, aa = 0, w = 0, f = 0, } = cardData
+    const { a = 0, aa = 0, fa = 0, w = 0, f = 0, } = cardData
 
     let d = this.data.d;
 
@@ -94,9 +94,11 @@ export class Entity extends GameElement {
       this.game?.onDeath(this);
     }
 
-    if (aa > 0) {
-      this.game?.applyToAllEnemies({ a: aa });
-    }
+    const parsedData = {} as CardData
+    if (aa > 0) parsedData.a = aa;
+    if (fa > 0) parsedData.f = fa;
+
+    if (Object.keys(parsedData).length) this.game?.applyToAllEnemies(parsedData);
   }
 
   applyFromFriendly(cardData: CardData) {

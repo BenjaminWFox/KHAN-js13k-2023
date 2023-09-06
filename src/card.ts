@@ -82,6 +82,7 @@ export class VisualCard extends Card implements IVisualCard {
     this.attributes = [];
     if (data.a) this.attributes.push(`ATTACK ENEMY: ${getAttackForData(data.a, modData)}`)
     if (data.aa) this.attributes.push(`ATTACK ALL: ${getAttackForData(data.aa, modData)}`)
+    if (data.fa) this.attributes.push(`FALTER ALL: ${getAttackForData(data.fa, modData)}`)
     if (data.d) this.attributes.push(`DEFEND SELF: ${getDefenceForData(data.d, modData)}`)
     if (data.e) this.attributes.push(`ENRAGE SELF: ${data.e}`)
     if (data.w)
@@ -133,12 +134,17 @@ export const cards: Array<CardConstructorData> = [
   ['Push Through', CARD_TYPE.assault, { c: 1, draw: 2, flavor: 'Any obstacle may be overcome with enough force.' }],
   ['Clairvoyance', CARD_TYPE.assault, { c: 0, draw: 1, flavor: 'The Khan had a preternatural ability to know what to do next.' }],
 
-  ['Wrath Of Khan', CARD_TYPE.assault, { c: 3, aa: 12, e: 2, hp: -2, flavor: 'The Khan was merciless in pursuit of his enemies.' }],
+  ['Shield Wall', CARD_TYPE.assault, { c: 2, d: 25, flavor: '' }],
+  ['Tactical Retreat', CARD_TYPE.assault, { c: 2, d: 12, draw: 1, flavor: '' }],
+
+  ['Surgical Strike', CARD_TYPE.assault, { c: 1, a: 10, draw: 1, flavor: 'Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.' }],
+  ['Whirling Dervish', CARD_TYPE.assault, { c: 3, aa: 6, fa: 2, flavor: 'The Persians were a magnificent addition to the Khan\'s army.' }],
+  ['Wrath Of Khan', CARD_TYPE.assault, { c: 3, aa: 12, e: 2, hp: -8, flavor: 'The Khan was merciless, sometimes reckless, in pursuit of his enemies.' }],
   ['Reeckless Assault', CARD_TYPE.assault, { c: 2, a: 20, hp: -10, flavor: 'Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.' }],
 
   ['Shock and Awe', CARD_TYPE.ability, { c: 2, w: 3, f: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
 
-  ['Combat Medics', CARD_TYPE.ability, { c: 1, d: 5, hp: 5, flavor: '??' }],
+  ['Combat Medics', CARD_TYPE.ability, { c: 1, d: 5, hp: 5, flavor: 'A little ginsing and a biiiig shield and you\'ll be back up in no time.' }],
   ['Field Hospital', CARD_TYPE.ability, { c: 2, hp: 15, flavor: 'He will win who knows when to fight and when not to fight.' }],
 ];
 
