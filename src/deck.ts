@@ -36,11 +36,15 @@ export class Deck extends GameElement implements IDeck {
 
     this.game = game;
     this.drawPile = [
-      ...(new Array(STARTING_CARDS).fill('_')).map((_, i) => {
-        return new VisualCard(basicCards[i % 2])
-      }),
+      new VisualCard(basicCards[0]),
+      new VisualCard(basicCards[0]),
+      new VisualCard(basicCards[0]),
+      new VisualCard(basicCards[1]),
+      new VisualCard(basicCards[1]),
       new VisualCard(basicCards[2]),
-      new VisualCard(basicCards[3])
+      new VisualCard(basicCards[3]),
+      new VisualCard(basicCards[4]),
+      new VisualCard(basicCards[5]),
     ];
     this.handPile = [];
     this.donePile = [];

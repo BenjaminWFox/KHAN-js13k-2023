@@ -67,7 +67,11 @@ export interface IDeck {
 }
 
 export interface GameData {
-  deck: Deck
+  level: number,
+  turn: number,
+  enemies: Array<Enemy>,
+  player: Player,
+  deck: Deck,
 }
 
 interface Affects {
@@ -81,6 +85,7 @@ interface Affects {
   hp?: number // hp change value
   mhp?: number // max hp change value
   s?: number // stamina change value
+  ca?: number // clear all debuffs value
   draw?: number // draw cards value
 }
 

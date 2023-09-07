@@ -151,7 +151,6 @@ export class Game implements IGame {
 
   newTurn() {
     this.turn += 1;
-
     this.setState(GAME_STATE.PLAYER_TURN)
     this.player.startTurn();
     this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.turn);
@@ -162,7 +161,7 @@ export class Game implements IGame {
       enemy.pickAction();
     })
 
-    this.deck.draw(4);
+    this.deck.draw(data.defaultDraw);
   }
 
   render() {

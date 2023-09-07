@@ -1,5 +1,5 @@
 import constants from "./data";
-import { CardData, EntityData, GameElements } from "./types";
+import { CardData, EntityData, GameData, GameElements } from "./types";
 
 export const ge = (selector: string) => document.querySelector(selector);
 export const gei = (id: string) => document.getElementById(id);
@@ -52,4 +52,21 @@ export function getDefenceForData(defence: number, modData: EntityData | CardDat
   if (!modData) return defence;
 
   return Math.ceil(defence * (!!modData.w ? .5 : 1));
+}
+
+export function serializeToLocalStore(data: GameData): void {
+  const sData = JSON.stringify(data);
+
+  console.log('sData', sData);
+
+  window.localStorage.setItem('js13k_2023_khan', sData);
+}
+
+export function deserializeFromLocalStore(): GameData | undefined {
+  const data = window.localStorage.getItem('js13k_2023_khan');
+  const pData = data ? JSON.parse(data) : undefined
+
+  console.log('pData', pData);
+
+  return data ? pData : undefined;
 }

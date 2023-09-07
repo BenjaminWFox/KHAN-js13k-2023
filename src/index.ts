@@ -1,4 +1,4 @@
-import { gei, resize } from "./utility";
+import { deserializeFromLocalStore, gei, resize } from "./utility";
 import { GameElements } from "./types";
 import { Game } from "./game";
 import { messages, showMessage } from "./messaging";
@@ -12,6 +12,10 @@ window.addEventListener('load', () => {
     continue: gei('continue')!,
     endturn: gei('endturn')!
   }
+
+  const gameData = deserializeFromLocalStore();
+
+  console.log('Game Data', gameData);
 
   const game = new Game(e)
 
@@ -32,5 +36,5 @@ window.addEventListener('load', () => {
 
   resize(e);
 
-  game.newGame();
+  // game.newGame();
 })
