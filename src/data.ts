@@ -37,7 +37,6 @@ export default {
       hp: 75,
       d: 0,
       w: 0,
-      f: 0,
       e: 0,
       mounted: true,
       actions: new EnemyActions([
@@ -46,9 +45,8 @@ export default {
         ['', CARD_TYPE.assault, { a: 15, d: 5 }],
         ['', CARD_TYPE.assault, { a: 10, d: 10 }],
         ['', CARD_TYPE.defense, { d: 15 }],
-        ['', CARD_TYPE.ability, { f: 2 }],
         ['', CARD_TYPE.ability, { w: 2 }],
-        ['', CARD_TYPE.ability, { f: 1, w: 1 }],
+        ['', CARD_TYPE.ability, { w: 1 }],
       ])
     },
     2: {
@@ -57,7 +55,6 @@ export default {
       hp: 20,
       d: 0,
       w: 0,
-      f: 0,
       e: 0,
       mounted: false,
       actions: new EnemyActions([
@@ -66,7 +63,7 @@ export default {
         ['', CARD_TYPE.assault, { a: 10 }],
         ['', CARD_TYPE.assault, { a: 8, e: 2 }],
         ['', CARD_TYPE.assault, { a: 8, w: 2 }],
-        ['', CARD_TYPE.assault, { a: 8, f: 2 }],
+        ['', CARD_TYPE.assault, { a: 8 }],
       ])
     },
     3: {
@@ -75,14 +72,13 @@ export default {
       hp: 40,
       d: 0,
       w: 0,
-      f: 0,
       e: 0,
       mounted: false,
       actions: new EnemyActions([
         ['', CARD_TYPE.assault, { a: 15 }],
         ['', CARD_TYPE.assault, { a: 8, e: 2 }],
         ['', CARD_TYPE.defense, { d: 5 }],
-        ['', CARD_TYPE.ability, { e: 4, f: 2 }],
+        ['', CARD_TYPE.ability, { e: 4 }],
       ])
     },
     4: {
@@ -91,7 +87,6 @@ export default {
       hp: 15,
       d: 0,
       w: 0,
-      f: 0,
       e: 0,
       mounted: false,
       actions: new EnemyActions([
@@ -106,7 +101,6 @@ export default {
       hp: 20,
       d: 0,
       w: 0,
-      f: 0,
       e: 1,
       mounted: false,
       actions: new EnemyActions([
@@ -114,7 +108,7 @@ export default {
         ['', CARD_TYPE.assault, { a: 7, e: 2 }],
         ['', CARD_TYPE.defense, { d: 6 }],
         ['', CARD_TYPE.defense, { d: 4, e: 1 }],
-        ['', CARD_TYPE.ability, { e: 2, f: 2 }],
+        ['', CARD_TYPE.ability, { e: 2 }],
       ])
     },
     6: {
@@ -123,7 +117,6 @@ export default {
       hp: 20,
       d: 0,
       w: 0,
-      f: 0,
       e: 2,
       mounted: false,
       actions: new EnemyActions([
@@ -131,7 +124,7 @@ export default {
         ['', CARD_TYPE.assault, { a: 7, e: 2 }],
         ['', CARD_TYPE.defense, { d: 6 }],
         ['', CARD_TYPE.defense, { d: 4, e: 1 }],
-        ['', CARD_TYPE.ability, { e: 2, f: 2 }],
+        ['', CARD_TYPE.ability, { e: 2 }],
       ])
     },
     7: {
@@ -140,7 +133,6 @@ export default {
       hp: 15,
       d: 0,
       w: 0,
-      f: 0,
       e: 0,
       mounted: false,
       actions: new EnemyActions([
@@ -156,7 +148,6 @@ export default {
       hp: 15,
       d: 0,
       w: 0,
-      f: 0,
       e: 3,
       mounted: false,
       actions: new EnemyActions([
@@ -171,15 +162,14 @@ export default {
       hp: 12,
       d: 0,
       w: 0,
-      f: 0,
       e: 0,
       mounted: false,
       actions: new EnemyActions([
-        ['', CARD_TYPE.assault, { a: 9, w: 1, f: 1 }],
+        ['', CARD_TYPE.assault, { a: 9, w: 1 }],
         ['', CARD_TYPE.assault, { a: 5, w: 1, e: 2 }],
         ['', CARD_TYPE.assault, { a: 7, w: 1 }],
         ['', CARD_TYPE.defense, { d: 6 }],
-        ['', CARD_TYPE.ability, { e: 2, f: 2 }],
+        ['', CARD_TYPE.ability, { e: 2 }],
       ])
     },
   } as EnemyData

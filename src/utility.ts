@@ -45,7 +45,7 @@ export function uuid(): string {
 export function getAttackForData(attack: number, modData: EntityData | CardData | undefined) {
   if (!modData) return attack;
 
-  return Math.ceil((attack * (modData.e ? 1.5 : 1)) * (modData.f ? .75 : 1));
+  return Math.ceil((attack * (modData.e ? 1.5 : 1)) * (modData.w ? .75 : 1));
 }
 
 export function getDefenceForData(defence: number, modData: EntityData | CardData | undefined) {

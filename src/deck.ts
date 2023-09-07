@@ -135,6 +135,10 @@ export class Deck extends GameElement implements IDeck {
     return this;
   };
 
+  startDraw(n: number) {
+    setTimeout(() => this.draw(n), 100)
+  }
+
   pickNewCards() {
     const cards = getNewCardsToPick();
 

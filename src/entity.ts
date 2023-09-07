@@ -39,6 +39,8 @@ export class Entity extends GameElement {
   }
 
   update(changed?: Partial<CardData>) {
+    console.log('***', this.id, this.data.name, 'UPDATE - current stats', { ...this.data, currentHp: this.currentHp })
+
     const fillEl = qs(this.sprite, `.hp .fill`)
     fillEl.style.width = Math.round(this.currentHp / this.data.hp * 100) + '%';
     this.data.d > 0 ? fillEl.classList.add('armored') : fillEl.classList.remove('armored');
@@ -49,44 +51,41 @@ export class Entity extends GameElement {
     const eEl = qs(this.sprite, '.affects .enrage')
     eEl.innerHTML = 'E:' + this.data.e;
     if (changed?.e) flashChanged(eEl);
-    const fEl = qs(this.sprite, '.affects .falter')
-    fEl.innerHTML = 'F:' + this.data.f;
-    if (changed?.f) flashChanged(fEl);
     const wEl = qs(this.sprite, '.affects .weak')
     wEl.innerHTML = 'W:' + this.data.w;
     if (changed?.w) flashChanged(wEl);
   }
 
   applyFromEnemy(cardData: CardData) {
-    console.log(this.id, 'entity applying cardData', cardData);
+    console.log('***', this.id, this.data.name, 'ATAKED - applying cardData', { ...cardData }, 'current stats are', { ...this.data })
 
     let changed: Partial<CardData> = {}
-    const { a = 0, aa = 0, fa = 0, w = 0, f = 0, } = cardData
+    const { a = 0, aa = 0, wa = 0, w = 0, } = cardData
 
     let d = this.data.d;
 
     if (a > 0 && this.data.d > 0) {
-      console.log('Applying against defense')
+      console.log('*****', 'Applying attack against Defense')
       changed.d = this.data.d
       d = d - a;
 
       if (d < 0) {
+        console.log('*****', 'Additionally removing HP')
         this.currentHp = Math.min(this.data.hp, Math.max(0, this.currentHp - (a - this.data.d)));
 
         this.data.d = 0;
       } else {
+        console.log('*****', 'Still Defense left')
         this.data.d = d;
       }
     } else {
-      console.log('Applying against hp only')
+      console.log('*****', 'Applying attack against HP')
       this.currentHp = Math.min(this.data.hp, Math.max(0, this.currentHp - a));
     }
 
     this.data.w += w;
-    this.data.f += f;
 
     if (w > 0) changed.w = w;
-    if (f > 0) changed.f = f;
 
     this.update(changed);
 
@@ -96,12 +95,14 @@ export class Entity extends GameElement {
 
     const parsedData = {} as CardData
     if (aa > 0) parsedData.a = aa;
-    if (fa > 0) parsedData.f = fa;
+    if (wa > 0) parsedData.w = wa;
 
     if (Object.keys(parsedData).length) this.game?.applyToAllEnemies(parsedData);
   }
 
   applyFromFriendly(cardData: CardData) {
+    console.log('***', this.id, this.data.name, 'BUFFED - applying cardData', { ...cardData }, 'current stats are', { ...this.data })
+
     let changed: Partial<CardData> = {}
     const { d = 0, e = 0, hp = 0 } = cardData
 
@@ -127,7 +128,6 @@ export class Entity extends GameElement {
 
   endTurn() {
     this.data.e = Math.max(0, this.data.e - 1);
-    this.data.f = Math.max(0, this.data.f - 1);
     this.data.w = Math.max(0, this.data.w - 1);
 
     this.update()

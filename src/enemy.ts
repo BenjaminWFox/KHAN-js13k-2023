@@ -28,7 +28,6 @@ export class Enemy extends Entity {
   }
 
   applyFromEnemy(cardData: CardData) {
-    console.log(this.id, 'enemy applying cardData', cardData)
     super.applyFromEnemy(cardData);
 
     if (this.nextAction) {

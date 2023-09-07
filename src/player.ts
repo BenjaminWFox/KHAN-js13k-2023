@@ -20,7 +20,6 @@ export class Player extends Entity {
   resetProperties() {
     this.data.d = 0;
     this.data.w = 0;
-    this.data.f = 0;
     this.data.e = 0;
   }
 
@@ -41,6 +40,8 @@ export class Player extends Entity {
   applyFromFriendly(cardData: CardData): void {
     super.applyFromFriendly(cardData)
 
+    console.log('*****', 'Additional Player Buffs', { ...cardData }, 'current stats are', { ...this.data })
+
     const { s = 0, draw = 0, mhp = 0 } = cardData;
 
     this.currentStamina += s;
@@ -48,10 +49,8 @@ export class Player extends Entity {
     this.currentHp += mhp;
     this.data.hp += mhp;
 
-    console.log('Apply')
     if (draw > 0) {
-      console.log("draw")
-      this.game?.deck.draw(draw);
+      this.game?.deck.startDraw(draw);
     }
 
     this.update();
@@ -62,7 +61,6 @@ export class Player extends Entity {
   }
 
   applyInnate(cards: Array<IVisualCard>, type: ACTIVATION_TRIGGER) {
-    console.log('Apply innate', cards)
     let applyCards: Array<IVisualCard> = []
 
     switch (type) {
@@ -78,12 +76,10 @@ export class Player extends Entity {
         break;
     }
 
-    console.log('Found innate', applyCards)
-
     applyCards.forEach(card => {
       this.applyFromFriendly(card.data);
 
-      if (card.data.w || card.data.f) {
+      if (card.data.w) {
         this.game?.applyToAllEnemies(card.data);
       }
     })

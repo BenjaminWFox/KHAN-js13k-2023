@@ -327,16 +327,16 @@
 }
 
 .weak:hover:before {
-  content: 'Weaken: gain 50% less defence for X turns';
+  content: 'Weaken: Do 25% less damage and gain 50% less defence for X turns';
 }
 
 .enrage:hover:before {
   content: 'Enrage: do 50% more damage for X turns';
 }
 
-.falter:hover:before {
+/* .falter:hover:before {
   content: 'Falter: do 25% less damage for X turns';
-}
+} */
 
 .enemy .stats {
   transform: scale(-.25, .25);

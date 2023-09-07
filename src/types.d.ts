@@ -58,6 +58,7 @@ export interface IDeck {
   shuffle: () => void,
   shuffleInto: (basePile: Cards, otherPile: Cards) => void,
   draw: (n: number) => void,
+  startDraw: (n: number) => void,
   removeFromHand: (card: IVisualCard) => void,
   removeInnateBuffs: (cards: Cards) => void,
   endTurn: () => void,
@@ -79,8 +80,8 @@ interface Affects {
   aa?: number // assult all value
   d?: number // defend change value
   w?: number // weak change value
-  f?: number // falter change value
-  fa?: number // falter all change value
+  // f?: number // falter change value
+  wa?: number // weak all change value
   e?: number // enraged change value
   hp?: number // hp change value
   mhp?: number // max hp change value
@@ -96,7 +97,7 @@ interface IEnemyActions {
 interface Properties {
   d: number // defend value
   w: number // weak value
-  f: number // falter value
+  // f: number // falter value
   e: number // enraged value
   hp: number // hp value
 }

@@ -32,7 +32,7 @@ function clearTargeted(targets: Array<HTMLDivElement>) {
 }
 
 function getValidTargets(entities: Array<Entity>, card: IVisualCard) {
-  if (card.data.a || card.data.aa || card.data.f || card.data.w) {
+  if (card.data.a || card.data.aa || card.data.w) {
     return entities.filter(entity => entity.data.type === SPRITE_TYPE.enemy)
   }
 
@@ -161,7 +161,7 @@ export class Game implements IGame {
       enemy.pickAction();
     })
 
-    this.deck.draw(data.defaultDraw);
+    this.deck.startDraw(data.defaultDraw);
   }
 
   render() {
@@ -259,12 +259,14 @@ export class Game implements IGame {
       // target may equal player, but that doesn't matter for this currently
       // since the enemy/friendly applications are different.
       // Main process for PLAYER attacking ENEMY and/or PLAYER buffing SELF:
-      target?.applyFromEnemy(
-        cardToRemove.dData(this.player.data)
-      );
-      this.player.applyFromFriendly(
-        cardToRemove.dData(this.player.data)
-      );
+      const dynamicData = cardToRemove.dData(this.player.data)
+
+      console.log('* Player Action *')
+
+      if (target && target !== this.player) {
+        target.applyFromEnemy(dynamicData);
+      }
+      this.player.applyFromFriendly(dynamicData);
 
       this.deck.updateVisibleCards(this.player.data);
       this.update();
@@ -275,10 +277,10 @@ export class Game implements IGame {
       if (!this.enemies.length) {
         if (this.level === Object.keys(levels).length) {
           this.setState(GAME_STATE.GAME_OVER)
-          console.log('GAME WON!!');
+          console.log('* Game Won');
           this.endGame();
         } else {
-          console.log('ROUND WON!!');
+          console.log('* Roud Won');
           this.endRound();
         }
       }
@@ -322,13 +324,12 @@ export class Game implements IGame {
 
       if (enemy) {
         // Main process for ENEMY attacking PLAYER and/or ENEMY buffing SELF:'
-        const dd = enemy.nextAction.dData(enemy.data)
+        const dynamicData = enemy.nextAction.dData(enemy.data)
 
-        this.player.applyFromEnemy(dd)
+        console.log('* Enemy Action *', enemy.id, enemy.data.name);
 
-        const dd2 = enemy.nextAction.dData(enemy.data)
-
-        enemy.applyFromFriendly(dd2)
+        this.player.applyFromEnemy(dynamicData)
+        enemy.applyFromFriendly(dynamicData)
 
         enemy.do(enemy.nextAction!.type);
 
@@ -361,7 +362,7 @@ export class Game implements IGame {
 
     if (entity.isPlayer) {
       // game over
-      console.log('GAME OVER :( :(');
+      console.log('* Game Lost');
       this.setState(GAME_STATE.GAME_OVER)
       this.endGame(false);
 
