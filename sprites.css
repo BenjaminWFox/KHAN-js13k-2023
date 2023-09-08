@@ -147,47 +147,47 @@
 }
 
 .khan {
-  background: url('./s.png') -52px 0;
+  background: url('s.png') -52px 0;
 }
 
 .horse {
-  background: url('./s.png') -65px 0;
+  background: url('s.png') -65px 0;
 }
 
 .king {
-  background: url('./s.png') 0 0;
+  background: url('s.png') 0 0;
 }
 
 .archer {
-  background: url('./s.png') -13px 0;
+  background: url('s.png') -13px 0;
 }
 
 .knight {
-  background: url('./s.png') -26px 0;
+  background: url('s.png') -26px 0;
 }
 
 .dervish {
-  background: url('./s.png') -39px 0;
+  background: url('s.png') -39px 0;
 }
 
 .snake {
-  background: url('./s.png') 0px -13px;
+  background: url('s.png') 0px -13px;
 }
 
 .rok {
-  background: url('./s.png') -13px -13px;
+  background: url('s.png') -13px -13px;
 }
 
 .wolf {
-  background: url('./s.png') -26px -13px;
+  background: url('s.png') -26px -13px;
 }
 
 .bear1 {
-  background: url('./s.png') -39px -13px;
+  background: url('s.png') -39px -13px;
 }
 
 .bear2 {
-  background: url('./s.png') -52px -13px;
+  background: url('s.png') -52px -13px;
 }
 
 .intent {
@@ -203,7 +203,7 @@
 }
 
 .assault {
-  background: url('./s.png') -65px -13px;
+  background: url('s.png') -65px -13px;
 }
 
 .assault:hover:before, .defense:hover:before, .ability:hover:before {
@@ -235,7 +235,7 @@
 }
 
 .defense {
-  background: url('./s.png') -73px -13px;
+  background: url('s.png') -73px -13px;
 }
 
 .ability:hover:before {
@@ -243,7 +243,7 @@
 }
 
 .ability {
-  background: url('./s.png') -81px -13px;
+  background: url('s.png') -81px -13px;
 }
 
 .hp, .affects {

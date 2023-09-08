@@ -85,7 +85,7 @@ button:active {
     display: flex;
     touch-action: manipulation;
     user-select: none;
-    background: url('./b.png');
+    background: url('khan/b.png');
     background-repeat: repeat;
     background-size: 66%;
 }
@@ -137,13 +137,7 @@ button:active {
     left: 0;
     right: 0;
     height: 60%;
-    background: url('./g.png');
+    background: url('g.png');
     background-repeat: repeat;
     background-size: 50%;
 }
-/* @media (min-aspect-ratio: 16/9) {
-    #board {
-        height: 100vh;
-        width: auto;
-    }
-} */
