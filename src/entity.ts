@@ -5,9 +5,17 @@ import sounds from "./sounds";
 import { CardData, EntityData, IGame } from "./types";
 import { gei, qs, uuid } from "./utility";
 
+/**
+ * Potential bug to fix - when an element is changed multiple times quickly, 
+ * sometimes a previous timeout removes a `changed` class prematureley, which
+ * looks a little glitchy.
+ * 
+ * @param el 
+ */
 function flashChanged(el: HTMLElement) {
   el.classList.remove('changed');
   el.classList.add('changed');
+
   setTimeout(() => {
     el.classList.remove('changed');
   }, 1500)
