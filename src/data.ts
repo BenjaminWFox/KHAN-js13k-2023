@@ -76,7 +76,7 @@ export default {
       actions: new EnemyActions([
         ['', CARD_TYPE.assault, { a: 15 }],
         ['', CARD_TYPE.assault, { a: 12, e: 2 }],
-        ['', CARD_TYPE.defense, { a: 10, d: 10 }],
+        ['', CARD_TYPE.assault, { a: 10, d: 10 }],
       ])
     },
     4: {

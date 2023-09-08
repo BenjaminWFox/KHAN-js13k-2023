@@ -6,6 +6,7 @@ import { CardData, EntityData, IGame } from "./types";
 import { gei, qs, uuid } from "./utility";
 
 function flashChanged(el: HTMLElement) {
+  el.classList.remove('changed');
   el.classList.add('changed');
   setTimeout(() => {
     el.classList.remove('changed');

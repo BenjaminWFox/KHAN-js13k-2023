@@ -2,6 +2,7 @@ import { deserializeFromLocalStore, gei, resize } from "./utility";
 import { GameElements } from "./types";
 import { Game } from "./game";
 import { messages, showMessage } from "./messaging";
+import { createP1 } from "./p1";
 
 window.addEventListener('load', () => {
   const e: GameElements = {
@@ -25,9 +26,7 @@ window.addEventListener('load', () => {
   }
 
   e.new.addEventListener('click', () => {
-    createP1();
-
-    p1`50.25
+    createP1()`50.25
     |C-------|--------|        |J-------|--------|        |F-------|--------|        |H-------|--------|        |A-------|--------|        |E-------|--------|        |F-------|--------|        |C-------|--------|     |`
 
     showMessage(messages.intro, game.newGame.bind(game))
