@@ -25,6 +25,11 @@ window.addEventListener('load', () => {
   }
 
   e.new.addEventListener('click', () => {
+    createP1();
+
+    p1`50.25
+    |C-------|--------|        |J-------|--------|        |F-------|--------|        |H-------|--------|        |A-------|--------|        |E-------|--------|        |F-------|--------|        |C-------|--------|     |`
+
     showMessage(messages.intro, game.newGame.bind(game))
   })
   e.endturn.addEventListener('click', () => game.endPlayerTurn())
@@ -35,6 +40,10 @@ window.addEventListener('load', () => {
   })
 
   resize(e);
+
+  if (navigator.userAgent.match('CriOS')) {
+    alert('Hello iOS Chrome User!\n\nYou may have to rotate your phone orientation back/forth once for correct display.\n\nEnjoy the game!')
+  }
 
   // game.newGame();
 })

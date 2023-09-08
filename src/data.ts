@@ -52,7 +52,7 @@ export default {
     2: {
       name: 'archer',
       type: SPRITE_TYPE.enemy,
-      hp: 20,
+      hp: 25,
       d: 0,
       w: 0,
       e: 0,
@@ -63,7 +63,6 @@ export default {
         ['', CARD_TYPE.assault, { a: 10 }],
         ['', CARD_TYPE.assault, { a: 8, e: 2 }],
         ['', CARD_TYPE.assault, { a: 8, w: 2 }],
-        ['', CARD_TYPE.assault, { a: 8 }],
       ])
     },
     3: {
@@ -76,15 +75,14 @@ export default {
       mounted: false,
       actions: new EnemyActions([
         ['', CARD_TYPE.assault, { a: 15 }],
-        ['', CARD_TYPE.assault, { a: 8, e: 2 }],
-        ['', CARD_TYPE.defense, { d: 5 }],
-        ['', CARD_TYPE.ability, { e: 4 }],
+        ['', CARD_TYPE.assault, { a: 12, e: 2 }],
+        ['', CARD_TYPE.defense, { a: 10, d: 10 }],
       ])
     },
     4: {
       name: 'dervish',
       type: SPRITE_TYPE.enemy,
-      hp: 15,
+      hp: 25,
       d: 0,
       w: 0,
       e: 0,
@@ -130,7 +128,7 @@ export default {
     7: {
       name: 'rok',
       type: SPRITE_TYPE.enemy,
-      hp: 15,
+      hp: 18,
       d: 0,
       w: 0,
       e: 0,

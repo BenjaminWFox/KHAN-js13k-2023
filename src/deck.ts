@@ -3,9 +3,9 @@ import { DeckCollections } from "./enums";
 import { Cards, EntityData, IDeck, IGame, IVisualCard } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
 import { GameElement } from "./GameElement";
+import sounds from "./sounds";
 
 const MAX_IN_HAND = 8;
-const STARTING_CARDS = 6;
 
 function getNewCardsToPick() {
   const c1 = getRandomIntInclusive(0, cards.length - 1);
@@ -112,6 +112,7 @@ export class Deck extends GameElement implements IDeck {
     this.pendingDraw = n;
 
     if (n > 0 && this.handPile.length < MAX_IN_HAND) {
+      sounds.draw();
       if (this.drawPile.length) {
         const c = this.drawPile.pop()!;
 

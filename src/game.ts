@@ -9,6 +9,7 @@ import { flashCardCost } from "./dom";
 import { Enemy } from "./enemy";
 import { messages, showMessage } from "./messaging";
 import data from "./data";
+import sounds from "./sounds";
 
 interface Data {
   selectedCard: IVisualCard | undefined,
@@ -127,6 +128,7 @@ export class Game implements IGame {
   }
 
   newCardPicked() {
+    sounds.buttonInteract();
     this.deck.clearHand();
     this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.buff);
 
@@ -196,6 +198,7 @@ export class Game implements IGame {
      * Clear selected & targets every time
      */
     clearTargeted(globalGameData.targetedEntities);
+    sounds.cardSelect();
 
     globalGameData.targetedEntities = [];
 
@@ -298,7 +301,7 @@ export class Game implements IGame {
 
   endPlayerTurn() {
     if (this.state === GAME_STATE.PLAYER_TURN) {
-
+      sounds.buttonInteract();
       this.setState(GAME_STATE.ENEMY_TURN);
 
       this.player.endTurn();

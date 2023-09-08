@@ -89,6 +89,18 @@ button:active {
     background-repeat: repeat;
     background-size: 66%;
 }
+
+#overlay {
+    left: 0;
+    right: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 10000;
+    box-shadow: inset 0px 0px 100px 50px #000;
+    pointer-events: none;
+}
+
 #game {
     position: relative;
     width: 100%;

@@ -14,7 +14,7 @@ export const levels: Record<number, Record<'enemies', () => Array<number>>> = {
     enemies: () => [4, getRandomIntInclusive(5, 9), getRandomIntInclusive(5, 9)]
   },
   5: {
-    enemies: () => [3, 2]
+    enemies: () => [4, 4, getRandomIntInclusive(5, 7)]
   },
   6: {
     enemies: () => [3, 2, getRandomIntInclusive(7, 9)]
@@ -23,7 +23,6 @@ export const levels: Record<number, Record<'enemies', () => Array<number>>> = {
     enemies: () => [3, 2, 3]
   },
   8: {
-    // enemies: () => [1, getRandomIntInclusive(2, 3), getRandomIntInclusive(2, 3), getRandomIntInclusive(2, 3)]
-    enemies: () => [1]
+    enemies: () => [1, 3, 8]
   }
 }

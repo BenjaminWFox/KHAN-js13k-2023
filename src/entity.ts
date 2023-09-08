@@ -1,6 +1,7 @@
 import { GameElement } from "./GameElement";
 import { CARD_TYPE, SPRITE_TYPE } from "./enums";
 import { spriteElementBuilder } from "./renderer";
+import sounds from "./sounds";
 import { CardData, EntityData, IGame } from "./types";
 import { gei, qs, uuid } from "./utility";
 
@@ -138,12 +139,15 @@ export class Entity extends GameElement {
 
     switch (type) {
       case CARD_TYPE.ability:
+        sounds.ability();
         animationName = 'bumpUp';
         break;
       case CARD_TYPE.assault:
+        sounds.assault();
         animationName = this.isPlayer ? 'bumpLeft' : 'bumpRight';
         break;
       case CARD_TYPE.defense:
+        sounds.defense();
         animationName = this.isPlayer ? 'bumpRight' : 'bumpLeft';
         break;
     }
