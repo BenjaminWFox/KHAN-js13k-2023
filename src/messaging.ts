@@ -23,9 +23,9 @@ export function showMessage(message: string, callback: () => void, multiMessage 
   b.innerHTML = 'Continue ...';
   b.id = 'context-close';
 
-  gei('context-close')!.replaceWith(b)
-  gei('context-close')!.addEventListener('click', () => {
+  const eventHandler = () => {
     callback();
+    gei('context-close')!.removeEventListener('click', eventHandler);
 
     if (!multiMessage) {
       gei('context')!.classList.remove('show');
@@ -33,5 +33,8 @@ export function showMessage(message: string, callback: () => void, multiMessage 
         gei('context')!.classList.add('hide');
       })
     }
-  })
+  }
+
+  gei('context-close')!.replaceWith(b)
+  gei('context-close')!.addEventListener('click', eventHandler)
 }

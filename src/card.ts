@@ -128,8 +128,8 @@ export const basicCards: Array<CardConstructorData> = [
   ['Basic Attack', CARD_TYPE.assault, { a: 8, c: 1, flavor: 'You spend your life perfecting something, can it really be called basic?' }],
   ['Basic Shield', CARD_TYPE.defense, { d: 8, c: 1, flavor: 'Discretion is the better part of valor, after all.' }],
   ['War Cry', CARD_TYPE.ability, { c: 2, w: 2, e: 4, flavor: 'Enemies could scarcely move to defend themselves on hearing the screams of the Khans\' army.' }],
-  ['Rally Cry', CARD_TYPE.defense, { c: 2, d: 12, flavor: 'Such were the regrouping tactics that enemies could find nowhere to strike.' }],
-  ['Tactical Retreat', CARD_TYPE.defense, { c: 2, d: 15, draw: 1, flavor: '' }],
+  ['Rally Cry', CARD_TYPE.defense, { c: 2, d: 20, flavor: 'Such were The Khans regrouping tactics that enemies could find nowhere to strike.' }],
+  ['Tactical Retreat', CARD_TYPE.defense, { c: 2, d: 14, draw: 1, flavor: '' }],
   ['Surgical Strike', CARD_TYPE.assault, { c: 1, a: 12, draw: 1, flavor: 'Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.' }],
 ];
 
@@ -140,7 +140,7 @@ export const cards: Array<CardConstructorData> = [
   ['Push Through', CARD_TYPE.ability, { c: 1, draw: 3, flavor: 'Any obstacle may be overcome with enough force.' }],
   ['Clairvoyance', CARD_TYPE.ability, { c: 0, draw: 2, flavor: 'The Khan had a preternatural ability to know what to do next.' }],
 
-  ['Shield Wall', CARD_TYPE.defense, { c: 2, d: 25, flavor: '' }],
+  ['Shield Wall', CARD_TYPE.defense, { c: 2, d: 30, e: 2, flavor: '' }],
   ['Reluctant Withdrawl', CARD_TYPE.defense, { c: 1, d: 12, e: 4, flavor: 'The Khan grew more determined with every forced step backwards.' }],
 
   ['Whirling Dervish', CARD_TYPE.assault, { c: 2, aa: 10, wa: 2, flavor: 'The Persians were a magnificent addition to the Khan\'s army.' }],
@@ -150,7 +150,7 @@ export const cards: Array<CardConstructorData> = [
 
   ['Shock and Awe', CARD_TYPE.ability, { c: 2, e: 3, w: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
 
-  ['Combat Medics', CARD_TYPE.defense, { c: 1, d: 8, hp: 4, flavor: 'A little ginsing, some water, a BIG shield and you\'ll be back up in no time.' }],
+  ['Combat Medics', CARD_TYPE.defense, { c: 1, d: 8, hp: 6, flavor: 'A little ginsing, some water, a BIG shield and you\'ll be back up in no time.' }],
   ['Field Hospital', CARD_TYPE.ability, { c: 2, hp: 12, flavor: 'He will win who knows when to fight and when not to fight.' }],
   // ['Meditation', CARD_TYPE.ability, { c: 2, ca: 1, flavor: '' }],
 ];

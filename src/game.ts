@@ -351,7 +351,6 @@ export class Game implements IGame {
         enemy.endTurn();
       })
 
-      this.turn += 1;
       this.newTurn();
     }
   }

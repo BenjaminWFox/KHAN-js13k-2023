@@ -85,7 +85,7 @@ button:active {
     display: flex;
     touch-action: manipulation;
     user-select: none;
-    background: url('khan/b.png');
+    background: url('b.png');
     background-repeat: repeat;
     background-size: 66%;
 }
