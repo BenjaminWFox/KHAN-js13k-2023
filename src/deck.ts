@@ -104,7 +104,7 @@ export class Deck extends GameElement implements IDeck {
   }
 
   update() {
-    gei('deck')!.innerHTML = `Deck: ${this.drawPile.length}`;
+    gei('deck')!.innerHTML = `Draw: ${this.drawPile.length}`;
     gei('done')!.innerHTML = `Discard: ${this.donePile.length}`;
   }
 

@@ -11,13 +11,20 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/title.css" />
   <link rel="stylesheet" href="/card.css" />
+  <link rel="stylesheet" href="/help.css" />
 </head>
 
 <body>
   <div id="board">
+    <button id="gotit" class="pixel-border hide">Ok, got it!</button>
+    <div id="menubuttons">
+      <button id="music" class="pixel-border stopped">Music</button>
+      <button id="sfx" class="pixel-border">SFX</button>
+      <button id="tutorial" class="pixel-border hide">Help / Info</button>
+    </div>
     <div id="overlay"></div>
     <div id="context" class="hide">
-      <div id="message" class="pixel-border">
+      <div id="message" class="pixel-border hide">
         <div id="content">
         </div>
         <button class="pixel-border" id="context-close">Continue ...</button>
@@ -53,7 +60,7 @@
         <button id="endturn" class="pixel-border">End Turn</button>
       </div>
       <div id="deck-done">
-        <div id="deck">Deck: 0</div>
+        <div id="deck">Draw: 0</div>
         <div id="stamina">Stamina: 0</div>
         <div id="done">Discard: 0</div>
       </div>

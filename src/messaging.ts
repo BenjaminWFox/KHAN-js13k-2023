@@ -15,6 +15,7 @@ export const messages = {
 
 export function showMessage(message: string, callback: () => void, multiMessage = false) {
   gei('context')!.classList.remove('hide');
+  gei('message')!.classList.remove('hide');
   gei('context')!.classList.add('show');
   gei('content')!.innerHTML = message;
 
@@ -24,15 +25,15 @@ export function showMessage(message: string, callback: () => void, multiMessage 
   b.id = 'context-close';
 
   const eventHandler = () => {
-    callback();
     gei('context-close')!.removeEventListener('click', eventHandler);
 
     if (!multiMessage) {
       gei('context')!.classList.remove('show');
-      setTimeout(() => {
-        gei('context')!.classList.add('hide');
-      })
+      gei('context')!.classList.add('hide');
+      gei('message')!.classList.add('hide');
     }
+
+    callback();
   }
 
   gei('context-close')!.replaceWith(b)

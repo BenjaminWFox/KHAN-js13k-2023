@@ -105,6 +105,32 @@ button:active {
     background-size: 66%;
 }
 
+#menubuttons {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    z-index: 20000;
+}
+
+#menubuttons button {
+    font-size: 1rem;
+    padding: 0 5px;
+    margin: 0 5px;
+}
+
+#menubuttons button.stopped {
+    text-shadow: 0 0 4px red;
+}
+
+button#gotit {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    z-index: 20000;
+}
+
 #overlay {
     left: 0;
     right: 0;

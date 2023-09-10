@@ -109,8 +109,8 @@ export class VisualCard extends Card implements IVisualCard {
     if (data.hp && data.hp < 0) this.attributes.push(`Lose ${Math.abs(data.hp)} life`)
     if (data.hp && data.hp > 0) {
       this.type === CARD_TYPE.innate ?
-        this.attributes.push(`Heal ${data.hp} life at the start of each ROUND`)
-        : this.attributes.push(`Heal ${data.hp} life`)
+        this.attributes.push(`Gain ${data.hp} life at the start of each ROUND`)
+        : this.attributes.push(`Gain ${data.hp} life`)
     }
   }
 
@@ -156,10 +156,10 @@ export const cards: Array<CardConstructorData> = [
 ];
 
 export const innateCards: Array<CardConstructorData> = [
-  // ['Strategic Planning', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, draw: 1, flavor: 'Water shapes its course according to the ground as the soldier works out victory in relation to his foe.' }],
-  // ['Calisthenics', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, s: 1, flavor: 'To not prepare is the greatest of crimes; to be prepared beforehand for any contingency is the greatest of virtues.' }],
+  ['Strategic Planning', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, draw: 1, flavor: 'Water shapes its course according to the ground as the soldier works out victory in relation to his foe.' }],
+  ['Calisthenics', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, s: 1, flavor: 'To not prepare is the greatest of crimes; to be prepared beforehand for any contingency is the greatest of virtues.' }],
   ['Tenger Spirit', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, hp: 10, flavor: 'The Khan was considered the embodiment of this highest deity.' }],
-  // ['Fearsome Reputation', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, w: 5, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
-  // ['Scientific Advancement', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.buff, c: 0, mhp: 5, flavor: '' }],
-  // ['Defensive Perimeter', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, d: 5, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
+  ['Fearsome Reputation', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, w: 5, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
+  ['Scientific Advancement', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.buff, c: 0, mhp: 5, flavor: '' }],
+  ['Defensive Perimeter', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, d: 5, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
 ]

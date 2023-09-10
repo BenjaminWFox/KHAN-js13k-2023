@@ -104,7 +104,7 @@ const data = {
         ['', CARD_TYPE.assault, { a: 10 }],
         ['', CARD_TYPE.assault, { a: 7, e: 2 }],
         ['', CARD_TYPE.defense, { d: 6 }],
-        ['', CARD_TYPE.defense, { d: 4, e: 1 }],
+        ['', CARD_TYPE.defense, { d: 4, e: 2 }],
         ['', CARD_TYPE.ability, { e: 2 }],
       ])
     },
@@ -120,7 +120,7 @@ const data = {
         ['', CARD_TYPE.assault, { a: 10 }],
         ['', CARD_TYPE.assault, { a: 7, e: 2 }],
         ['', CARD_TYPE.defense, { d: 6 }],
-        ['', CARD_TYPE.defense, { d: 4, e: 1 }],
+        ['', CARD_TYPE.defense, { d: 4, e: 2 }],
         ['', CARD_TYPE.ability, { e: 2 }],
       ])
     },
