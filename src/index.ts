@@ -32,7 +32,7 @@ window.addEventListener('load', () => {
     showMessage(messages.intro, game.newGame.bind(game))
   })
   e.endturn.addEventListener('click', () => game.endPlayerTurn())
-  e.continue.addEventListener('click', () => { })
+  // e.continue.addEventListener('click', () => { })
 
   window.addEventListener('resize', () => {
     resize(e);

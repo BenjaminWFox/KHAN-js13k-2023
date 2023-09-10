@@ -30,6 +30,8 @@ export interface IGame {
   enemies: Array<Entity>;
   player: Entity;
   state: GAME_STATE;
+  diffMult: number;
+  modifiedEnemyData: EnemyDataCollection;
   alert: (str: string) => void;
   newGame: () => void;
   newRound: () => void;
@@ -91,7 +93,8 @@ interface Affects {
 }
 
 interface IEnemyActions {
-  actions: Array<Card>
+  actions: Array<CardConstructorData>
+  get: () => CardConstructorData
 }
 
 interface Properties {
@@ -106,7 +109,6 @@ export interface EntityData extends Properties {
   name: string,
   type: SPRITE_TYPE,
   mounted: boolean,
-  actions?: EnemyActions,
 }
 
 export interface PlayerData extends EntityData {
@@ -119,4 +121,7 @@ export interface CardData extends Affects {
   flavor?: string;
 };
 
-export type EnemyData = Record<number, EntityData>
+export interface EnemyData extends EntityData {
+  actions: IEnemyActions;
+}
+export type EnemyDataCollection = Record<number, EnemyData>;

@@ -1,4 +1,4 @@
-import { IDeck, GameData, GameElements, IGame, IVisualCard, CardData, Cards } from "./types";
+import { IDeck, GameData, GameElements, IGame, IVisualCard, CardData, Cards, EnemyDataCollection } from "./types";
 import { levels } from "./levels";
 import { Entity } from "./entity";
 import { Player } from "./player";
@@ -8,7 +8,7 @@ import { Deck } from "./deck";
 import { flashCardCost } from "./dom";
 import { Enemy } from "./enemy";
 import { messages, showMessage } from "./messaging";
-import data from "./data";
+import data, { getEnemyDataWithMult } from "./data";
 import sounds from "./sounds";
 
 interface Data {
@@ -49,7 +49,7 @@ function getValidTargets(entities: Array<Entity>, card: IVisualCard) {
  */
 function getEnemiesForLevel(c: IGame) {
   levels[c.level].enemies().forEach((enemy => {
-    const e = new Enemy(data.enemyData[enemy], c)
+    const e = new Enemy(c.modifiedEnemyData[enemy], c)
     c.enemies.push(e);
   }))
 }
@@ -62,6 +62,8 @@ export class Game implements IGame {
   enemies: Array<Enemy>;
   player: Player;
   state: GAME_STATE;
+  diffMult: number;
+  modifiedEnemyData: EnemyDataCollection;
 
   constructor(e: GameElements, gameData?: GameData) {
     this.deck = gameData?.deck || new Deck(this);
@@ -73,6 +75,8 @@ export class Game implements IGame {
     this.enemies = [];
     this.player = new Player(data.playerData, this);
     this.state = GAME_STATE.PLAYER_TURN
+    this.diffMult = 1;
+    this.modifiedEnemyData = data.enemyData;
   }
 
   setState(newState: GAME_STATE) {
@@ -93,6 +97,9 @@ export class Game implements IGame {
   }
 
   newGame() {
+    this.diffMult = Number((gei('difficulty') as HTMLSelectElement).value);
+    this.modifiedEnemyData = getEnemyDataWithMult(this.diffMult);
+
     this.e.title.classList.add('hide');
     this.e.game.classList.remove('hide');
 
@@ -174,12 +181,12 @@ export class Game implements IGame {
 
     gei('stamina')!.innerHTML = `Stamina: ${this.player.currentStamina}`;
     gei('stage')!.innerHTML = `Stage ${this.level} / ${Object.keys(levels).length}`
-    gei('round')!.innerHTML = `Round ${this.turn}`
+    gei('round')!.innerHTML = `Turn ${this.turn}`
   }
 
   update() {
     gei('stamina')!.innerHTML = `Stamina: ${this.player.currentStamina}`;
-    gei('round')!.innerHTML = `Round ${this.turn}`
+    gei('round')!.innerHTML = `Turn ${this.turn}`
   }
 
   onPlayerBuffsApplied(cards: Cards) {

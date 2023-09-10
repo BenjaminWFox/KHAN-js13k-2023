@@ -1,13 +1,13 @@
 import { Card } from "./card";
 import { Entity } from "./entity";
 import { CARD_TYPE } from "./enums";
-import { CardData, EntityData, ICard, IGame } from "./types";
+import { CardData, EnemyData, EntityData, ICard, IGame } from "./types";
 import { getAttackForData } from "./utility";
 
 export class Enemy extends Entity {
   nextAction!: ICard;
 
-  constructor(data: EntityData, game: IGame) {
+  constructor(data: EnemyData, game: IGame) {
     super(data, game);
   }
 
@@ -22,7 +22,7 @@ export class Enemy extends Entity {
   }
 
   pickAction() {
-    this.nextAction = new Card(this.data.actions.get());
+    this.nextAction = new Card((this.data as EnemyData).actions.get());
 
     this.intent(this.nextAction);
   }

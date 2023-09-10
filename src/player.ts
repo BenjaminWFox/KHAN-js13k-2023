@@ -37,6 +37,10 @@ export class Player extends Entity {
     this.update()
   }
 
+  applyFromEnemy(cardData: CardData): void {
+    super.applyFromEnemy(cardData)
+  }
+
   applyFromFriendly(cardData: CardData): void {
     super.applyFromFriendly(cardData)
 

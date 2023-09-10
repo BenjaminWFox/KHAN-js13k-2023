@@ -1,4 +1,3 @@
-import constants from "./data";
 import { CardData, EntityData, GameData, GameElements } from "./types";
 
 export const ge = (selector: string) => document.querySelector(selector);
@@ -23,7 +22,7 @@ export function getRandomIntInclusive(min: number, max: number): number {
 }
 
 export function resize(e: GameElements) {
-  let scale = constants.boardScale;
+  let scale = 1;
 
   e.board.style.transform = `scale(${scale})`
 

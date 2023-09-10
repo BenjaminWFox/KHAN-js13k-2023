@@ -1,5 +1,6 @@
+import { Enemy } from "./enemy";
 import { CARD_TYPE, SPRITE_TYPE } from "./enums";
-import { CardConstructorData, EnemyData, IEnemyActions, PlayerData } from "./types";
+import { CardConstructorData, CardData, EnemyData, EnemyDataCollection, IEnemyActions, PlayerData } from "./types";
 import { getRandomIntInclusive } from "./utility";
 
 class EnemyActions implements IEnemyActions {
@@ -14,8 +15,7 @@ class EnemyActions implements IEnemyActions {
   }
 }
 
-export default {
-  boardScale: 1,
+const data = {
   startLevel: 1,
   startTurn: 0,
   defaultDraw: 5,
@@ -169,5 +169,46 @@ export default {
         ['', CARD_TYPE.ability, { e: 2 }],
       ])
     },
-  } as EnemyData
+  } as EnemyDataCollection
 }
+
+function getEnemyDataWithMult(mult: number): EnemyDataCollection {
+  const enemyData = { ...data.enemyData };
+
+  Object.keys(enemyData).forEach((key) => {
+    let k = Number(key) as keyof EnemyDataCollection;
+
+    const e = { ...enemyData[k] }
+
+    if (mult === 2 || mult === 3) {
+      e.hp = e.hp * mult;
+    }
+
+    let temp = [...e.actions!.actions];
+    const newActions: Array<CardConstructorData> = []
+
+    temp.forEach((action) => {
+      const newAction = [action[0], action[1], { ...action[2] }]
+      const newData = { ...newAction[2] as CardData };
+
+      if (newData.a!) {
+        newData.a! *= mult;
+      }
+      if (newData.d) {
+        newData.d! *= mult;
+      }
+      newAction[2] = newData;
+      newActions.push(newAction as CardConstructorData);
+    })
+
+    e.actions = new EnemyActions(newActions);
+    enemyData[k] = e
+  })
+
+  console.log(data.enemyData[9].hp, enemyData[9].hp, data.enemyData[9].actions.actions[0], enemyData[9].actions.actions[0])
+
+  return enemyData;
+}
+
+export default data;
+export { getEnemyDataWithMult };

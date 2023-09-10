@@ -71,6 +71,21 @@ button:active {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
+}
+
+#difficulty-wrapper {
+    padding: 0 10px;
+    font-size: 2rem;
+    color: #000;
+}
+
+#difficulty {
+    background-color: #c0ae92;
+    color: #000;
+    text-align: center;
+    min-width: 300px;
+    font-size: 2rem;
 }
 
 #title {
