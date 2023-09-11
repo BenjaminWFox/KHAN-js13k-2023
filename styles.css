@@ -82,6 +82,7 @@ button:active {
 
 #difficulty {
     background-color: #c0ae92;
+    font-family: inherit;
     color: #000;
     text-align: center;
     min-width: 300px;

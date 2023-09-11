@@ -1,7 +1,7 @@
 import { Card } from "./card";
 import { Entity } from "./entity";
 import { CARD_TYPE } from "./enums";
-import { CardData, EnemyData, EntityData, ICard, IGame } from "./types";
+import { CardData, EnemyData, ICard, IGame } from "./types";
 import { getAttackForData } from "./utility";
 
 export class Enemy extends Entity {

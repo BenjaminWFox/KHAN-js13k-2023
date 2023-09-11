@@ -1,6 +1,5 @@
-import { Enemy } from "./enemy";
 import { CARD_TYPE, SPRITE_TYPE } from "./enums";
-import { CardConstructorData, CardData, EnemyData, EnemyDataCollection, IEnemyActions, PlayerData } from "./types";
+import { CardConstructorData, CardData, EnemyDataCollection, IEnemyActions, PlayerData } from "./types";
 import { getRandomIntInclusive } from "./utility";
 
 class EnemyActions implements IEnemyActions {

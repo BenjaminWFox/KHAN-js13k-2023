@@ -105,7 +105,7 @@ export class VisualCard extends Card implements IVisualCard {
         this.attributes.push(`Draw ${data.draw} extra card${data.draw > 1 ? 's' : ''} per TURN`)
         : this.attributes.push(`DRAW CARDS: ${data.draw}`)
     }
-    if (data.mhp) this.attributes.push(`Gain +${data.mhp} max life`)
+    if (data.mhp) this.attributes.push(`Gain +${data.mhp} max life this ONCE`)
     if (data.hp && data.hp < 0) this.attributes.push(`Lose ${Math.abs(data.hp)} life`)
     if (data.hp && data.hp > 0) {
       this.type === CARD_TYPE.innate ?
@@ -160,6 +160,6 @@ export const innateCards: Array<CardConstructorData> = [
   ['Calisthenics', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, s: 1, flavor: 'To not prepare is the greatest of crimes; to be prepared beforehand for any contingency is the greatest of virtues.' }],
   ['Tenger Spirit', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, hp: 10, flavor: 'The Khan was considered the embodiment of this highest deity.' }],
   ['Fearsome Reputation', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.round, c: 0, w: 5, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
-  ['Scientific Advancement', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.buff, c: 0, mhp: 5, flavor: '' }],
+  ['Scientific Advancement', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.buff, c: 0, mhp: 10, flavor: '' }],
   ['Defensive Perimeter', CARD_TYPE.innate, { on: ACTIVATION_TRIGGER.turn, c: 0, d: 5, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
 ]

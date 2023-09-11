@@ -57,7 +57,7 @@
   bottom: 0px;
 }
 
-.card.innate {
+.card.innate:not(:last-child) {
   margin-left: 190px;
 }
 

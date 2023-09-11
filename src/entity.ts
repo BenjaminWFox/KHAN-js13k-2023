@@ -49,7 +49,7 @@ export class Entity extends GameElement {
   }
 
   update(changed?: Partial<CardData>) {
-    console.log('***', this.id, this.data.name, 'UPDATE - current stats', { ...this.data, currentHp: this.currentHp })
+    // console.log('***', this.id, this.data.name, 'UPDATE - current stats', { ...this.data, currentHp: this.currentHp })
 
     const fillEl = qs(this.sprite, `.hp .fill`)
     fillEl.style.width = Math.round(this.currentHp / this.data.hp * 100) + '%';
@@ -67,7 +67,7 @@ export class Entity extends GameElement {
   }
 
   applyFromEnemy(cardData: CardData) {
-    console.log('***', this.id, this.data.name, 'ATAKED - applying cardData', { ...cardData }, 'current stats are', { ...this.data })
+    // console.log('***', this.id, this.data.name, 'ATAKED - applying cardData', { ...cardData }, 'current stats are', { ...this.data })
 
     let changed: Partial<CardData> = {}
     const { a = 0, aa = 0, wa = 0, w = 0, } = cardData
@@ -75,21 +75,21 @@ export class Entity extends GameElement {
     let d = this.data.d;
 
     if (a > 0 && this.data.d > 0) {
-      console.log('*****', 'Applying attack against Defense')
+      // console.log('*****', 'Applying attack against Defense')
       changed.d = this.data.d
       d = d - a;
 
       if (d < 0) {
-        console.log('*****', 'Additionally removing HP')
+        // console.log('*****', 'Additionally removing HP')
         this.currentHp = Math.min(this.data.hp, Math.max(0, this.currentHp - (a - this.data.d)));
 
         this.data.d = 0;
       } else {
-        console.log('*****', 'Still Defense left')
+        // console.log('*****', 'Still Defense left')
         this.data.d = d;
       }
     } else {
-      console.log('*****', 'Applying attack against HP')
+      // console.log('*****', 'Applying attack against HP')
       this.currentHp = Math.min(this.data.hp, Math.max(0, this.currentHp - a));
     }
 
@@ -111,7 +111,7 @@ export class Entity extends GameElement {
   }
 
   applyFromFriendly(cardData: CardData) {
-    console.log('***', this.id, this.data.name, 'BUFFED - applying cardData', { ...cardData }, 'current stats are', { ...this.data })
+    // console.log('***', this.id, this.data.name, 'BUFFED - applying cardData', { ...cardData }, 'current stats are', { ...this.data })
 
     let changed: Partial<CardData> = {}
     const { d = 0, e = 0, hp = 0 } = cardData

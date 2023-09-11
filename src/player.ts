@@ -44,7 +44,7 @@ export class Player extends Entity {
   applyFromFriendly(cardData: CardData): void {
     super.applyFromFriendly(cardData)
 
-    console.log('*****', 'Additional Player Buffs', { ...cardData }, 'current stats are', { ...this.data })
+    // console.log('*****', 'Additional Player Buffs', { ...cardData }, 'current stats are', { ...this.data })
 
     const { s = 0, draw = 0, mhp = 0 } = cardData;
 

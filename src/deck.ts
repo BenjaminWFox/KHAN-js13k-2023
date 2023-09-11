@@ -1,26 +1,77 @@
 import { VisualCard, basicCards, cards, innateCards } from "./card";
 import { DeckCollections } from "./enums";
-import { Cards, EntityData, IDeck, IGame, IVisualCard } from "./types";
+import { CardConstructorData, Cards, EntityData, IDeck, IGame, IVisualCard } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
 import { GameElement } from "./GameElement";
 import sounds from "./sounds";
 
 const MAX_IN_HAND = 8;
+const alreadyShownCardsQueue: Array<number> = []
+const alreadyShownInnateCardsQueue: Array<number> = []
+
+function pickNewNumberIfInSeenCollection(collection: Array<number>, seenCollection: Array<number>, pickCollection: Array<CardConstructorData>, collectionMaxLen: number) {
+  console.log('** Collection MAX', collectionMaxLen)
+  let newIds: Array<number> = [];
+
+  collection.forEach((num, i) => {
+    console.log('Running for next number', num);
+    let newId = num;
+
+    while (seenCollection.includes(newId) || newIds.includes(newId)) {
+      newId = getRandomIntInclusive(0, pickCollection.length - 1);
+      console.log('Trying to replace card id', num, 'with', newId)
+    }
+
+    newIds.push(newId);
+    collection[i] = newId;
+  })
+
+  newIds.forEach(id => {
+    seenCollection.push(id);
+  })
+
+  while (seenCollection.length > collectionMaxLen) {
+    seenCollection.shift();
+  }
+}
 
 function getNewCardsToPick() {
+  console.log('Fetching new cards - current seen queue:', { alreadyShownCardsQueue: [...alreadyShownCardsQueue], alreadyShownInnateCardsQueue: [...alreadyShownInnateCardsQueue] })
   const c1 = getRandomIntInclusive(0, cards.length - 1);
   let c2 = c1
   let c3 = c1
+
   while (c2 === c1 || c2 === c3) {
     c2 = getRandomIntInclusive(0, cards.length - 1);
   }
+
   while (c3 === c1 || c3 === c2) {
     c3 = getRandomIntInclusive(0, cards.length - 1);
   }
 
-  const ci = getRandomIntInclusive(0, innateCards.length - 1);
+  const ci1 = getRandomIntInclusive(0, innateCards.length - 1);
+  let ci2 = getRandomIntInclusive(0, innateCards.length - 1);
+  while (ci1 === ci2) {
+    ci2 = getRandomIntInclusive(0, innateCards.length - 1);
+  }
 
-  return [new VisualCard(cards[c1], true), new VisualCard(cards[c2], true), new VisualCard(cards[c3], true), new VisualCard(innateCards[ci], true)];
+  const cardIds = [c1, c2, c3];
+  const innateCardIds = [ci1, ci2];
+
+  console.log({ cardIds: [...cardIds], innateCardIds: [...innateCardIds] })
+
+  pickNewNumberIfInSeenCollection(cardIds, alreadyShownCardsQueue, cards, 6);
+  pickNewNumberIfInSeenCollection(innateCardIds, alreadyShownInnateCardsQueue, innateCards, 4);
+
+  console.log({ cardIds, innateCardIds })
+  console.log('Finished, new queue is', { alreadyShownCardsQueue: [...alreadyShownCardsQueue], alreadyShownInnateCardsQueue: [...alreadyShownInnateCardsQueue] })
+
+  return [
+    new VisualCard(cards[cardIds[0]], true),
+    new VisualCard(cards[cardIds[1]], true),
+    new VisualCard(cards[cardIds[2]], true),
+    new VisualCard(innateCards[innateCardIds[0]], true),
+    new VisualCard(innateCards[innateCardIds[1]], true)];
 }
 
 export class Deck extends GameElement implements IDeck {
