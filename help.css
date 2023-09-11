@@ -4,10 +4,10 @@
 
 .tutorial #deck:before,
 .tutorial #done:before,
-.tutorial #game h2:after {
+.tutorial #tutorialtext {
   font-size: 2rem;
   position: absolute;
-  z-index: 10000;
+  z-index: 15000;
 }
 
 /* .tutorial #deck:before {
@@ -21,9 +21,23 @@
   right: 50px;
 } */
 
-.tutorial #game h2:after {
-  text-align: left;
-  content: 'Goal: Click/tap your cards to defeat enemies or buff yourself, the Khan! Each new \A stage, choose a new card to add to your deck, or a new ability. Can you make \A it all the way and defeat the King of the West? \A\A Abilities:\A DEFEND/D - block X attack damage, lasts 1 turn. \A ENRAGE/E - boost attack damage 25% for X turns. \A WEAKEN/W - reduce attack damage 25% and defense gain 50% for X turns.';
+#tutorialtext {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.tutorial #tutorialtext {
+  display: block;
+}
+
+#overviewtext {
+  position: absolute;
+  left: 50%;
   transform: translateX(-50%);
-  white-space: pre;
+  width: 60%;
+  top: 10%;
 }

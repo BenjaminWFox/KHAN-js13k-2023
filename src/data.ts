@@ -101,9 +101,9 @@ const data = {
       actions: new EnemyActions([
         ['', CARD_TYPE.assault, { a: 10 }],
         ['', CARD_TYPE.assault, { a: 7, e: 2 }],
-        ['', CARD_TYPE.defense, { d: 6 }],
-        ['', CARD_TYPE.defense, { d: 4, e: 2 }],
-        ['', CARD_TYPE.ability, { e: 2 }],
+        ['', CARD_TYPE.defense, { d: 10 }],
+        ['', CARD_TYPE.defense, { d: 8, e: 2 }],
+        ['', CARD_TYPE.ability, { e: 3 }],
       ])
     },
     6: {
@@ -117,9 +117,9 @@ const data = {
       actions: new EnemyActions([
         ['', CARD_TYPE.assault, { a: 10 }],
         ['', CARD_TYPE.assault, { a: 7, e: 2 }],
-        ['', CARD_TYPE.defense, { d: 6 }],
-        ['', CARD_TYPE.defense, { d: 4, e: 2 }],
-        ['', CARD_TYPE.ability, { e: 2 }],
+        ['', CARD_TYPE.defense, { d: 10 }],
+        ['', CARD_TYPE.defense, { d: 8, e: 2 }],
+        ['', CARD_TYPE.ability, { e: 3 }],
       ])
     },
     7: {
@@ -163,8 +163,7 @@ const data = {
         ['', CARD_TYPE.assault, { a: 9, w: 1 }],
         ['', CARD_TYPE.assault, { a: 5, w: 1, e: 2 }],
         ['', CARD_TYPE.assault, { a: 7, w: 1 }],
-        ['', CARD_TYPE.defense, { d: 6 }],
-        ['', CARD_TYPE.ability, { e: 2 }],
+        ['', CARD_TYPE.defense, { d: 10, e: 3 }],
       ])
     },
   } as EnemyDataCollection
