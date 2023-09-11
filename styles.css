@@ -127,7 +127,7 @@ button:active {
 button#gotit {
     position: absolute;
     left: 50%;
-    top: 55%;
+    top: 60%;
     transform: translate(-50%, -50%);
     font-size: 3rem;
     z-index: 20000;
