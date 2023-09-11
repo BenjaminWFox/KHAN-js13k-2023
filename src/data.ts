@@ -182,6 +182,7 @@ function getEnemyDataWithMult(mult: number): EnemyDataCollection {
       break;
     case 5:
       multiplyer = 2.5;
+      break;
     default:
       multiplyer = 1;
       break;
