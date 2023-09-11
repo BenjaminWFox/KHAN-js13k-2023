@@ -19,6 +19,8 @@ export interface ICard extends GameElement {
 export interface IVisualCard extends ICard {
   sprite: HTMLDivElement;
   update: (modData: EntityData) => void;
+  listener: (e: MouseEvent) => void;
+  cardSelect: (e: MouseEvent) => void;
   buildVisualAttributes: (data: CardData, modData?: EntityData) => void;
 }
 
@@ -32,6 +34,7 @@ export interface IGame {
   state: GAME_STATE;
   diffMult: number;
   modifiedEnemyData: EnemyDataCollection;
+  setState: (state: GAME_STATE) => void;
   alert: (str: string) => void;
   newGame: () => void;
   newRound: () => void;

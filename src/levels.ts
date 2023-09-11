@@ -29,6 +29,6 @@ export const levels: Record<number, Record<'enemies', () => Array<number>>> = {
     enemies: () => [3, 2, 3]
   },
   10: {
-    enemies: () => [1, 4, 3, 5]
+    enemies: () => [1, 2, 3, 5]
   }
 }

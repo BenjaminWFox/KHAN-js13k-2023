@@ -1,5 +1,5 @@
 import { GameElement } from "./GameElement";
-import { ACTIVATION_TRIGGER, CARD_TYPE, DeckCollections } from "./enums";
+import { ACTIVATION_TRIGGER, CARD_TYPE, DeckCollections, GAME_STATE } from "./enums";
 import { cardElementBuilder } from "./renderer";
 import { CardConstructorData, CardData, EntityData, ICard, IVisualCard } from "./types";
 import { getAttackForData, getDefenceForData, uuid } from "./utility";
@@ -61,14 +61,17 @@ export class VisualCard extends Card implements IVisualCard {
 
   deckAddSelect(event: MouseEvent) {
     event.stopPropagation();
+    if (this.game?.state === GAME_STATE.PICKING_CARD) {
+      this.game?.setState(GAME_STATE.TRANSITION)
 
-    this.sprite.removeEventListener('click', this.listener)
-    this.listener = this.cardSelect.bind(this)
-    this.sprite.addEventListener('click', this.listener)
+      this.sprite.removeEventListener('click', this.listener)
+      this.listener = this.cardSelect.bind(this)
+      this.sprite.addEventListener('click', this.listener)
 
-    this.type === CARD_TYPE.innate ?
-      this.game?.deck.add(this, DeckCollections.INNATE)
-      : this.game?.deck.add(this);
+      this.type === CARD_TYPE.innate ?
+        this.game?.deck.add(this, DeckCollections.INNATE)
+        : this.game?.deck.add(this);
+    }
   }
 
   cardSelect(event: MouseEvent) {

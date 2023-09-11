@@ -29,4 +29,5 @@ export enum GAME_STATE {
   ENEMY_TURN = 'enemy_turn',
   PICKING_CARD = 'picking_card',
   GAME_OVER = 'game_over',
+  TRANSITION = 'TRANSITION',
 }
