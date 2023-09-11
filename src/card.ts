@@ -27,6 +27,7 @@ export class Card extends GameElement implements ICard {
     return {
       ...this.data,
       a: getAttackForData(this.data.a || 0, modData),
+      aa: getAttackForData(this.data.aa || 0, modData),
       d: getDefenceForData(this.data.d || 0, modData),
     };
   }
