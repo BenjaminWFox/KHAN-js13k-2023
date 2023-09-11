@@ -39,18 +39,17 @@ const data = {
       e: 0,
       mounted: true,
       actions: new EnemyActions([
-        ['', CARD_TYPE.assault, { a: 20 }],
-        ['', CARD_TYPE.assault, { a: 15, d: 5 }],
-        ['', CARD_TYPE.assault, { a: 10, d: 10 }],
-        ['', CARD_TYPE.defense, { d: 25 }],
-        ['', CARD_TYPE.defense, { d: 20, e: 2 }],
-        ['', CARD_TYPE.ability, { w: 4 }],
+        ['', CARD_TYPE.assault, { a: 25 }],
+        ['', CARD_TYPE.assault, { a: 20, d: 10 }],
+        ['', CARD_TYPE.assault, { a: 15, d: 15 }],
+        ['', CARD_TYPE.defense, { d: 25, w: 2 }],
+        ['', CARD_TYPE.defense, { d: 20, e: 2, w: 2 }],
       ])
     },
     2: {
       name: 'archer',
       type: SPRITE_TYPE.enemy,
-      hp: 25,
+      hp: 30,
       d: 0,
       w: 0,
       e: 0,
@@ -80,7 +79,7 @@ const data = {
     4: {
       name: 'dervish',
       type: SPRITE_TYPE.enemy,
-      hp: 25,
+      hp: 28,
       d: 0,
       w: 0,
       e: 0,
@@ -94,7 +93,7 @@ const data = {
     5: {
       name: 'bear2',
       type: SPRITE_TYPE.enemy,
-      hp: 20,
+      hp: 22,
       d: 0,
       w: 0,
       e: 1,
@@ -110,7 +109,7 @@ const data = {
     6: {
       name: 'bear1',
       type: SPRITE_TYPE.enemy,
-      hp: 20,
+      hp: 22,
       d: 0,
       w: 0,
       e: 2,

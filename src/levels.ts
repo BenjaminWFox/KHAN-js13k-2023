@@ -5,24 +5,30 @@ export const levels: Record<number, Record<'enemies', () => Array<number>>> = {
     enemies: () => [getRandomIntInclusive(9, 9)]
   },
   2: {
-    enemies: () => [getRandomIntInclusive(8, 9), getRandomIntInclusive(8, 9)]
+    enemies: () => [getRandomIntInclusive(9, 9), getRandomIntInclusive(9, 9)]
   },
   3: {
-    enemies: () => [getRandomIntInclusive(7, 9), getRandomIntInclusive(5, 7), getRandomIntInclusive(5, 7)]
+    enemies: () => [getRandomIntInclusive(7, 8)]
   },
   4: {
-    enemies: () => [4, getRandomIntInclusive(5, 9), getRandomIntInclusive(5, 9)]
+    enemies: () => [getRandomIntInclusive(7, 8), getRandomIntInclusive(6, 9)]
   },
   5: {
-    enemies: () => [4, 4, getRandomIntInclusive(5, 7)]
+    enemies: () => [getRandomIntInclusive(7, 9), getRandomIntInclusive(5, 7), getRandomIntInclusive(5, 7)]
   },
   6: {
-    enemies: () => [3, 2, getRandomIntInclusive(7, 9)]
+    enemies: () => [4, getRandomIntInclusive(5, 9), getRandomIntInclusive(5, 9)]
   },
   7: {
-    enemies: () => [3, 2, 3]
+    enemies: () => [4, 4, getRandomIntInclusive(5, 7)]
   },
   8: {
-    enemies: () => [1, 3, 8]
+    enemies: () => [3, 2, getRandomIntInclusive(7, 9)]
+  },
+  9: {
+    enemies: () => [3, 2, 3]
+  },
+  10: {
+    enemies: () => [1, 4, 3, 5]
   }
 }
