@@ -283,7 +283,7 @@
 .affects div:hover:before {
   position: absolute;
   top: 10px;
-  width: 150%;
+  width: 160px;
   text-align: left;
 }
 
