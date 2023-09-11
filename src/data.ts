@@ -170,6 +170,22 @@ const data = {
 }
 
 function getEnemyDataWithMult(mult: number): EnemyDataCollection {
+  let multiplyer = 1;
+
+  switch (mult) {
+    case 3:
+    case 2:
+      multiplyer = 1.5;
+      break;
+    case 4:
+      multiplyer = 2;
+      break;
+    case 5:
+      multiplyer = 2.5;
+    default:
+      multiplyer = 1;
+      break;
+  }
   const enemyData = { ...data.enemyData };
 
   Object.keys(enemyData).forEach((key) => {
@@ -177,8 +193,8 @@ function getEnemyDataWithMult(mult: number): EnemyDataCollection {
 
     const e = { ...enemyData[k] }
 
-    if (mult === 2 || mult === 3) {
-      e.hp = e.hp * mult;
+    if (mult > 2) {
+      e.hp = e.hp * multiplyer;
     }
 
     let temp = [...e.actions!.actions];
@@ -189,10 +205,10 @@ function getEnemyDataWithMult(mult: number): EnemyDataCollection {
       const newData = { ...newAction[2] as CardData };
 
       if (newData.a!) {
-        newData.a! *= mult;
+        newData.a! *= multiplyer;
       }
       if (newData.d) {
-        newData.d! *= mult;
+        newData.d! *= multiplyer;
       }
       newAction[2] = newData;
       newActions.push(newAction as CardConstructorData);
