@@ -33,7 +33,7 @@ const data = {
     1: {
       name: 'king',
       type: SPRITE_TYPE.enemy,
-      hp: 75,
+      hp: 80,
       d: 0,
       w: 0,
       e: 0,
@@ -140,7 +140,7 @@ const data = {
     8: {
       name: 'wolf',
       type: SPRITE_TYPE.enemy,
-      hp: 15,
+      hp: 16,
       d: 0,
       w: 0,
       e: 3,
@@ -195,7 +195,7 @@ function getEnemyDataWithMult(mult: number): EnemyDataCollection {
     const e = { ...enemyData[k] }
 
     if (mult > 2) {
-      e.hp = e.hp * multiplyer;
+      e.hp = Math.ceil(e.hp * multiplyer);
     }
 
     let temp = [...e.actions!.actions];
