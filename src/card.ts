@@ -64,16 +64,6 @@ export class VisualCard extends Card implements IVisualCard {
 
     if (this.game?.state === GAME_STATE.PICKING_CARD) {
       this.game.deck.selectToAdd(this);
-
-      // this.game?.setState(GAME_STATE.TRANSITION)
-
-      // this.sprite.removeEventListener('click', this.listener)
-      // this.listener = this.cardSelect.bind(this)
-      // this.sprite.addEventListener('click', this.listener)
-
-      // this.type === CARD_TYPE.innate ?
-      //   this.game?.deck.add(this, DeckCollections.INNATE)
-      //   : this.game?.deck.add(this);
     }
   }
 
