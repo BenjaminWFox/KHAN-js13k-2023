@@ -103,8 +103,8 @@ export class VisualCard extends Card implements IVisualCard {
     if (data.hp && data.hp < 0) this.attributes.push(`Lose ${Math.abs(data.hp)} life`)
     if (data.hp && data.hp > 0) {
       this.type === CARD_TYPE.innate ?
-        this.attributes.push(`Gain ${data.hp} life at the start of each ROUND`)
-        : this.attributes.push(`Gain ${data.hp} life`)
+        this.attributes.push(`Heal ${data.hp} life at the start of each ROUND`)
+        : this.attributes.push(`Heal ${data.hp} life`)
     }
   }
 
