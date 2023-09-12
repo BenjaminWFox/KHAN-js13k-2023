@@ -3,6 +3,7 @@ import { GameElements } from "./types";
 import { Game } from "./game";
 import { messages, showMessage } from "./messaging";
 import { createP1 } from "./p1";
+import { zzfx } from "./zzfx";
 
 export const globals = {
   music: false,
@@ -75,6 +76,7 @@ window.addEventListener('load', () => {
   })
 
   e.new.addEventListener('click', () => {
+    zzfx(0);
     play();
 
     showMessage(messages.intro, () => {
