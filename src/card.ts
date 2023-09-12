@@ -76,6 +76,7 @@ export class VisualCard extends Card implements IVisualCard {
   buildVisualAttributes(data: CardData, modData?: EntityData) {
     this.attributes = [];
     if (data.a) this.attributes.push(`ATTACK ENEMY: ${getAttackForData(data.a, modData)}`)
+    if (data.ca) this.attributes.push(`Remove ENRAGE and WEAKEN from SELF`)
     if (data.aa) this.attributes.push(`ATTACK ALL: ${getAttackForData(data.aa, modData)}`)
     if (data.wa) this.attributes.push(`WEAKEN ALL: ${getAttackForData(data.wa, modData)}`)
     if (data.d)
@@ -88,10 +89,6 @@ export class VisualCard extends Card implements IVisualCard {
       this.type === CARD_TYPE.innate ?
         this.attributes.push(`Enemies start +${data.w} weak/ROUND`)
         : this.attributes.push(`WEAKEN ENEMY: ${data.w}`)
-    // if (data.f)
-    //   this.type === CARD_TYPE.innate ?
-    //     this.attributes.push(`Enemies start +${data.f} falter/ROUND`)
-    //     : this.attributes.push(`FALTER ENEMY: ${data.f}`)
     if (data.s) {
       this.type === CARD_TYPE.innate ?
         this.attributes.push(`Gain +${data.s} stamina per TURN`)
@@ -131,7 +128,6 @@ export const basicCards: Array<CardConstructorData> = [
 ];
 
 export const cards: Array<CardConstructorData> = [
-
   ['Recharge', CARD_TYPE.ability, { c: 0, s: 2, flavor: 'The Khan\'s army could rest on the move, allowing them to be where noone thought they could be.' }],
 
   ['Push Through', CARD_TYPE.ability, { c: 1, draw: 3, flavor: 'Any obstacle may be overcome with enough force.' }],
@@ -151,7 +147,7 @@ export const cards: Array<CardConstructorData> = [
   ['Combat Medics', CARD_TYPE.defense, { c: 1, d: 8, hp: 6, flavor: 'A little ginsing, some water, a BIG shield and you\'ll be back up in no time.' }],
   ['Field Hospital', CARD_TYPE.ability, { c: 2, hp: 12, flavor: 'He will win who knows when to fight and when not to fight.' }],
 
-  // ['Meditation', CARD_TYPE.ability, { c: 2, ca: 1, flavor: '' }], // Not implemented. Would clear all debuffs.
+  ['Meditation', CARD_TYPE.ability, { c: 1, ca: 1, flavor: 'It is the unemotional, reserved, calm, detached warrior who wins, not the hothead seeking vengeance.' }],
 ];
 
 export const innateCards: Array<CardConstructorData> = [

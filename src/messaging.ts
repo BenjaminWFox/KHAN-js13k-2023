@@ -14,6 +14,7 @@ export const messages = {
 }
 
 export function showMessage(message: string, callback: () => void, multiMessage = false) {
+  (gei('tutorial')! as HTMLButtonElement).disabled = true
   gei('context')!.classList.remove('hide');
   gei('message')!.classList.remove('hide');
   gei('context')!.classList.add('show');
@@ -28,6 +29,7 @@ export function showMessage(message: string, callback: () => void, multiMessage 
     gei('context-close')!.removeEventListener('click', eventHandler);
 
     if (!multiMessage) {
+      (gei('tutorial')! as HTMLButtonElement).disabled = false
       gei('context')!.classList.remove('show');
       gei('context')!.classList.add('hide');
       gei('message')!.classList.add('hide');

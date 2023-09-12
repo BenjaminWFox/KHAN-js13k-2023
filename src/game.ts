@@ -133,6 +133,7 @@ export class Game implements IGame {
   endRound() {
     // Wait for this
     this.deck.endRound();
+    (gei('endturn') as HTMLButtonElement).disabled = true;
 
     setTimeout(() => {
       this.setState(GAME_STATE.PICKING_CARD)
@@ -179,7 +180,8 @@ export class Game implements IGame {
 
   newTurn() {
     this.turn += 1;
-    this.setState(GAME_STATE.PLAYER_TURN)
+    this.setState(GAME_STATE.PLAYER_TURN);
+    (gei('endturn') as HTMLButtonElement).disabled = false;
     this.player.startTurn();
     this.player.applyInnate(this.deck.innatePile, ACTIVATION_TRIGGER.turn);
 
@@ -329,6 +331,7 @@ export class Game implements IGame {
     if (this.state === GAME_STATE.PLAYER_TURN) {
       sounds.buttonInteract();
       this.setState(GAME_STATE.ENEMY_TURN);
+      (gei('endturn') as HTMLButtonElement).disabled = true;
 
       this.player.endTurn();
       clearSelectedCard(globalGameData.selectedCard);

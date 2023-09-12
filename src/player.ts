@@ -46,12 +46,17 @@ export class Player extends Entity {
 
     // console.log('*****', 'Additional Player Buffs', { ...cardData }, 'current stats are', { ...this.data })
 
-    const { s = 0, draw = 0, mhp = 0 } = cardData;
+    const { s = 0, draw = 0, mhp = 0, ca = 0 } = cardData;
 
     this.currentStamina += s;
 
     this.currentHp += mhp;
     this.data.hp += mhp;
+
+    if (ca > 0) {
+      this.data.e = 0;
+      this.data.w = 0;
+    }
 
     if (draw > 0) {
       this.game?.deck.startDraw(draw);
