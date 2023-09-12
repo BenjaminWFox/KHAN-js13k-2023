@@ -1,4 +1,4 @@
-import { CardData, EntityData, GameData, GameElements } from "./types";
+import { CardData, EntityData, GameElements } from "./types";
 
 export const ge = (selector: string) => document.querySelector(selector);
 export const gei = (id: string) => document.getElementById(id);
