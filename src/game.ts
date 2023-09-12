@@ -290,7 +290,7 @@ export class Game implements IGame {
       // Main process for PLAYER attacking ENEMY and/or PLAYER buffing SELF:
       const dynamicData = cardToRemove.dData(this.player.data)
 
-      console.log('* Player Action *')
+      // console.log('* Player Action *')
 
       if (target && target !== this.player) {
         target.applyFromEnemy(dynamicData);
@@ -306,10 +306,10 @@ export class Game implements IGame {
       if (!this.enemies.length) {
         if (this.level === Object.keys(levels).length) {
           this.setState(GAME_STATE.GAME_OVER)
-          console.log('* Game Won');
+          // console.log('* Game Won');
           this.endGame();
         } else {
-          console.log('* Roud Won');
+          // console.log('* Roud Won');
           this.endRound();
         }
       }
@@ -355,7 +355,7 @@ export class Game implements IGame {
         // Main process for ENEMY attacking PLAYER and/or ENEMY buffing SELF:'
         const dynamicData = enemy.nextAction.dData(enemy.data)
 
-        console.log('* Enemy Action *', enemy.id, enemy.data.name);
+        // console.log('* Enemy Action *', enemy.id, enemy.data.name);
 
         this.player.applyFromEnemy(dynamicData)
         enemy.applyFromFriendly(dynamicData)
@@ -390,7 +390,7 @@ export class Game implements IGame {
 
     if (entity.isPlayer) {
       // game over
-      console.log('* Game Lost');
+      // console.log('* Game Lost');
       this.setState(GAME_STATE.GAME_OVER)
       this.endGame(false);
 

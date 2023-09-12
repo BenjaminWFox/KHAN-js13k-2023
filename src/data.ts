@@ -219,7 +219,7 @@ function getEnemyDataWithMult(mult: number): EnemyDataCollection {
     enemyData[k] = e
   })
 
-  console.log(data.enemyData[9].hp, enemyData[9].hp, data.enemyData[9].actions.actions[0], enemyData[9].actions.actions[0])
+  // console.log(data.enemyData[9].hp, enemyData[9].hp, data.enemyData[9].actions.actions[0], enemyData[9].actions.actions[0])
 
   return enemyData;
 }

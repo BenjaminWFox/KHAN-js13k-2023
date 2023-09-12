@@ -10,16 +10,16 @@ const alreadyShownCardsQueue: Array<number> = []
 const alreadyShownInnateCardsQueue: Array<number> = []
 
 function pickNewNumberIfInSeenCollection(collection: Array<number>, seenCollection: Array<number>, pickCollection: Array<CardConstructorData>, collectionMaxLen: number) {
-  console.log('** Collection MAX', collectionMaxLen)
+  // console.log('** Collection MAX', collectionMaxLen)
   let newIds: Array<number> = [];
 
   collection.forEach((num, i) => {
-    console.log('Running for next number', num);
+    // console.log('Running for next number', num);
     let newId = num;
 
     while (seenCollection.includes(newId) || newIds.includes(newId)) {
       newId = getRandomIntInclusive(0, pickCollection.length - 1);
-      console.log('Trying to replace card id', num, 'with', newId)
+      // console.log('Trying to replace card id', num, 'with', newId)
     }
 
     newIds.push(newId);
@@ -36,7 +36,7 @@ function pickNewNumberIfInSeenCollection(collection: Array<number>, seenCollecti
 }
 
 function getNewCardsToPick() {
-  console.log('Fetching new cards - current seen queue:', { alreadyShownCardsQueue: [...alreadyShownCardsQueue], alreadyShownInnateCardsQueue: [...alreadyShownInnateCardsQueue] })
+  // console.log('Fetching new cards - current seen queue:', { alreadyShownCardsQueue: [...alreadyShownCardsQueue], alreadyShownInnateCardsQueue: [...alreadyShownInnateCardsQueue] })
   const c1 = getRandomIntInclusive(0, cards.length - 1);
   let c2 = c1
   let c3 = c1
@@ -58,13 +58,13 @@ function getNewCardsToPick() {
   const cardIds = [c1, c2, c3];
   const innateCardIds = [ci1, ci2];
 
-  console.log({ cardIds: [...cardIds], innateCardIds: [...innateCardIds] })
+  // console.log({ cardIds: [...cardIds], innateCardIds: [...innateCardIds] })
 
   pickNewNumberIfInSeenCollection(cardIds, alreadyShownCardsQueue, cards, 6);
   pickNewNumberIfInSeenCollection(innateCardIds, alreadyShownInnateCardsQueue, innateCards, 4);
 
-  console.log({ cardIds, innateCardIds })
-  console.log('Finished, new queue is', { alreadyShownCardsQueue: [...alreadyShownCardsQueue], alreadyShownInnateCardsQueue: [...alreadyShownInnateCardsQueue] })
+  // console.log({ cardIds, innateCardIds })
+  // console.log('Finished, new queue is', { alreadyShownCardsQueue: [...alreadyShownCardsQueue], alreadyShownInnateCardsQueue: [...alreadyShownInnateCardsQueue] })
 
   return [
     new VisualCard(cards[cardIds[0]], true),

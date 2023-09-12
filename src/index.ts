@@ -27,7 +27,7 @@ window.addEventListener('load', () => {
   }
   const gameData = deserializeFromLocalStore();
 
-  console.log('Game Data', gameData);
+  // console.log('Game Data', gameData);
 
   const game = new Game(e)
 
@@ -53,7 +53,7 @@ window.addEventListener('load', () => {
     p1``;
   }
   function tutorial(show: boolean) {
-    console.log('TUTORIAL', show)
+    // console.log('TUTORIAL', show)
     if (!show) {
       globals.tutorial = false
       gei('board')!.classList.remove('tutorial')

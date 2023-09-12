@@ -56,7 +56,7 @@ export function getDefenceForData(defence: number, modData: EntityData | CardDat
 export function serializeToLocalStore(data: GameData): void {
   const sData = JSON.stringify(data);
 
-  console.log('sData', sData);
+  // console.log('sData', sData);
 
   window.localStorage.setItem('js13k_2023_khan', sData);
 }
@@ -65,7 +65,7 @@ export function deserializeFromLocalStore(): GameData | undefined {
   const data = window.localStorage.getItem('js13k_2023_khan');
   const pData = data ? JSON.parse(data) : undefined
 
-  console.log('pData', pData);
+  // console.log('pData', pData);
 
   return data ? pData : undefined;
 }
