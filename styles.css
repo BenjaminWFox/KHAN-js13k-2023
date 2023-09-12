@@ -46,11 +46,11 @@ button {
     padding: 0 50px;
 }
 
-button:hover {
+button:hover:not(:disabled) {
     text-shadow: 0 0 10px #fff;
 }
 
-button:active {
+button:active:not(:disabled) {
     text-shadow: 0 0 10px #999;
 }
 

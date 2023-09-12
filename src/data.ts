@@ -154,7 +154,7 @@ const data = {
     9: {
       name: 'snake',
       type: SPRITE_TYPE.enemy,
-      hp: 12,
+      hp: 1,
       d: 0,
       w: 0,
       e: 0,

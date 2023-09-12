@@ -33,7 +33,7 @@ function clearTargeted(targets: Array<HTMLDivElement>) {
 }
 
 function getValidTargets(entities: Array<Entity>, card: IVisualCard) {
-  if (card.data.a || card.data.aa || card.data.w) {
+  if (card.data.a || card.data.aa || card.data.w || card.data.wa) {
     return entities.filter(entity => entity.data.type === SPRITE_TYPE.enemy)
   }
 

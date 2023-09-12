@@ -61,16 +61,19 @@ export class VisualCard extends Card implements IVisualCard {
 
   deckAddSelect(event: MouseEvent) {
     event.stopPropagation();
+
     if (this.game?.state === GAME_STATE.PICKING_CARD) {
-      this.game?.setState(GAME_STATE.TRANSITION)
+      this.game.deck.selectToAdd(this);
 
-      this.sprite.removeEventListener('click', this.listener)
-      this.listener = this.cardSelect.bind(this)
-      this.sprite.addEventListener('click', this.listener)
+      // this.game?.setState(GAME_STATE.TRANSITION)
 
-      this.type === CARD_TYPE.innate ?
-        this.game?.deck.add(this, DeckCollections.INNATE)
-        : this.game?.deck.add(this);
+      // this.sprite.removeEventListener('click', this.listener)
+      // this.listener = this.cardSelect.bind(this)
+      // this.sprite.addEventListener('click', this.listener)
+
+      // this.type === CARD_TYPE.innate ?
+      //   this.game?.deck.add(this, DeckCollections.INNATE)
+      //   : this.game?.deck.add(this);
     }
   }
 
@@ -131,7 +134,7 @@ export class VisualCard extends Card implements IVisualCard {
 export const basicCards: Array<CardConstructorData> = [
   ['Saber Attack', CARD_TYPE.assault, { a: 8, c: 1, flavor: 'The Khans favored weapon, designed for use from horseback. These swords with slightly curved blades were 30-40 inches long.' }],
   ['Bambai Shield', CARD_TYPE.defense, { d: 10, c: 1, flavor: 'The Khans favored shield, round and domed, originally made of woven reeds covered in leather and later from stronger metal.' }],
-  ['War Cry', CARD_TYPE.ability, { c: 2, w: 2, e: 4, flavor: 'Enemies could scarcely move to defend themselves on hearing the screams of the Khans\' army.' }],
+  ['War Cry', CARD_TYPE.ability, { c: 1, wa: 1, e: 2, flavor: 'Enemies could scarcely move to defend themselves on hearing the screams of the Khans\' army.' }],
   ['Rally Cry', CARD_TYPE.defense, { c: 2, d: 18, e: 1, flavor: 'Such were The Khans regrouping tactics that enemies could find nowhere to strike.' }],
   ['Tactical Retreat', CARD_TYPE.defense, { c: 2, d: 14, draw: 1, flavor: 'Better to retreat, and entice the enemy into a trap or your making.' }],
   ['Surgical Strike', CARD_TYPE.assault, { c: 1, a: 12, draw: 1, flavor: 'Let your plans be dark and impenetrable as night, and when you move, fall like a thunderbolt.' }],
@@ -153,7 +156,7 @@ export const cards: Array<CardConstructorData> = [
   ['Overpower', CARD_TYPE.assault, { c: 2, a: 18, w: 2, flavor: 'Attack where the enemy is unprepared, appear where you are not expected.' }],
   ['Cavalry Charge', CARD_TYPE.assault, { c: 4, aa: 18, flavor: 'The Khan\'s cavalry were second to none thanks, in no small part, to the invention of the stirrup.' }],
 
-  ['Shock and Awe', CARD_TYPE.ability, { c: 1, e: 3, wa: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
+  ['Shock and Awe', CARD_TYPE.ability, { c: 2, e: 3, wa: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
 
   ['Combat Medics', CARD_TYPE.defense, { c: 1, d: 8, hp: 6, flavor: 'A little ginsing, some water, a BIG shield and you\'ll be back up in no time.' }],
   ['Field Hospital', CARD_TYPE.ability, { c: 2, hp: 12, flavor: 'He will win who knows when to fight and when not to fight.' }],

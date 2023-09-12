@@ -1,6 +1,6 @@
 import { VisualCard, basicCards, cards, innateCards } from "./card";
-import { DeckCollections } from "./enums";
-import { CardConstructorData, Cards, EntityData, IDeck, IGame, IVisualCard } from "./types";
+import { CARD_TYPE, DeckCollections, GAME_STATE } from "./enums";
+import { CardConstructorData, Cards, EntityData, ICard, IDeck, IGame, IVisualCard } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
 import { GameElement } from "./GameElement";
 import sounds from "./sounds";
@@ -81,6 +81,7 @@ export class Deck extends GameElement implements IDeck {
   donePile: Cards;
   innatePile: Cards;
   pendingDraw: number;
+  pendingSelect: IVisualCard | undefined;
   game: IGame;
 
   constructor(game: IGame) {
@@ -110,6 +111,43 @@ export class Deck extends GameElement implements IDeck {
 
   register(game: IGame) {
     [this.drawPile, this.handPile, this.donePile].forEach(pile => pile?.forEach(card => card.register(game)));
+  }
+
+  selectToAdd(card: IVisualCard) {
+    this.handPile.forEach(card => {
+      card.sprite.classList.remove('selected');
+    })
+    if (this.pendingSelect === card) {
+      (gei('confirmcard') as HTMLButtonElement).disabled = true
+      this.pendingSelect = undefined;
+    } else {
+      (gei('confirmcard') as HTMLButtonElement).disabled = false
+      this.pendingSelect = card;
+      this.pendingSelect.sprite.classList.add('selected');
+    }
+  }
+
+  confirmAdd() {
+    const el = (gei('confirmcard') as HTMLButtonElement)
+    el.removeEventListener('click', this.confirmAdd);
+    el.disabled = true;
+    el.classList.add('hide');
+
+    if (this.pendingSelect && this.game?.state === GAME_STATE.PICKING_CARD) {
+      this.game?.setState(GAME_STATE.TRANSITION)
+
+      this.pendingSelect.sprite.classList.remove('selected');
+
+      this.pendingSelect.sprite.removeEventListener('click', this.pendingSelect.listener)
+      this.pendingSelect.listener = this.pendingSelect.cardSelect.bind(this.pendingSelect)
+      this.pendingSelect.sprite.addEventListener('click', this.pendingSelect.listener)
+
+      this.pendingSelect.type === CARD_TYPE.innate ?
+        this.add(this.pendingSelect, DeckCollections.INNATE)
+        : this.add(this.pendingSelect);
+
+      this.pendingSelect = undefined;
+    }
   }
 
   add(card: IVisualCard, collection?: DeckCollections) {
@@ -197,6 +235,10 @@ export class Deck extends GameElement implements IDeck {
 
   pickNewCards() {
     const cards = getNewCardsToPick();
+
+    const el = (gei('confirmcard') as HTMLButtonElement)
+    el.addEventListener('click', this.confirmAdd.bind(this));
+    el.classList.remove('hide');
 
     cards.forEach(card => {
       card.register(this.game);

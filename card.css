@@ -9,6 +9,24 @@
   animation-duration: .25s;
 }
 
+#confirmcard {
+  position: absolute;
+  font-size: 2rem;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  opacity: 1;
+}
+
+#confirmcard.hide {
+  display: none;
+}
+
+#confirmcard:disabled {
+  opacity: .75;
+}
+
 #deckdisplay {
   position: absolute;
   left: 0;
