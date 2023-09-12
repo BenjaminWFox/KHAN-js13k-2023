@@ -1,4 +1,4 @@
-import { deserializeFromLocalStore, gei, resize } from "./utility";
+import { gei, resize } from "./utility";
 import { GameElements } from "./types";
 import { Game } from "./game";
 import { messages, showMessage } from "./messaging";
@@ -25,9 +25,6 @@ window.addEventListener('load', () => {
     gotit: gei('gotit')!,
     viewdeck: gei('viewdeck')!,
   }
-  const gameData = deserializeFromLocalStore();
-
-  // console.log('Game Data', gameData);
 
   const game = new Game(e)
 
