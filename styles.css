@@ -61,6 +61,13 @@ button:active {
     top: 60px;
 }
 
+#viewdeck {
+    position: absolute;
+    font-size: 1rem;
+    right: 25px;
+    top: 200px;
+}
+
 #menu {
     position: absolute;
     bottom: 0;

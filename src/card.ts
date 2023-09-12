@@ -145,7 +145,7 @@ export const cards: Array<CardConstructorData> = [
   ['Clairvoyance', CARD_TYPE.ability, { c: 0, draw: 2, flavor: 'The Khan had a preternatural ability to know what to do next.' }],
 
   ['Shield Wall', CARD_TYPE.defense, { c: 3, d: 30, e: 2, flavor: '' }],
-  ['Reluctant Withdrawl', CARD_TYPE.defense, { c: 1, d: 12, e: 4, flavor: 'The Khan grew more determined with every forced step backwards.' }],
+  ['Reluctant Withdrawl', CARD_TYPE.defense, { c: 1, d: 12, e: 3, flavor: 'The Khan grew more determined with every forced step backwards.' }],
 
   ['Whirling Dervish', CARD_TYPE.assault, { c: 2, aa: 10, wa: 2, flavor: 'The Persians were a magnificent addition to the Khan\'s army.' }],
   ['Wrath Of Khan', CARD_TYPE.assault, { c: 3, aa: 15, e: 4, hp: -10, flavor: 'The Khan was merciless, sometimes reckless, in pursuit of his enemies.' }],
@@ -153,7 +153,7 @@ export const cards: Array<CardConstructorData> = [
   ['Overpower', CARD_TYPE.assault, { c: 2, a: 18, w: 2, flavor: 'Attack where the enemy is unprepared, appear where you are not expected.' }],
   ['Cavalry Charge', CARD_TYPE.assault, { c: 4, aa: 18, flavor: 'The Khan\'s cavalry were second to none thanks, in no small part, to the stirrup.' }],
 
-  ['Shock and Awe', CARD_TYPE.ability, { c: 2, e: 3, w: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
+  ['Shock and Awe', CARD_TYPE.ability, { c: 1, e: 3, wa: 3, flavor: 'Supreme excellence consists of breaking the enemy\'s resistance without fighting.' }],
 
   ['Combat Medics', CARD_TYPE.defense, { c: 1, d: 8, hp: 6, flavor: 'A little ginsing, some water, a BIG shield and you\'ll be back up in no time.' }],
   ['Field Hospital', CARD_TYPE.ability, { c: 2, hp: 12, flavor: 'He will win who knows when to fight and when not to fight.' }],

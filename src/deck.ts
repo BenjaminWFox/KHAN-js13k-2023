@@ -75,6 +75,7 @@ function getNewCardsToPick() {
 }
 
 export class Deck extends GameElement implements IDeck {
+  deck: Cards;
   drawPile: Cards;
   handPile: Cards;
   donePile: Cards;
@@ -97,6 +98,7 @@ export class Deck extends GameElement implements IDeck {
       new VisualCard(basicCards[4]),
       new VisualCard(basicCards[5]),
     ];
+    this.deck = [...this.drawPile];
     this.handPile = [];
     this.donePile = [];
     this.innatePile = [];
@@ -126,6 +128,8 @@ export class Deck extends GameElement implements IDeck {
         this.drawPile.push(card);
         break;
     };
+
+    this.deck.push(card);
 
     this.update();
 

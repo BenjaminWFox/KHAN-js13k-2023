@@ -52,6 +52,7 @@ export interface IGame {
 }
 
 export interface IDeck {
+  deck: Cards,
   drawPile: Cards,
   handPile: Cards,
   donePile: Cards,

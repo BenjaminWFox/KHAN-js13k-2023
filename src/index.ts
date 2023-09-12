@@ -23,6 +23,7 @@ window.addEventListener('load', () => {
     sfx: gei('sfx')!,
     tutorial: gei('tutorial')!,
     gotit: gei('gotit')!,
+    viewdeck: gei('viewdeck')!,
   }
   const gameData = deserializeFromLocalStore();
 
@@ -100,6 +101,8 @@ window.addEventListener('load', () => {
       e.sfx.classList.remove('stopped');
     }
   })
+
+  e.viewdeck.addEventListener('click', game.renderDeck.bind(game));
 
   window.addEventListener('resize', () => {
     resize(e);

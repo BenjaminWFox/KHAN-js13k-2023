@@ -96,6 +96,25 @@ export class Game implements IGame {
     }, 4000);
   }
 
+  renderDeck() {
+    const el = gei('deckdisplay')!;
+    const btn = gei('viewdeck')!;
+
+    if (el.classList.contains('hide')) {
+      el.classList.remove('hide');
+      this.deck.deck.forEach(card => {
+        el.appendChild(card.sprite.cloneNode(true));
+      });
+      btn.style.zIndex = '20001'
+      btn.innerHTML = 'Done'
+    } else {
+      el.classList.add('hide');
+      el.innerHTML = '';
+      btn.style.zIndex = 'inherit'
+      btn.innerHTML = 'View Deck'
+    }
+  }
+
   newGame() {
     this.diffMult = Number((gei('difficulty') as HTMLSelectElement).value);
     this.modifiedEnemyData = getEnemyDataWithMult(this.diffMult);
