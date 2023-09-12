@@ -1,5 +1,5 @@
 import { GameElement } from "./GameElement";
-import { ACTIVATION_TRIGGER, CARD_TYPE, DeckCollections, GAME_STATE } from "./enums";
+import { ACTIVATION_TRIGGER, CARD_TYPE, GAME_STATE } from "./enums";
 import { cardElementBuilder } from "./renderer";
 import { CardConstructorData, CardData, EntityData, ICard, IVisualCard } from "./types";
 import { getAttackForData, getDefenceForData, uuid } from "./utility";

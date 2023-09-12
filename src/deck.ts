@@ -1,6 +1,6 @@
 import { VisualCard, basicCards, cards, innateCards } from "./card";
 import { CARD_TYPE, DeckCollections, GAME_STATE } from "./enums";
-import { CardConstructorData, Cards, EntityData, ICard, IDeck, IGame, IVisualCard } from "./types";
+import { CardConstructorData, Cards, EntityData, IDeck, IGame, IVisualCard } from "./types";
 import { gei, getRandomIntInclusive } from "./utility";
 import { GameElement } from "./GameElement";
 import sounds from "./sounds";
