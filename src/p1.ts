@@ -47,7 +47,7 @@ export const createP1 = function () {
 
   var playBuffer = (buffer, context, stop) => {
     var gain = context.createGain()
-    gain.gain.value = 0.05;
+    gain.gain.value = 0.10;
     gain.connect(context.destination)
     var source = context.createBufferSource()
     source.buffer = buffer
