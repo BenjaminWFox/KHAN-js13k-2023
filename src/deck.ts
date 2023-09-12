@@ -117,6 +117,7 @@ export class Deck extends GameElement implements IDeck {
     this.handPile.forEach(card => {
       card.sprite.classList.remove('selected');
     })
+    sounds.cardSelect();
     if (this.pendingSelect === card) {
       (gei('confirmcard') as HTMLButtonElement).disabled = true
       this.pendingSelect = undefined;
