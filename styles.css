@@ -59,6 +59,26 @@ button:active:not(:disabled) {
     text-shadow: 0 0 10px #999;
 }
 
+#ag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    max-width: 350px;
+    z-index: 100000;
+}
+
+#ag a {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: block;
+}
+
+#ag a img {
+    max-width: 100%;
+    max-height: 28px;
+    vertical-align: middle;
+}
+
 #endturn {
     position: absolute;
     font-size: 2rem;
